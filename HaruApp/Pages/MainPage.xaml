@@ -17,7 +17,8 @@
     SupportedOrientations="Portrait"
     Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
-    Style="{StaticResource TurnstilePageTransition}">
+    Style="{StaticResource TurnstilePageTransition}"
+    Loaded="PhoneApplicationPage_Loaded">
 
     <Grid Background="Transparent">
         <controls:Pivot x:Name="MainPivot" Title=""

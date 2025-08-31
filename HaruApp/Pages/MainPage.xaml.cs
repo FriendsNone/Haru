@@ -11,15 +11,27 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
+using System.Windows.Navigation;
 
 namespace HaruApp
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        // Constructor
+        IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (settings.Contains("Location"))
+            {
+                string location = settings["Location"] as string;
+                MainPivot.Title = location.ToUpper();
+            }
         }
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
