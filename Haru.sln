@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaruApp", "HaruApp\HaruApp.csproj", "{94E9332F-10CF-4FD8-94E0-9797A93C3F65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaruCore", "HaruCore\HaruCore.csproj", "{266504F0-A06D-45C2-9BD5-31ACD54D1882}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{94E9332F-10CF-4FD8-94E0-9797A93C3F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94E9332F-10CF-4FD8-94E0-9797A93C3F65}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94E9332F-10CF-4FD8-94E0-9797A93C3F65}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
