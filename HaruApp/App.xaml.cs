@@ -12,11 +12,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 namespace HaruApp
 {
     public partial class App : Application
     {
+        IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -63,6 +66,22 @@ namespace HaruApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            if (!settings.Contains("TemperatureUnit"))
+            {
+                settings["TemperatureUnit"] = "celsius";
+            }
+
+            if (!settings.Contains("WindSpeedUnit"))
+            {
+                settings["WindSpeedUnit"] = "kmh";
+            }
+
+            if (!settings.Contains("PrecipitationUnit"))
+            {
+                settings["PrecipitationUnit"] = "mm";
+            }
+
+            settings.Save();
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -116,7 +135,7 @@ namespace HaruApp
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures

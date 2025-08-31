@@ -1,0 +1,65 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="HaruApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="480"
+    d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"
+    Orientation="Portrait"
+    shell:SystemTray.IsVisible="True"
+    Style="{StaticResource TurnstilePageTransition}">
+
+    <Grid Background="Transparent">
+        <controls:Pivot x:Name="MainPivot" Title=""
+                        SelectionChanged="MainPivot_SelectionChanged">
+            <controls:PivotItem Header="now">
+                <Grid/>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="hourly">
+                <Grid/>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="weekly">
+                <Grid/>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton x:Name="SearchApplicationBarIconButton"
+                                            IconUri="/Assets/AppBar/appbar.feature.search.rest.png"
+                                            Text="search"
+                                            Click="SearchApplicationBarIconButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="RefreshApplicationBarIconButton"
+                                            IconUri="/Assets/AppBar/appbar.refresh.rest.png"
+                                            Text="refresh"
+                                            Click="RefreshApplicationBarIconButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="PinApplicationBarIconButton"
+                                            IconUri="/Assets/AppBar/appbar.pin.rest.png"
+                                            Text="pin to start"
+                                            Click="PinApplicationBarIconButton_Click"/>
+
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="SettingsApplicationBarMenuItem"
+                                              Text="settings"
+                                              Click="SettingsApplicationBarMenuItem_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="AboutApplicationBarMenuItem"
+                                              Text="about"
+                                              Click="AboutApplicationBarMenuItem_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+ 
+</phone:PhoneApplicationPage>
