@@ -8,12 +8,13 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
+using System.ComponentModel;
 
 namespace HaruApp.Pages
 {
     public partial class SettingsPage : PhoneApplicationPage
     {
-        IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private bool _isPromptShown = false;
 
         public SettingsPage()
@@ -35,7 +36,7 @@ namespace HaruApp.Pages
                 PrecipitationUnitListPicker.SelectedItem = settings["PrecipitationUnit"];
         }
 
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        protected override void OnBackKeyPress(CancelEventArgs e)
         {
             base.OnBackKeyPress(e);
 

@@ -18,7 +18,7 @@ namespace HaruApp
 {
     public partial class App : Application
     {
-        IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -67,19 +67,13 @@ namespace HaruApp
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
             if (!settings.Contains("TemperatureUnit"))
-            {
                 settings["TemperatureUnit"] = "celsius";
-            }
 
             if (!settings.Contains("WindSpeedUnit"))
-            {
                 settings["WindSpeedUnit"] = "kmh";
-            }
 
             if (!settings.Contains("PrecipitationUnit"))
-            {
                 settings["PrecipitationUnit"] = "mm";
-            }
 
             settings.Save();
         }

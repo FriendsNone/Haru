@@ -47,7 +47,8 @@
                 <toolkit:PhoneTextBox x:Name="SearchPhoneTextBox"
                                       Grid.Column="0"
                                       Hint="enter location"
-                                      InputScope="Text"/>
+                                      InputScope="Text"
+                                      KeyUp="SearchPhoneTextBox_KeyUp"/>
                 
                 <Button x:Name="SearchButton"
                         Grid.Column="1"

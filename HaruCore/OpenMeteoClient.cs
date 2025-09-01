@@ -11,7 +11,7 @@ namespace HaruCore
 {
     public class OpenMeteoClient
     {
-        public void SearchLocation(string query, Action<List<LocationResult>, Exception> callback, int count = 5)
+        public void SearchLocation(string query, Action<List<LocationResult>, Exception> callback, int count = 10)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -45,16 +45,36 @@ namespace HaruCore
             wc.DownloadStringAsync(new Uri(url));
         }
 
-        public void GetForecast(double latitude, double longitude, Action<ForecastResponse, Exception> callback)
+        public void GetForecast(double latitude,
+                                double longitude,
+                                string temperatureUnit,
+                                string windSpeedUnit,
+                                string precipitationUnit,
+                                Action<ForecastResponse, Exception> callback,
+                                string timeFormat = "iso8601",
+                                int forecastDays = 7,
+                                int forecastHours = 12)
         {
             string lat = latitude.ToString(CultureInfo.InvariantCulture);
             string lon = longitude.ToString(CultureInfo.InvariantCulture);
-            string tz = DateTimeZoneProviders.Tzdb.GetSystemDefault().Id;
+            string hourly = "";
+            string daily = "";
+            string current = "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m";
+            string timeZone = DateTimeZoneProviders.Tzdb.GetSystemDefault().Id;
             string url = string.Format(
-                "http://api.open-meteo.com/v1/forecast?latitude={0}&longitude={1}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&timezone={2}",
+                "http://api.open-meteo.com/v1/forecast?latitude={0}&longitude={1}&hourly={2}&daily={3}&current={4}&temperature_unit={5}&wind_speed_unit={6}&precipitation_unit={7}&timeformat={8}&timezone={9}&forecast_days={10}&forecast_hours={11}",
                 lat,
                 lon,
-                tz);
+                hourly,
+                daily,
+                current,
+                temperatureUnit,
+                windSpeedUnit,
+                precipitationUnit,
+                timeFormat,
+                timeZone,
+                forecastDays,
+                forecastHours);
 
             WebClient wc = new WebClient();
             wc.DownloadStringCompleted += (s, e) =>

@@ -21,10 +21,12 @@
     Loaded="PhoneApplicationPage_Loaded">
 
     <Grid Background="Transparent">
-        <controls:Pivot x:Name="MainPivot" Title=""
+        <controls:Pivot x:Name="MainPivot" Title="NO LOCATION"
                         SelectionChanged="MainPivot_SelectionChanged">
             <controls:PivotItem Header="now">
-                <Grid/>
+                <Grid>
+                    <TextBlock x:Name="NowTextBlock"/>
+                </Grid>
             </controls:PivotItem>
 
             <controls:PivotItem Header="hourly">
@@ -35,6 +37,20 @@
                 <Grid/>
             </controls:PivotItem>
         </controls:Pivot>
+
+        <Canvas x:Name="GuideCanvas"
+                Margin="0,646,0,0"
+                Opacity="0.2"
+                Visibility="Collapsed">
+            <TextBlock Canvas.Left="220"
+                       Canvas.Top="10"
+                       FontFamily="Comic Sans MS"
+                       Text="set your location here"/>
+            <Image Height="50"
+                   Width="50"
+                   Canvas.Left="160"
+                   Source="/HaruApp;component/Assets/guide_arrow.png"/>
+        </Canvas>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
