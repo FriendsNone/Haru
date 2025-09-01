@@ -46,10 +46,10 @@
                        Canvas.Top="10"
                        FontFamily="Comic Sans MS"
                        Text="set your location here"/>
-            <Image Height="50"
+            <Image x:Name="GuideImage"
+                   Height="50"
                    Width="50"
-                   Canvas.Left="160"
-                   Source="/HaruApp;component/Assets/guide_arrow.png"/>
+                   Canvas.Left="160"/>
         </Canvas>
     </Grid>
 

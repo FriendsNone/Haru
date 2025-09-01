@@ -14,6 +14,7 @@ using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
 using System.Windows.Navigation;
 using HaruCore;
+using System.Windows.Media.Imaging;
 
 namespace HaruApp
 {
@@ -32,6 +33,7 @@ namespace HaruApp
             {
                 IsIndeterminate = true
             };
+            SetGuideImage();
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -97,6 +99,20 @@ namespace HaruApp
         private void AboutApplicationBarMenuItem_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
+        }
+
+        private void SetGuideImage()
+        {
+            bool isLightTheme = (Color)Application.Current.Resources["PhoneBackgroundColor"] == Colors.White;
+
+            string imagePath;
+
+            if (isLightTheme)
+                imagePath = "/HaruApp;component/Assets/guide.light.png";
+            else
+                imagePath = "/HaruApp;component/Assets/guide.dark.png";
+
+            GuideImage.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
         }
 
         private void FetchForecast()
