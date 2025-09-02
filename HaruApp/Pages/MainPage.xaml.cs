@@ -33,7 +33,6 @@ namespace HaruApp
             {
                 IsIndeterminate = true
             };
-            SetGuideImage();
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -101,20 +100,6 @@ namespace HaruApp
             NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
         }
 
-        private void SetGuideImage()
-        {
-            bool isLightTheme = (Color)Application.Current.Resources["PhoneBackgroundColor"] == Colors.White;
-
-            string imagePath;
-
-            if (isLightTheme)
-                imagePath = "/HaruApp;component/Assets/guide.light.png";
-            else
-                imagePath = "/HaruApp;component/Assets/guide.dark.png";
-
-            GuideImage.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
-        }
-
         private void FetchForecast()
         {
             double latitude = (double)settings["Latitude"];
@@ -127,8 +112,6 @@ namespace HaruApp
             progressIndicator.Text = "Fetching forecast...";
             progressIndicator.IsVisible = true;
 
-            NowTextBlock.Text = "";
-
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
             {
                 if (ferr != null || forecast == null)
@@ -140,14 +123,45 @@ namespace HaruApp
                 CurrentWeather cw = forecast.CurrentWeather;
                 if (cw != null)
                 {
-                    NowTextBlock.Text = string.Format("Current temperature: {0}°C\nWindspeed: {1} km/h\nWind direction: {2}°\n{3}",
-                        cw.Temperature,
-                        cw.WindSpeed,
-                        cw.WindDirection,
-                        cw.Time);
+                    TemperatureTextBlock.Text = string.Format("{0}°{1}", cw.Temperature, temperatureUnit == "celsius" ? "C" : "F");
+                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}°{1}", cw.ApparentTemperature, temperatureUnit == "celsius" ? "C" : "F");
+                    WeatherCodeTextBlock.Text = cw.WeatherCode.ToString();
+                    RelativeHumidityTextBlock.Text = string.Format("{0}%", cw.RelativeHumidity);
+                    PrecipitationTextBlock.Text = string.Format("{0}{1}", cw.Precipitation, precipitationUnit);
+                    RainTextBlock.Text = string.Format("{0}{1}", cw.Rain, precipitationUnit);
+                    ShowersTextBlock.Text = string.Format("{0}{1}", cw.Showers, precipitationUnit);
+                    SnowfallTextBlock.Text = string.Format("{0}{1}", cw.Snowfall, precipitationUnit);
+                    CloudCoverTextBlock.Text = string.Format("{0}%", cw.CloudCover);
+                    PressureTextBlock.Text = string.Format("{0}hPa", cw.Pressure);
+                    SurfacePressureTextBlock.Text = string.Format("{0}hPa", cw.SurfacePressure);
+                    WindSpeedTextBlock.Text = string.Format("{0}{1}", cw.WindSpeed, windSpeedUnit);
+                    WindDirectionTextBlock.Text = string.Format("{0}°", cw.WindDirection);
+                    WindGustsTextBlock.Text = string.Format("{0}{1}", cw.WindGusts, windSpeedUnit);
+
+                    UpdateTile();
                     progressIndicator.IsVisible = false;
                 }
             });
+        }
+
+        private void UpdateTile()
+        {
+            ShellTile tile = ShellTile.ActiveTiles.First();
+            if (tile != null)
+            {
+                string location = (string)settings["Location"];
+
+                StandardTileData data = new StandardTileData()
+                {
+                    Title = location,
+                    BackgroundImage = new Uri("/Assets/WeatherIcons/overcast-day.png", UriKind.Relative),
+                    BackTitle = string.Format("Updated at {0}", DateTime.Now.ToString("t")),
+                    BackContent = "something something"
+                };
+
+
+                tile.Update(data);
+            }
         }
     }
 }

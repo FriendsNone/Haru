@@ -21,11 +21,116 @@
     Loaded="PhoneApplicationPage_Loaded">
 
     <Grid Background="Transparent">
-        <controls:Pivot x:Name="MainPivot" Title="NO LOCATION"
+        <controls:Pivot x:Name="MainPivot"
+                        Title="NO LOCATION"
                         SelectionChanged="MainPivot_SelectionChanged">
             <controls:PivotItem Header="now">
-                <Grid>
-                    <TextBlock x:Name="NowTextBlock"/>
+                <Grid Margin="12,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.Column="0"
+                               Source="/Assets/WeatherIcons/overcast-day.png"/>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock x:Name="TemperatureTextBlock"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                       FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}"
+                                       Text="27°C"/>
+                            <TextBlock x:Name="ApparentTemperatureTextBlock"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Text="feels like 27°C"/>
+                            <TextBlock x:Name="WeatherCodeTextBlock"
+                                       Foreground="{StaticResource PhoneAccentBrush}"
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Text="overcast"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <ScrollViewer Grid.Row="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="24"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Humidity"/>
+                                <TextBlock x:Name="RelativeHumidityTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Precipitation"/>
+                                <TextBlock x:Name="PrecipitationTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0">
+                                <TextBlock Text="Rain"/>
+                                <TextBlock x:Name="RainTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="2">
+                                <TextBlock Text="Showers"/>
+                                <TextBlock x:Name="ShowersTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Snowfall"/>
+                                <TextBlock x:Name="SnowfallTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Cloud cover"/>
+                                <TextBlock x:Name="CloudCoverTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="0">
+                                <TextBlock Text="Pressure"/>
+                                <TextBlock x:Name="PressureTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="3" Grid.Column="2">
+                                <TextBlock Text="Surface pressure"/>
+                                <TextBlock x:Name="SurfacePressureTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="0">
+                                <TextBlock Text="Wind speed"/>
+                                <TextBlock x:Name="WindSpeedTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="2">
+                                <TextBlock Text="Wind direction"/>
+                                <TextBlock x:Name="WindDirectionTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="5" Grid.Column="0">
+                                <TextBlock Text="Wind gusts"/>
+                                <TextBlock x:Name="WindGustsTextBlock" FontSize="{StaticResource PhoneFontSizeLarge}" TextAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
                 </Grid>
             </controls:PivotItem>
 
@@ -46,10 +151,16 @@
                        Canvas.Top="10"
                        FontFamily="Comic Sans MS"
                        Text="set your location here"/>
-            <Image x:Name="GuideImage"
-                   Height="50"
+            <Image Height="50"
                    Width="50"
-                   Canvas.Left="160"/>
+                   Canvas.Left="160"
+                   Visibility="{StaticResource PhoneDarkThemeVisibility}"
+                   Source="/Assets/guide.dark.png"/>
+            <Image Height="50"
+                   Width="50"
+                   Canvas.Left="160"
+                   Visibility="{StaticResource PhoneLightThemeVisibility}"
+                   Source="/Assets/guide.light.png"/>
         </Canvas>
     </Grid>
 
@@ -78,5 +189,5 @@
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
- 
+
 </phone:PhoneApplicationPage>
