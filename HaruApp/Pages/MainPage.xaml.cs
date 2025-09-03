@@ -123,9 +123,10 @@ namespace HaruApp
                 CurrentWeather cw = forecast.CurrentWeather;
                 if (cw != null)
                 {
+                    WeatherCodeImage.Source = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
                     TemperatureTextBlock.Text = string.Format("{0}°{1}", cw.Temperature, temperatureUnit == "celsius" ? "C" : "F");
                     ApparentTemperatureTextBlock.Text = string.Format("feels like {0}°{1}", cw.ApparentTemperature, temperatureUnit == "celsius" ? "C" : "F");
-                    WeatherCodeTextBlock.Text = cw.WeatherCode.ToString();
+                    WeatherCodeTextBlock.Text = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
                     RelativeHumidityTextBlock.Text = string.Format("{0}%", cw.RelativeHumidity);
                     PrecipitationTextBlock.Text = string.Format("{0}{1}", cw.Precipitation, precipitationUnit);
                     RainTextBlock.Text = string.Format("{0}{1}", cw.Rain, precipitationUnit);
@@ -137,14 +138,15 @@ namespace HaruApp
                     WindSpeedTextBlock.Text = string.Format("{0}{1}", cw.WindSpeed, windSpeedUnit);
                     WindDirectionTextBlock.Text = string.Format("{0}°", cw.WindDirection);
                     WindGustsTextBlock.Text = string.Format("{0}{1}", cw.WindGusts, windSpeedUnit);
+                    NowScrollViewer.Visibility = Visibility.Visible;
 
-                    UpdateTile();
+                    UpdateTile(cw);
                     progressIndicator.IsVisible = false;
                 }
             });
         }
 
-        private void UpdateTile()
+        private void UpdateTile(CurrentWeather cw)
         {
             ShellTile tile = ShellTile.ActiveTiles.First();
             if (tile != null)
@@ -154,9 +156,12 @@ namespace HaruApp
                 StandardTileData data = new StandardTileData()
                 {
                     Title = location,
-                    BackgroundImage = new Uri("/Assets/WeatherIcons/overcast-day.png", UriKind.Relative),
-                    BackTitle = string.Format("Updated at {0}", DateTime.Now.ToString("t")),
-                    BackContent = "something something"
+                    BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
+                    BackTitle = string.Format("{0}", DateTime.Now.ToString("t")),
+                    BackContent = string.Format("{0}°{1}\n{2}",
+                        cw.Temperature,
+                        (string)settings["TemperatureUnit"] == "celsius" ? "C" : "F",
+                        WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay)),
                 };
 
 

@@ -76,12 +76,16 @@ namespace HaruCore
     {
         [JsonProperty("time")]
         public string Time { get; set; }
+        [JsonProperty("interval")]
+        public int Interval { get; set; }
         [JsonProperty("temperature_2m")]
         public double Temperature { get; set; }
         [JsonProperty("relative_humidity_2m")]
         public double RelativeHumidity { get; set; }
         [JsonProperty("apparent_temperature")]
         public double ApparentTemperature { get; set; }
+        [JsonProperty("is_day")]
+        public bool IsDay { get; set; }
         [JsonProperty("precipitation")]
         public double Precipitation { get; set; }
         [JsonProperty("rain")]
