@@ -85,10 +85,10 @@ namespace HaruApp
             FetchForecast();
         }
 
-        private void PinApplicationBarIconButton_Click(object sender, EventArgs e)
-        {
-            // TODO: Implement pin to start functionality
-        }
+        //private void PinApplicationBarIconButton_Click(object sender, EventArgs e)
+        //{
+        //    // TODO: Implement pin to start functionality
+        //}
 
         private void SettingsApplicationBarMenuItem_Click(object sender, EventArgs e)
         {
@@ -123,22 +123,22 @@ namespace HaruApp
                 CurrentWeather cw = forecast.CurrentWeather;
                 if (cw != null)
                 {
-                    WeatherCodeImage.Source = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
-                    TemperatureTextBlock.Text = string.Format("{0}°{1}", cw.Temperature, temperatureUnit == "celsius" ? "C" : "F");
-                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}°{1}", cw.ApparentTemperature, temperatureUnit == "celsius" ? "C" : "F");
-                    WeatherCodeTextBlock.Text = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
-                    RelativeHumidityTextBlock.Text = string.Format("{0}%", cw.RelativeHumidity);
-                    PrecipitationTextBlock.Text = string.Format("{0}{1}", cw.Precipitation, precipitationUnit);
-                    RainTextBlock.Text = string.Format("{0}{1}", cw.Rain, precipitationUnit);
-                    ShowersTextBlock.Text = string.Format("{0}{1}", cw.Showers, precipitationUnit);
-                    SnowfallTextBlock.Text = string.Format("{0}{1}", cw.Snowfall, precipitationUnit);
-                    CloudCoverTextBlock.Text = string.Format("{0}%", cw.CloudCover);
-                    PressureTextBlock.Text = string.Format("{0}hPa", cw.Pressure);
-                    SurfacePressureTextBlock.Text = string.Format("{0}hPa", cw.SurfacePressure);
-                    WindSpeedTextBlock.Text = string.Format("{0}{1}", cw.WindSpeed, windSpeedUnit);
-                    WindDirectionTextBlock.Text = string.Format("{0}°", cw.WindDirection);
-                    WindGustsTextBlock.Text = string.Format("{0}{1}", cw.WindGusts, windSpeedUnit);
-                    NowScrollViewer.Visibility = Visibility.Visible;
+                    WeatherCodeImage.Source           = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
+                    TemperatureTextBlock.Text         = string.Format("{0}{1}", cw.Temperature, UnitModel.GetTemperatureUnit(temperatureUnit));
+                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}{1}", cw.ApparentTemperature, UnitModel.GetTemperatureUnit(temperatureUnit));
+                    WeatherCodeTextBlock.Text         = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
+                    RelativeHumidityTextBlock.Text    = string.Format("{0}%", cw.RelativeHumidity);
+                    PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
+                    //RainTextBlock.Text                = string.Format("{0}{1}", cw.Rain, UnitModel.GetPrecipitationUnit(precipitationUnit));
+                    //ShowersTextBlock.Text             = string.Format("{0}{1}", cw.Showers, UnitModel.GetPrecipitationUnit(precipitationUnit));
+                    //SnowfallTextBlock.Text            = string.Format("{0}{1}", cw.Snowfall, UnitModel.GetPrecipitationUnit(precipitationUnit));
+                    CloudCoverTextBlock.Text          = string.Format("{0}%", cw.CloudCover);
+                    PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
+                    SurfacePressureTextBlock.Text     = string.Format("{0} hPa", cw.SurfacePressure);
+                    WindSpeedTextBlock.Text           = string.Format("{0} {1}", cw.WindSpeed, UnitModel.GetWindSpeedUnit(windSpeedUnit));
+                    WindDirectionTextBlock.Text       = string.Format("{0}°", cw.WindDirection);
+                    WindGustsTextBlock.Text           = string.Format("{0} {1}", cw.WindGusts, UnitModel.GetWindSpeedUnit(windSpeedUnit));
+                    NowScrollViewer.Visibility        = Visibility.Visible;
 
                     UpdateTile(cw);
                     progressIndicator.IsVisible = false;

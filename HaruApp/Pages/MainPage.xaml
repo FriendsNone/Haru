@@ -63,8 +63,8 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <!--<RowDefinition Height="Auto"/>-->
+                                <!--<RowDefinition Height="Auto"/>-->
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -89,72 +89,72 @@
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1"
+                            <!--<StackPanel Grid.Row="1"
                                         Grid.Column="0">
                                 <TextBlock Text="Rain"/>
                                 <TextBlock x:Name="RainTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
-                            </StackPanel>
+                            </StackPanel>-->
 
-                            <StackPanel Grid.Row="1"
+                            <!--<StackPanel Grid.Row="1"
                                         Grid.Column="2">
                                 <TextBlock Text="Showers"/>
                                 <TextBlock x:Name="ShowersTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
-                            </StackPanel>
+                            </StackPanel>-->
 
-                            <StackPanel Grid.Row="2"
+                            <!--<StackPanel Grid.Row="2"
                                         Grid.Column="0">
                                 <TextBlock Text="Snowfall"/>
                                 <TextBlock x:Name="SnowfallTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
-                            </StackPanel>
+                            </StackPanel>-->
 
-                            <StackPanel Grid.Row="2"
-                                        Grid.Column="2">
+                            <StackPanel Grid.Row="1"
+                                        Grid.Column="0">
                                 <TextBlock Text="Cloud cover"/>
                                 <TextBlock x:Name="CloudCoverTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="3"
-                                        Grid.Column="0">
+                            <StackPanel Grid.Row="1"
+                                        Grid.Column="2">
                                 <TextBlock Text="Pressure"/>
                                 <TextBlock x:Name="PressureTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="3"
-                                        Grid.Column="2">
+                            <StackPanel Grid.Row="2"
+                                        Grid.Column="0">
                                 <TextBlock Text="Surface pressure"/>
                                 <TextBlock x:Name="SurfacePressureTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="4"
-                                        Grid.Column="0">
+                            <StackPanel Grid.Row="2"
+                                        Grid.Column="2">
                                 <TextBlock Text="Wind speed"/>
                                 <TextBlock x:Name="WindSpeedTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="4"
-                                        Grid.Column="2">
+                            <StackPanel Grid.Row="3"
+                                        Grid.Column="0">
                                 <TextBlock Text="Wind direction"/>
                                 <TextBlock x:Name="WindDirectionTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            TextAlignment="Right"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="5"
-                                        Grid.Column="0">
+                            <StackPanel Grid.Row="3"
+                                        Grid.Column="2">
                                 <TextBlock Text="Wind gusts"/>
                                 <TextBlock x:Name="WindGustsTextBlock"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
@@ -205,10 +205,10 @@
                                             IconUri="/Assets/AppBar/appbar.refresh.rest.png"
                                             Text="refresh"
                                             Click="RefreshApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton x:Name="PinApplicationBarIconButton"
+            <!--<shell:ApplicationBarIconButton x:Name="PinApplicationBarIconButton"
                                             IconUri="/Assets/AppBar/appbar.pin.rest.png"
                                             Text="pin to start"
-                                            Click="PinApplicationBarIconButton_Click"/>
+                                            Click="PinApplicationBarIconButton_Click"/>-->
 
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem x:Name="SettingsApplicationBarMenuItem"

@@ -88,12 +88,12 @@ namespace HaruCore
         public bool IsDay { get; set; }
         [JsonProperty("precipitation")]
         public double Precipitation { get; set; }
-        [JsonProperty("rain")]
-        public double Rain { get; set; }
-        [JsonProperty("showers")]
-        public double Showers { get; set; }
-        [JsonProperty("snowfall")]
-        public double Snowfall { get; set; }
+        //[JsonProperty("rain")]
+        //public double Rain { get; set; }
+        //[JsonProperty("showers")]
+        //public double Showers { get; set; }
+        //[JsonProperty("snowfall")]
+        //public double Snowfall { get; set; }
         [JsonProperty("weather_code")]
         public int WeatherCode { get; set; }
         [JsonProperty("cloud_cover")]
