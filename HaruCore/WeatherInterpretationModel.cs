@@ -39,6 +39,38 @@ namespace HaruCore
             { 99, "thunderstorm with hail" }
         };
 
+        private static readonly Dictionary<int, string> WeatherIcons = new Dictionary<int, string>
+        {
+            { 0, "/Assets/WeatherIcons/day/clear-day.png" },
+            { 1, "/Assets/WeatherIcons/cloudy.png" },
+            { 2, "/Assets/WeatherIcons/cloudy.png" },
+            { 3, "/Assets/WeatherIcons/overcast.png" },
+            { 45, "/Assets/WeatherIcons/fog.png" },
+            { 48, "/Assets/WeatherIcons/fog.png" },
+            { 51, "/Assets/WeatherIcons/drizzle.png" },
+            { 53, "/Assets/WeatherIcons/drizzle.png" },
+            { 55, "/Assets/WeatherIcons/drizzle.png" },
+            { 56, "/Assets/WeatherIcons/sleet.png" },
+            { 57, "/Assets/WeatherIcons/sleet.png" },
+            { 61, "/Assets/WeatherIcons/rain.png" },
+            { 63, "/Assets/WeatherIcons/rain.png" },
+            { 65, "/Assets/WeatherIcons/rain.png" },
+            { 66, "/Assets/WeatherIcons/sleet.png" },
+            { 67, "/Assets/WeatherIcons/sleet.png" },
+            { 71, "/Assets/WeatherIcons/snow.png" },
+            { 73, "/Assets/WeatherIcons/snow.png" },
+            { 75, "/Assets/WeatherIcons/snow.png" },
+            { 77, "/Assets/WeatherIcons/snowflake.png" },
+            { 80, "/Assets/WeatherIcons/rain.png" },
+            { 81, "/Assets/WeatherIcons/rain.png" },
+            { 82, "/Assets/WeatherIcons/rain.png" },
+            { 85, "/Assets/WeatherIcons/snow.png" },
+            { 86, "/Assets/WeatherIcons/snow.png" },
+            { 95, "/Assets/WeatherIcons/thunderstorms.png" },
+            { 96, "/Assets/WeatherIcons/thunderstorms-rain.png" },
+            { 99, "/Assets/WeatherIcons/thunderstorms.png" }
+        };        
+
         private static readonly Dictionary<int, string> WeatherIconsDay = new Dictionary<int, string>
         {
             { 0, "/Assets/WeatherIcons/day/clear-day.png" },
@@ -103,6 +135,15 @@ namespace HaruCore
             { 99, "/Assets/WeatherIcons/night/thunderstorms-night.png" }
         };
 
+        public static string GetWeatherDescription(int weatherCode)
+        {
+            string description;
+            if (WeatherDescriptions.TryGetValue(weatherCode, out description))
+                return description;
+
+            return "unknown";
+        }
+
         public static string GetWeatherDescription(int weatherCode, bool isDay)
         {
             if (weatherCode == 0) return isDay ? "sunny" : "clear";
@@ -113,6 +154,16 @@ namespace HaruCore
                 return description;
 
             return "unknown";
+        }
+
+        public static string GetWeatherIcon(int weatherCode)
+        {
+            Dictionary<int, string> icons = WeatherIcons;
+            string iconPath;
+            if (icons.TryGetValue(weatherCode, out iconPath))
+                return iconPath;
+
+            return "/Assets/WeatherIcons/not-available.png";
         }
 
         public static string GetWeatherIcon(int weatherCode, bool isDay)

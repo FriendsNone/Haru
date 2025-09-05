@@ -166,11 +166,69 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="next 12 hours">
-                <Grid/>
+                <Grid>
+                    <ListBox x:Name="HourlyListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="24"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Column="0" Source="{Binding WeatherIcon}"/> 
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="{Binding Temperature2m}"
+                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}"/>
+                                        <TextBlock Text="{Binding WeatherDescription}"
+                                                Foreground="{StaticResource PhoneAccentBrush}"
+                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                        <TextBlock Text="{Binding Time}"
+                                                Foreground="{StaticResource PhoneSubtleBrush}"
+                                                FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
 
             <controls:PivotItem Header="next 7 days">
-                <Grid/>
+                <Grid>
+                    <ListBox x:Name="DailyListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="24"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Grid.Column="0" Source="{Binding WeatherIcon}"/> 
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="{Binding Temperature2mMax}"
+                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}"/>
+                                        <TextBlock Text="{Binding WeatherDescription}"
+                                                Foreground="{StaticResource PhoneAccentBrush}"
+                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                        <TextBlock Text="{Binding Time}"
+                                                Foreground="{StaticResource PhoneSubtleBrush}"
+                                                FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
 

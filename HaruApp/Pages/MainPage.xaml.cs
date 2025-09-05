@@ -120,7 +120,7 @@ namespace HaruApp
                     return;
                 }
 
-                CurrentWeather cw = forecast.CurrentWeather;
+                CurrentWeather cw = forecast.Current;
                 if (cw != null)
                 {
                     WeatherCodeImage.Source           = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
@@ -139,10 +139,18 @@ namespace HaruApp
                     WindDirectionTextBlock.Text       = string.Format("{0}°", cw.WindDirection);
                     WindGustsTextBlock.Text           = string.Format("{0} {1}", cw.WindGusts, UnitModel.GetWindSpeedUnit(windSpeedUnit));
                     NowScrollViewer.Visibility        = Visibility.Visible;
-
                     UpdateTile(cw);
-                    progressIndicator.IsVisible = false;
                 }
+
+                var hr = forecast.Hourly.ToRecords();
+                if (hr != null && hr.Count > 0)
+                    HourlyListBox.ItemsSource = hr;
+
+                var dr = forecast.Daily.ToRecords();
+                if (dr != null && dr.Count > 0)
+                    DailyListBox.ItemsSource = dr;
+
+                progressIndicator.IsVisible = false;
             });
         }
 
