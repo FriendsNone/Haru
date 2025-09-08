@@ -140,6 +140,7 @@
     <Content Include="Assets\WeatherIcons\haze-night.png" />
     <Content Include="Assets\WeatherIcons\haze.png" />
     <Content Include="Assets\WeatherIcons\mist.png" />
+    <Content Include="Assets\WeatherIcons\not-available.png" />
     <Content Include="Assets\WeatherIcons\overcast-day.png" />
     <Content Include="Assets\WeatherIcons\overcast-night.png" />
     <Content Include="Assets\WeatherIcons\overcast.png" />

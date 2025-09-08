@@ -85,11 +85,6 @@ namespace HaruApp
             FetchForecast();
         }
 
-        //private void PinApplicationBarIconButton_Click(object sender, EventArgs e)
-        //{
-        //    // TODO: Implement pin to start functionality
-        //}
-
         private void SettingsApplicationBarMenuItem_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/SettingsPage.xaml", UriKind.Relative));
@@ -129,9 +124,6 @@ namespace HaruApp
                     WeatherCodeTextBlock.Text         = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
                     RelativeHumidityTextBlock.Text    = string.Format("{0}%", cw.RelativeHumidity);
                     PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
-                    //RainTextBlock.Text                = string.Format("{0}{1}", cw.Rain, UnitModel.GetPrecipitationUnit(precipitationUnit));
-                    //ShowersTextBlock.Text             = string.Format("{0}{1}", cw.Showers, UnitModel.GetPrecipitationUnit(precipitationUnit));
-                    //SnowfallTextBlock.Text            = string.Format("{0}{1}", cw.Snowfall, UnitModel.GetPrecipitationUnit(precipitationUnit));
                     CloudCoverTextBlock.Text          = string.Format("{0}%", cw.CloudCover);
                     PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
                     SurfacePressureTextBlock.Text     = string.Format("{0} hPa", cw.SurfacePressure);
