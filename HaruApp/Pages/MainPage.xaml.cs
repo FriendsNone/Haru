@@ -119,8 +119,8 @@ namespace HaruApp
                 if (cw != null)
                 {
                     WeatherCodeImage.Source           = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
-                    TemperatureTextBlock.Text         = string.Format("{0}{1}", cw.Temperature, UnitModel.GetTemperatureUnit(temperatureUnit));
-                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}{1}", cw.ApparentTemperature, UnitModel.GetTemperatureUnit(temperatureUnit));
+                    TemperatureTextBlock.Text         = string.Format("{0}{1}", Math.Ceiling(cw.Temperature), UnitModel.GetTemperatureUnit(temperatureUnit));
+                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}{1}", Math.Ceiling(cw.ApparentTemperature), UnitModel.GetTemperatureUnit(temperatureUnit));
                     WeatherCodeTextBlock.Text         = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
                     RelativeHumidityTextBlock.Text    = string.Format("{0}%", cw.RelativeHumidity);
                     PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -19,25 +20,25 @@ namespace HaruCore
 
         [JsonProperty("latitude")]
         public double Latitude { get; set; }
-        
+
         [JsonProperty("longitude")]
         public double Longitude { get; set; }
-        
+
         [JsonProperty("country_code")]
         public string CountryCode { get; set; }
-        
+
         [JsonProperty("country")]
         public string Country { get; set; }
-        
+
         [JsonProperty("admin1")]
         public string Admin1 { get; set; }
-        
+
         [JsonProperty("admin2")]
         public string Admin2 { get; set; }
-        
+
         [JsonProperty("admin3")]
         public string Admin3 { get; set; }
-        
+
         [JsonProperty("admin4")]
         public string Admin4 { get; set; }
 
@@ -65,12 +66,6 @@ namespace HaruCore
 
     public class ForecastResponse
     {
-        //[JsonProperty("latitude")]
-        //public double Latitude { get; set; }
-
-        //[JsonProperty("longitude")]
-        //public double Longitude { get; set; }
-
         [JsonProperty("current")]
         public CurrentWeather Current { get; set; }
 
@@ -85,69 +80,65 @@ namespace HaruCore
     {
         [JsonProperty("time")]
         public string Time { get; set; }
-        
+
         [JsonProperty("interval")]
         public int Interval { get; set; }
-        
+
         [JsonProperty("temperature_2m")]
         public double Temperature { get; set; }
-        
+
         [JsonProperty("relative_humidity_2m")]
         public double RelativeHumidity { get; set; }
-        
+
         [JsonProperty("apparent_temperature")]
         public double ApparentTemperature { get; set; }
-        
+
         [JsonProperty("is_day")]
         public bool IsDay { get; set; }
-        
+
         [JsonProperty("precipitation")]
         public double Precipitation { get; set; }
-        
+
         //[JsonProperty("rain")]
         //public double Rain { get; set; }
-        
+
         //[JsonProperty("showers")]
         //public double Showers { get; set; }
-        
+
         //[JsonProperty("snowfall")]
         //public double Snowfall { get; set; }
-        
+
         [JsonProperty("weather_code")]
         public int WeatherCode { get; set; }
-        
+
         [JsonProperty("cloud_cover")]
         public double CloudCover { get; set; }
-        
+
         [JsonProperty("pressure_msl")]
         public double Pressure { get; set; }
-        
+
         [JsonProperty("surface_pressure")]
         public double SurfacePressure { get; set; }
-        
+
         [JsonProperty("wind_speed_10m")]
         public double WindSpeed { get; set; }
-        
+
         [JsonProperty("wind_direction_10m")]
         public double WindDirection { get; set; }
-        
+
         [JsonProperty("wind_gusts_10m")]
         public double WindGusts { get; set; }
     }
 
     public class HourlyRecord
     {
-        public DateTime Time { get; set; }
-        public double Temperature2m { get; set; }
+        public string Time { get; set; }
+        public int Temperature2m { get; set; }
         public double RelativeHumidity2m { get; set; }
         public double DewPoint2m { get; set; }
-        public double ApparentTemperature { get; set; }
+        public int ApparentTemperature { get; set; }
         public int PrecipitationProbability { get; set; }
         public double Precipitation { get; set; }
-        public double Rain { get; set; }
-        public double Showers { get; set; }
-        public double Snowfall { get; set; }
-        public double SnowDepth { get; set; }
         public string WeatherIcon { get; set; }
         public string WeatherDescription { get; set; }
         public double PressureMsl { get; set; }
@@ -169,18 +160,6 @@ namespace HaruCore
         public int WindDirection120m { get; set; }
         public int WindDirection180m { get; set; }
         public double WindGusts10m { get; set; }
-        public double Temperature80m { get; set; }
-        public double Temperature120m { get; set; }
-        public double Temperature180m { get; set; }
-        public double SoilTemperature0cm { get; set; }
-        public double SoilTemperature6cm { get; set; }
-        public double SoilTemperature18cm { get; set; }
-        public double SoilTemperature54cm { get; set; }
-        public double SoilMoisture0to1cm { get; set; }
-        public double SoilMoisture1to3cm { get; set; }
-        public double SoilMoisture3to9cm { get; set; }
-        public double SoilMoisture9to27cm { get; set; }
-        public double SoilMoisture27to81cm { get; set; }
     }
 
     public class HourlyWeather
@@ -324,17 +303,13 @@ namespace HaruCore
             {
                 records.Add(new HourlyRecord
                 {
-                    Time = DateTime.Parse(Time[i]),
-                    Temperature2m = Temperature2m.ElementAtOrDefault(i),
+                    Time = DateTime.Parse(Time[i]).ToString("t", CultureInfo.CurrentCulture),
+                    Temperature2m = (int)Math.Ceiling(Temperature2m.ElementAtOrDefault(i)),
                     RelativeHumidity2m = RelativeHumidity2m.ElementAtOrDefault(i),
                     DewPoint2m = DewPoint2m.ElementAtOrDefault(i),
-                    ApparentTemperature = ApparentTemperature.ElementAtOrDefault(i),
+                    ApparentTemperature = (int)Math.Ceiling(ApparentTemperature.ElementAtOrDefault(i)),
                     PrecipitationProbability = PrecipitationProbability.ElementAtOrDefault(i),
                     Precipitation = Precipitation.ElementAtOrDefault(i),
-                    Rain = Rain.ElementAtOrDefault(i),
-                    Showers = Showers.ElementAtOrDefault(i),
-                    Snowfall = Snowfall.ElementAtOrDefault(i),
-                    SnowDepth = SnowDepth.ElementAtOrDefault(i),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
                     PressureMsl = PressureMsl.ElementAtOrDefault(i),
@@ -356,18 +331,6 @@ namespace HaruCore
                     WindDirection120m = WindDirection120m.ElementAtOrDefault(i),
                     WindDirection180m = WindDirection180m.ElementAtOrDefault(i),
                     WindGusts10m = WindGusts10m.ElementAtOrDefault(i),
-                    Temperature80m = Temperature80m.ElementAtOrDefault(i),
-                    Temperature120m = Temperature120m.ElementAtOrDefault(i),
-                    Temperature180m = Temperature180m.ElementAtOrDefault(i),
-                    SoilTemperature0cm = SoilTemperature0cm.ElementAtOrDefault(i),
-                    SoilTemperature6cm = SoilTemperature6cm.ElementAtOrDefault(i),
-                    SoilTemperature18cm = SoilTemperature18cm.ElementAtOrDefault(i),
-                    SoilTemperature54cm = SoilTemperature54cm.ElementAtOrDefault(i),
-                    SoilMoisture0to1cm = SoilMoisture0to1cm.ElementAtOrDefault(i),
-                    SoilMoisture1to3cm = SoilMoisture1to3cm.ElementAtOrDefault(i),
-                    SoilMoisture3to9cm = SoilMoisture3to9cm.ElementAtOrDefault(i),
-                    SoilMoisture9to27cm = SoilMoisture9to27cm.ElementAtOrDefault(i),
-                    SoilMoisture27to81cm = SoilMoisture27to81cm.ElementAtOrDefault(i),
                 });
             }
             return records;
@@ -376,13 +339,13 @@ namespace HaruCore
 
     public class DailyRecord
     {
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
         public string WeatherIcon { get; set; }
         public string WeatherDescription { get; set; }
-        public double Temperature2mMax { get; set; }
-        public double Temperature2mMin { get; set; }
-        public double ApparentTemperatureMax { get; set; }
-        public double ApparentTemperatureMin { get; set; }
+        public int Temperature2mMax { get; set; }
+        public int Temperature2mMin { get; set; }
+        public int ApparentTemperatureMax { get; set; }
+        public int ApparentTemperatureMin { get; set; }
         public DateTime Sunrise { get; set; }
         public DateTime Sunset { get; set; }
         public double DaylightDuration { get; set; }
@@ -480,13 +443,13 @@ namespace HaruCore
             {
                 records.Add(new DailyRecord
                 {
-                    Time = DateTime.Parse(Time[i]),
+                    Time = DateTime.Parse(Time[i]).ToString("d dddd", CultureInfo.CurrentCulture),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i)),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i)),
-                    Temperature2mMax = Temperature2mMax.ElementAtOrDefault(i),
-                    Temperature2mMin = Temperature2mMin.ElementAtOrDefault(i),
-                    ApparentTemperatureMax = ApparentTemperatureMax.ElementAtOrDefault(i),
-                    ApparentTemperatureMin = ApparentTemperatureMin.ElementAtOrDefault(i),
+                    Temperature2mMax = (int)Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)),
+                    Temperature2mMin = (int)Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i)),
+                    ApparentTemperatureMax = (int)Math.Ceiling(ApparentTemperatureMax.ElementAtOrDefault(i)),
+                    ApparentTemperatureMin = (int)Math.Ceiling(ApparentTemperatureMin.ElementAtOrDefault(i)),
                     Sunrise = DateTime.Parse(Sunrise.ElementAtOrDefault(i)),
                     Sunset = DateTime.Parse(Sunset.ElementAtOrDefault(i)),
                     DaylightDuration = DaylightDuration.ElementAtOrDefault(i),
