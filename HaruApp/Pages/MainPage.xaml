@@ -40,6 +40,8 @@
 
                         <Image x:Name="WeatherCodeImage"
                                Grid.Column="0"
+                               Width="173"
+                               Height="173"
                                toolkit:SlideInEffect.LineIndex="1"/>
 
                         <StackPanel Grid.Column="2">
