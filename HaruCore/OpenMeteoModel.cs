@@ -81,9 +81,6 @@ namespace HaruCore
         [JsonProperty("time")]
         public string Time { get; set; }
 
-        [JsonProperty("interval")]
-        public int Interval { get; set; }
-
         [JsonProperty("temperature_2m")]
         public double Temperature { get; set; }
 
@@ -99,35 +96,17 @@ namespace HaruCore
         [JsonProperty("precipitation")]
         public double Precipitation { get; set; }
 
-        //[JsonProperty("rain")]
-        //public double Rain { get; set; }
-
-        //[JsonProperty("showers")]
-        //public double Showers { get; set; }
-
-        //[JsonProperty("snowfall")]
-        //public double Snowfall { get; set; }
-
         [JsonProperty("weather_code")]
         public int WeatherCode { get; set; }
 
-        [JsonProperty("cloud_cover")]
-        public double CloudCover { get; set; }
-
         [JsonProperty("pressure_msl")]
         public double Pressure { get; set; }
-
-        [JsonProperty("surface_pressure")]
-        public double SurfacePressure { get; set; }
 
         [JsonProperty("wind_speed_10m")]
         public double WindSpeed { get; set; }
 
         [JsonProperty("wind_direction_10m")]
         public double WindDirection { get; set; }
-
-        [JsonProperty("wind_gusts_10m")]
-        public double WindGusts { get; set; }
     }
 
     public class HourlyRecord

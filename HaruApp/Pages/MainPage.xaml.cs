@@ -120,16 +120,13 @@ namespace HaruApp
                 {
                     WeatherCodeImage.Source           = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
                     TemperatureTextBlock.Text         = string.Format("{0}{1}", Math.Ceiling(cw.Temperature), UnitModel.GetTemperatureUnit(temperatureUnit));
-                    ApparentTemperatureTextBlock.Text = string.Format("feels like {0}{1}", Math.Ceiling(cw.ApparentTemperature), UnitModel.GetTemperatureUnit(temperatureUnit));
+                    ApparentTemperatureTextBlock.Text = string.Format("{0}{1}", Math.Ceiling(cw.ApparentTemperature), UnitModel.GetTemperatureUnit(temperatureUnit));
                     WeatherCodeTextBlock.Text         = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
                     RelativeHumidityTextBlock.Text    = string.Format("{0}%", cw.RelativeHumidity);
                     PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
-                    CloudCoverTextBlock.Text          = string.Format("{0}%", cw.CloudCover);
                     PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
-                    SurfacePressureTextBlock.Text     = string.Format("{0} hPa", cw.SurfacePressure);
                     WindSpeedTextBlock.Text           = string.Format("{0} {1}", cw.WindSpeed, UnitModel.GetWindSpeedUnit(windSpeedUnit));
                     WindDirectionTextBlock.Text       = string.Format("{0}°", cw.WindDirection);
-                    WindGustsTextBlock.Text           = string.Format("{0} {1}", cw.WindGusts, UnitModel.GetWindSpeedUnit(windSpeedUnit));
                     NowScrollViewer.Visibility        = Visibility.Visible;
                     UpdateTile(cw);
                 }
