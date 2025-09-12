@@ -444,8 +444,8 @@ namespace HaruCore
                 records.Add(new DailyRecord
                 {
                     Time = DateTime.Parse(Time[i]).ToString("d dddd", CultureInfo.CurrentCulture),
-                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i)),
-                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i)),
+                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), true),
+                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), true),
                     Temperature2mMax = (int)Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)),
                     Temperature2mMin = (int)Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i)),
                     ApparentTemperatureMax = (int)Math.Ceiling(ApparentTemperatureMax.ElementAtOrDefault(i)),

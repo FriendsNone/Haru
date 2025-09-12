@@ -125,25 +125,23 @@
     </Content>
     <Content Include="Assets\guide.light.png" />
     <Content Include="Assets\WeatherIcons\clear-day.png" />
+    <Content Include="Assets\WeatherIcons\clear-night.png" />
     <Content Include="Assets\WeatherIcons\cloudy.png" />
-    <Content Include="Assets\WeatherIcons\drizzle.png" />
-    <Content Include="Assets\WeatherIcons\extreme-drizzle.png" />
-    <Content Include="Assets\WeatherIcons\extreme-rain.png" />
-    <Content Include="Assets\WeatherIcons\extreme-snow.png" />
-    <Content Include="Assets\WeatherIcons\extreme.png" />
-    <Content Include="Assets\WeatherIcons\fog.png" />
-    <Content Include="Assets\WeatherIcons\overcast-drizzle.png" />
-    <Content Include="Assets\WeatherIcons\overcast-fog.png" />
-    <Content Include="Assets\WeatherIcons\overcast-rain.png" />
-    <Content Include="Assets\WeatherIcons\overcast-sleet.png" />
-    <Content Include="Assets\WeatherIcons\overcast-snow.png" />
-    <Content Include="Assets\WeatherIcons\overcast.png" />
+    <Content Include="Assets\WeatherIcons\mist.png" />
+    <Content Include="Assets\WeatherIcons\not-available.png" />
     <Content Include="Assets\WeatherIcons\rain.png" />
     <Content Include="Assets\WeatherIcons\sleet.png" />
     <Content Include="Assets\WeatherIcons\snow.png" />
-    <Content Include="Assets\WeatherIcons\snowflake.png" />
-    <Content Include="Assets\WeatherIcons\thunderstorms-extreme-rain.png" />
-    <Content Include="Assets\WeatherIcons\thunderstorms-extreme.png" />
+    <Content Include="Assets\WeatherIcons\thunderstorms.png" />
+    <Content Include="Assets\WeatherIcons\Tile\clear-day.png" />
+    <Content Include="Assets\WeatherIcons\Tile\clear-night.png" />
+    <Content Include="Assets\WeatherIcons\Tile\cloudy.png" />
+    <Content Include="Assets\WeatherIcons\Tile\mist.png" />
+    <Content Include="Assets\WeatherIcons\Tile\not-available.png" />
+    <Content Include="Assets\WeatherIcons\Tile\rain.png" />
+    <Content Include="Assets\WeatherIcons\Tile\sleet.png" />
+    <Content Include="Assets\WeatherIcons\Tile\snow.png" />
+    <Content Include="Assets\WeatherIcons\Tile\thunderstorms.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -163,6 +161,7 @@
   <ItemGroup>
     <Content Include="Assets\guide.dark.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -156,7 +156,7 @@ namespace HaruApp
                 StandardTileData data = new StandardTileData()
                 {
                     Title = location,
-                    BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
+                    BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherTileIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
                     BackTitle = string.Format("{0}", DateTime.Now.ToString("t")),
                     BackContent = string.Format("{0}°{1}\n{2}",
                         cw.Temperature,
