@@ -126,7 +126,8 @@ namespace HaruApp
                     PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
                     PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
                     WindSpeedTextBlock.Text           = string.Format("{0} {1}", cw.WindSpeed, UnitModel.GetWindSpeedUnit(windSpeedUnit));
-                    WindDirectionTextBlock.Text       = string.Format("{0}°", cw.WindDirection);
+                    WindDirectionTextBlock.Text       = UnitModel.InterpretDirection(cw.WindDirection);
+                    TimeTextBlock.Text                = string.Format("Forecast as of {0}", UnitModel.InterpretTimeDifference(cw.Time));
                     NowScrollViewer.Visibility        = Visibility.Visible;
                     UpdateTile(cw);
                 }
@@ -154,7 +155,7 @@ namespace HaruApp
                 {
                     Title = location,
                     BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherTileIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
-                    BackTitle = string.Format("{0}", DateTime.Now.ToString("t")),
+                    BackTitle = DateTime.Now.ToString("t"),
                     BackContent = string.Format("{0}°{1}\n{2}",
                         cw.Temperature,
                         (string)settings["TemperatureUnit"] == "celsius" ? "C" : "F",

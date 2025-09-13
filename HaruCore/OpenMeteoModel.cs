@@ -280,9 +280,11 @@ namespace HaruCore
             var records = new List<HourlyRecord>();
             for (int i = 0; i < Time.Count; i++)
             {
+                DateTime time = DateTime.Parse(Time[i], null, DateTimeStyles.RoundtripKind);
+
                 records.Add(new HourlyRecord
                 {
-                    Time = DateTime.Parse(Time[i]).ToString("t", CultureInfo.CurrentCulture),
+                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)),
                     Temperature2m = (int)Math.Ceiling(Temperature2m.ElementAtOrDefault(i)),
                     RelativeHumidity2m = RelativeHumidity2m.ElementAtOrDefault(i),
                     DewPoint2m = DewPoint2m.ElementAtOrDefault(i),
@@ -422,7 +424,7 @@ namespace HaruCore
             {
                 records.Add(new DailyRecord
                 {
-                    Time = DateTime.Parse(Time[i]).ToString("d dddd", CultureInfo.CurrentCulture),
+                    Time = DateTime.Parse(Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), true),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), true),
                     Temperature2mMax = (int)Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)),
