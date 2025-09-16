@@ -114,31 +114,11 @@ namespace HaruCore
         public string Time { get; set; }
         public int Temperature2m { get; set; }
         public double RelativeHumidity2m { get; set; }
-        public double DewPoint2m { get; set; }
-        public int ApparentTemperature { get; set; }
         public int PrecipitationProbability { get; set; }
-        public double Precipitation { get; set; }
         public string WeatherIcon { get; set; }
         public string WeatherDescription { get; set; }
-        public double PressureMsl { get; set; }
-        public double SurfacePressure { get; set; }
-        public int CloudCover { get; set; }
-        public int CloudCoverLow { get; set; }
-        public int CloudCoverMid { get; set; }
-        public int CloudCoverHigh { get; set; }
-        public double Visibility { get; set; }
-        public double Evapotranspiration { get; set; }
-        public double Et0FaoEvapotranspiration { get; set; }
-        public double VapourPressureDeficit { get; set; }
         public double WindSpeed10m { get; set; }
-        public double WindSpeed80m { get; set; }
-        public double WindSpeed120m { get; set; }
-        public double WindSpeed180m { get; set; }
         public int WindDirection10m { get; set; }
-        public int WindDirection80m { get; set; }
-        public int WindDirection120m { get; set; }
-        public int WindDirection180m { get; set; }
-        public double WindGusts10m { get; set; }
     }
 
     public class HourlyWeather
@@ -152,125 +132,17 @@ namespace HaruCore
         [JsonProperty("relative_humidity_2m")]
         public List<double> RelativeHumidity2m { get; set; }
 
-        [JsonProperty("dew_point_2m")]
-        public List<double> DewPoint2m { get; set; }
-
-        [JsonProperty("apparent_temperature")]
-        public List<double> ApparentTemperature { get; set; }
-
         [JsonProperty("precipitation_probability")]
         public List<int> PrecipitationProbability { get; set; }
-
-        [JsonProperty("precipitation")]
-        public List<double> Precipitation { get; set; }
-
-        [JsonProperty("rain")]
-        public List<double> Rain { get; set; }
-
-        [JsonProperty("showers")]
-        public List<double> Showers { get; set; }
-
-        [JsonProperty("snowfall")]
-        public List<double> Snowfall { get; set; }
-
-        [JsonProperty("snow_depth")]
-        public List<double> SnowDepth { get; set; }
 
         [JsonProperty("weather_code")]
         public List<int> WeatherCode { get; set; }
 
-        [JsonProperty("pressure_msl")]
-        public List<double> PressureMsl { get; set; }
-
-        [JsonProperty("surface_pressure")]
-        public List<double> SurfacePressure { get; set; }
-
-        [JsonProperty("cloud_cover")]
-        public List<int> CloudCover { get; set; }
-
-        [JsonProperty("cloud_cover_low")]
-        public List<int> CloudCoverLow { get; set; }
-
-        [JsonProperty("cloud_cover_mid")]
-        public List<int> CloudCoverMid { get; set; }
-
-        [JsonProperty("cloud_cover_high")]
-        public List<int> CloudCoverHigh { get; set; }
-
-        [JsonProperty("visibility")]
-        public List<double> Visibility { get; set; }
-
-        [JsonProperty("evapotranspiration")]
-        public List<double> Evapotranspiration { get; set; }
-
-        [JsonProperty("et0_fao_evapotranspiration")]
-        public List<double> Et0FaoEvapotranspiration { get; set; }
-
-        [JsonProperty("vapour_pressure_deficit")]
-        public List<double> VapourPressureDeficit { get; set; }
-
         [JsonProperty("wind_speed_10m")]
         public List<double> WindSpeed10m { get; set; }
 
-        [JsonProperty("wind_speed_80m")]
-        public List<double> WindSpeed80m { get; set; }
-
-        [JsonProperty("wind_speed_120m")]
-        public List<double> WindSpeed120m { get; set; }
-
-        [JsonProperty("wind_speed_180m")]
-        public List<double> WindSpeed180m { get; set; }
-
         [JsonProperty("wind_direction_10m")]
         public List<int> WindDirection10m { get; set; }
-
-        [JsonProperty("wind_direction_80m")]
-        public List<int> WindDirection80m { get; set; }
-
-        [JsonProperty("wind_direction_120m")]
-        public List<int> WindDirection120m { get; set; }
-
-        [JsonProperty("wind_direction_180m")]
-        public List<int> WindDirection180m { get; set; }
-
-        [JsonProperty("wind_gusts_10m")]
-        public List<double> WindGusts10m { get; set; }
-
-        [JsonProperty("temperature_80m")]
-        public List<double> Temperature80m { get; set; }
-
-        [JsonProperty("temperature_120m")]
-        public List<double> Temperature120m { get; set; }
-
-        [JsonProperty("temperature_180m")]
-        public List<double> Temperature180m { get; set; }
-
-        [JsonProperty("soil_temperature_0cm")]
-        public List<double> SoilTemperature0cm { get; set; }
-
-        [JsonProperty("soil_temperature_6cm")]
-        public List<double> SoilTemperature6cm { get; set; }
-
-        [JsonProperty("soil_temperature_18cm")]
-        public List<double> SoilTemperature18cm { get; set; }
-
-        [JsonProperty("soil_temperature_54cm")]
-        public List<double> SoilTemperature54cm { get; set; }
-
-        [JsonProperty("soil_moisture_0_to_1cm")]
-        public List<double> SoilMoisture0to1cm { get; set; }
-
-        [JsonProperty("soil_moisture_1_to_3cm")]
-        public List<double> SoilMoisture1to3cm { get; set; }
-
-        [JsonProperty("soil_moisture_3_to_9cm")]
-        public List<double> SoilMoisture3to9cm { get; set; }
-
-        [JsonProperty("soil_moisture_9_to_27cm")]
-        public List<double> SoilMoisture9to27cm { get; set; }
-
-        [JsonProperty("soil_moisture_27_to_81cm")]
-        public List<double> SoilMoisture27to81cm { get; set; }
 
         [JsonProperty("is_day")]
         public List<bool> IsDay { get; set; }
@@ -287,31 +159,11 @@ namespace HaruCore
                     Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)),
                     Temperature2m = (int)Math.Ceiling(Temperature2m.ElementAtOrDefault(i)),
                     RelativeHumidity2m = RelativeHumidity2m.ElementAtOrDefault(i),
-                    DewPoint2m = DewPoint2m.ElementAtOrDefault(i),
-                    ApparentTemperature = (int)Math.Ceiling(ApparentTemperature.ElementAtOrDefault(i)),
                     PrecipitationProbability = PrecipitationProbability.ElementAtOrDefault(i),
-                    Precipitation = Precipitation.ElementAtOrDefault(i),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
-                    PressureMsl = PressureMsl.ElementAtOrDefault(i),
-                    SurfacePressure = SurfacePressure.ElementAtOrDefault(i),
-                    CloudCover = CloudCover.ElementAtOrDefault(i),
-                    CloudCoverLow = CloudCoverLow.ElementAtOrDefault(i),
-                    CloudCoverMid = CloudCoverMid.ElementAtOrDefault(i),
-                    CloudCoverHigh = CloudCoverHigh.ElementAtOrDefault(i),
-                    Visibility = Visibility.ElementAtOrDefault(i),
-                    Evapotranspiration = Evapotranspiration.ElementAtOrDefault(i),
-                    Et0FaoEvapotranspiration = Et0FaoEvapotranspiration.ElementAtOrDefault(i),
-                    VapourPressureDeficit = VapourPressureDeficit.ElementAtOrDefault(i),
                     WindSpeed10m = WindSpeed10m.ElementAtOrDefault(i),
-                    WindSpeed80m = WindSpeed80m.ElementAtOrDefault(i),
-                    WindSpeed120m = WindSpeed120m.ElementAtOrDefault(i),
-                    WindSpeed180m = WindSpeed180m.ElementAtOrDefault(i),
                     WindDirection10m = WindDirection10m.ElementAtOrDefault(i),
-                    WindDirection80m = WindDirection80m.ElementAtOrDefault(i),
-                    WindDirection120m = WindDirection120m.ElementAtOrDefault(i),
-                    WindDirection180m = WindDirection180m.ElementAtOrDefault(i),
-                    WindGusts10m = WindGusts10m.ElementAtOrDefault(i),
                 });
             }
             return records;
