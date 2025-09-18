@@ -112,13 +112,12 @@ namespace HaruCore
     public class HourlyRecord
     {
         public string Time { get; set; }
-        public int Temperature2m { get; set; }
-        public double RelativeHumidity2m { get; set; }
-        public int PrecipitationProbability { get; set; }
         public string WeatherIcon { get; set; }
         public string WeatherDescription { get; set; }
-        public double WindSpeed10m { get; set; }
-        public int WindDirection10m { get; set; }
+        public string Temperature { get; set; }
+        public string Humidity { get; set; }
+        public string Precipitation { get; set; }
+        public string Wind { get; set; }
     }
 
     public class HourlyWeather
@@ -156,14 +155,13 @@ namespace HaruCore
 
                 records.Add(new HourlyRecord
                 {
-                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)),
-                    Temperature2m = (int)Math.Ceiling(Temperature2m.ElementAtOrDefault(i)),
-                    RelativeHumidity2m = RelativeHumidity2m.ElementAtOrDefault(i),
-                    PrecipitationProbability = PrecipitationProbability.ElementAtOrDefault(i),
+                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
-                    WindSpeed10m = WindSpeed10m.ElementAtOrDefault(i),
-                    WindDirection10m = WindDirection10m.ElementAtOrDefault(i),
+                    Temperature = string.Format("{0}°", Math.Ceiling(Temperature2m.ElementAtOrDefault(i))),
+                    Humidity = string.Format("{0}%", RelativeHumidity2m.ElementAtOrDefault(i)),
+                    Precipitation = string.Format("{0}%", PrecipitationProbability.ElementAtOrDefault(i)),
+                    Wind = string.Format("{0} {1}", WindSpeed10m.ElementAtOrDefault(i), UnitModel.InterpretDirection(WindDirection10m.ElementAtOrDefault(i), true)),
                 });
             }
             return records;
@@ -175,17 +173,10 @@ namespace HaruCore
         public string Time { get; set; }
         public string WeatherIcon { get; set; }
         public string WeatherDescription { get; set; }
-        public int Temperature2mMax { get; set; }
-        public int Temperature2mMin { get; set; }
-        public double PrecipitationSum { get; set; }
-        public int PrecipitationProbabilityMax { get; set; }
-        public double WindSpeed10mMax { get; set; }
-        public int WindDirection10mDominant { get; set; }
-        public int PrecipitationProbabilityMean { get; set; }
-        public int PrecipitationProbabilityMin { get; set; }
-        public int RelativeHumidity2mMean { get; set; }
-        public int RelativeHumidity2mMax { get; set; }
-        public int RelativeHumidity2mMin { get; set; }
+        public string Temperature { get; set; }
+        public string Humidity { get; set; }
+        public string Precipitation { get; set; }
+        public string Wind { get; set; }
     }
 
     public class DailyWeather
@@ -202,9 +193,6 @@ namespace HaruCore
         [JsonProperty("temperature_2m_min")]
         public List<double> Temperature2mMin { get; set; }
 
-        [JsonProperty("precipitation_sum")]
-        public List<double> PrecipitationSum { get; set; }
-
         [JsonProperty("precipitation_probability_max")]
         public List<int> PrecipitationProbabilityMax { get; set; }
 
@@ -212,22 +200,10 @@ namespace HaruCore
         public List<double> WindSpeed10mMax { get; set; }
 
         [JsonProperty("wind_direction_10m_dominant")]
-        public List<int> WindDirection10mDominant { get; set; }
-
-        [JsonProperty("precipitation_probability_mean")]
-        public List<int> PrecipitationProbabilityMean { get; set; }
-
-        [JsonProperty("precipitation_probability_min")]
-        public List<int> PrecipitationProbabilityMin { get; set; }
+        public List<double> WindDirection10mDominant { get; set; }
 
         [JsonProperty("relative_humidity_2m_mean")]
         public List<int> RelativeHumidity2mMean { get; set; }
-
-        [JsonProperty("relative_humidity_2m_max")]
-        public List<int> RelativeHumidity2mMax { get; set; }
-
-        [JsonProperty("relative_humidity_2m_min")]
-        public List<int> RelativeHumidity2mMin { get; set; }
 
         public List<DailyRecord> ToRecords()
         {
@@ -236,15 +212,13 @@ namespace HaruCore
             {
                 records.Add(new DailyRecord
                 {
-                    Time = DateTime.Parse(Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture),
+                    Time = DateTime.Parse(Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
                     WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), true),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), true),
-                    Temperature2mMax = (int)Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)),
-                    Temperature2mMin = (int)Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i)),
-                    PrecipitationSum = PrecipitationSum.ElementAtOrDefault(i),
-                    PrecipitationProbabilityMax = PrecipitationProbabilityMax.ElementAtOrDefault(i),
-                    WindSpeed10mMax = WindSpeed10mMax.ElementAtOrDefault(i),
-                    WindDirection10mDominant = WindDirection10mDominant.ElementAtOrDefault(i),
+                    Temperature = string.Format("{0}°/{1}°", Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)), Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i))),
+                    Humidity = string.Format("{0}%", RelativeHumidity2mMean.ElementAtOrDefault(i)),
+                    Precipitation = string.Format("{0}%", PrecipitationProbabilityMax.ElementAtOrDefault(i)),
+                    Wind = string.Format("{0} {1}", WindSpeed10mMax.ElementAtOrDefault(i), UnitModel.InterpretDirection(WindDirection10mDominant.ElementAtOrDefault(i), true)),
                 });
             }
             return records;

@@ -39,6 +39,18 @@ namespace HaruCore
             "northwest"
         };
 
+        private static readonly string[] DirectionsShorthand =
+        {
+            "N",
+            "NE",
+            "E",
+            "SE",
+            "S",
+            "SW",
+            "W",
+            "NW"
+        };
+
         public static string GetTemperatureUnit(string key)
         {
             if (TemperatureUnits.ContainsKey(key))
@@ -60,11 +72,11 @@ namespace HaruCore
             return "mm";
         }
 
-        public static string InterpretDirection(double azimuth)
+        public static string InterpretDirection(double azimuth, bool shorthand)
         {
             azimuth = (azimuth % 360 + 360) % 360;
             int index = (int)Math.Round(azimuth / 45.0) % 8;
-            return Directions[index];
+            return shorthand ? DirectionsShorthand[index] : Directions[index];
         }
 
         public static string InterpretTimeDifference(string dateTime)

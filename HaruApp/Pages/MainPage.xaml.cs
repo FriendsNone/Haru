@@ -126,7 +126,7 @@ namespace HaruApp
                     PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
                     PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
                     WindSpeedTextBlock.Text           = string.Format("{0} {1}", cw.WindSpeed, UnitModel.GetWindSpeedUnit(windSpeedUnit));
-                    WindDirectionTextBlock.Text       = UnitModel.InterpretDirection(cw.WindDirection);
+                    WindDirectionTextBlock.Text       = UnitModel.InterpretDirection(cw.WindDirection, false);
                     TimeTextBlock.Text                = string.Format("Forecast as of {0}", UnitModel.InterpretTimeDifference(cw.Time));
                     NowScrollViewer.Visibility        = Visibility.Visible;
                     UpdateTile(cw);

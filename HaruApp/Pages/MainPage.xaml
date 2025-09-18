@@ -253,7 +253,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="TEMP"/>
-                                            <TextBlock Text="{Binding Temperature2m}"
+                                            <TextBlock Text="{Binding Temperature}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -264,7 +264,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="HUM"/>
-                                            <TextBlock Text="{Binding RelativeHumidity2m}"
+                                            <TextBlock Text="{Binding Humidity}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -275,7 +275,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="PREC"/>
-                                            <TextBlock Text="{Binding PrecipitationProbability}"
+                                            <TextBlock Text="{Binding Precipitation}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -286,7 +286,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="WIND"/>
-                                            <TextBlock Text="{Binding WindSpeed10m}"
+                                            <TextBlock Text="{Binding Wind}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -370,7 +370,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="TEMP"/>
-                                            <TextBlock Text="{Binding Temperature2mMax}"
+                                            <TextBlock Text="{Binding Temperature}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -381,7 +381,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="AVG HUM"/>
-                                            <TextBlock Text="{Binding RelativeHumidity2mMean}"
+                                            <TextBlock Text="{Binding Humidity}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -392,7 +392,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="MAX PREC"/>
-                                            <TextBlock Text="{Binding PrecipitationProbabilityMax}"
+                                            <TextBlock Text="{Binding Precipitation}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
@@ -403,7 +403,7 @@
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
                                                        Text="MAX WIND"/>
-                                            <TextBlock Text="{Binding WindSpeed10mMax}"
+                                            <TextBlock Text="{Binding Wind}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                         </StackPanel>
