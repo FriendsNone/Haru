@@ -177,25 +177,15 @@ namespace HaruCore
         public string WeatherDescription { get; set; }
         public int Temperature2mMax { get; set; }
         public int Temperature2mMin { get; set; }
-        public int ApparentTemperatureMax { get; set; }
-        public int ApparentTemperatureMin { get; set; }
-        public DateTime Sunrise { get; set; }
-        public DateTime Sunset { get; set; }
-        public double DaylightDuration { get; set; }
-        public double SunshineDuration { get; set; }
-        public double UvIndexMax { get; set; }
-        public double UvIndexClearSkyMax { get; set; }
-        public double RainSum { get; set; }
-        public double ShowersSum { get; set; }
-        public double SnowfallSum { get; set; }
         public double PrecipitationSum { get; set; }
-        public double PrecipitationHours { get; set; }
         public int PrecipitationProbabilityMax { get; set; }
         public double WindSpeed10mMax { get; set; }
-        public double WindGusts10mMax { get; set; }
         public int WindDirection10mDominant { get; set; }
-        public double ShortwaveRadiationSum { get; set; }
-        public double Et0FaoEvapotranspiration { get; set; }
+        public int PrecipitationProbabilityMean { get; set; }
+        public int PrecipitationProbabilityMin { get; set; }
+        public int RelativeHumidity2mMean { get; set; }
+        public int RelativeHumidity2mMax { get; set; }
+        public int RelativeHumidity2mMin { get; set; }
     }
 
     public class DailyWeather
@@ -212,44 +202,8 @@ namespace HaruCore
         [JsonProperty("temperature_2m_min")]
         public List<double> Temperature2mMin { get; set; }
 
-        [JsonProperty("apparent_temperature_max")]
-        public List<double> ApparentTemperatureMax { get; set; }
-
-        [JsonProperty("apparent_temperature_min")]
-        public List<double> ApparentTemperatureMin { get; set; }
-
-        [JsonProperty("sunrise")]
-        public List<string> Sunrise { get; set; }
-
-        [JsonProperty("sunset")]
-        public List<string> Sunset { get; set; }
-
-        [JsonProperty("daylight_duration")]
-        public List<double> DaylightDuration { get; set; }
-
-        [JsonProperty("sunshine_duration")]
-        public List<double> SunshineDuration { get; set; }
-
-        [JsonProperty("uv_index_max")]
-        public List<double> UvIndexMax { get; set; }
-
-        [JsonProperty("uv_index_clear_sky_max")]
-        public List<double> UvIndexClearSkyMax { get; set; }
-
-        [JsonProperty("rain_sum")]
-        public List<double> RainSum { get; set; }
-
-        [JsonProperty("showers_sum")]
-        public List<double> ShowersSum { get; set; }
-
-        [JsonProperty("snowfall_sum")]
-        public List<double> SnowfallSum { get; set; }
-
         [JsonProperty("precipitation_sum")]
         public List<double> PrecipitationSum { get; set; }
-
-        [JsonProperty("precipitation_hours")]
-        public List<double> PrecipitationHours { get; set; }
 
         [JsonProperty("precipitation_probability_max")]
         public List<int> PrecipitationProbabilityMax { get; set; }
@@ -257,17 +211,23 @@ namespace HaruCore
         [JsonProperty("wind_speed_10m_max")]
         public List<double> WindSpeed10mMax { get; set; }
 
-        [JsonProperty("wind_gusts_10m_max")]
-        public List<double> WindGusts10mMax { get; set; }
-
         [JsonProperty("wind_direction_10m_dominant")]
         public List<int> WindDirection10mDominant { get; set; }
 
-        [JsonProperty("shortwave_radiation_sum")]
-        public List<double> ShortwaveRadiationSum { get; set; }
+        [JsonProperty("precipitation_probability_mean")]
+        public List<int> PrecipitationProbabilityMean { get; set; }
 
-        [JsonProperty("et0_fao_evapotranspiration")]
-        public List<double> Et0FaoEvapotranspiration { get; set; }
+        [JsonProperty("precipitation_probability_min")]
+        public List<int> PrecipitationProbabilityMin { get; set; }
+
+        [JsonProperty("relative_humidity_2m_mean")]
+        public List<int> RelativeHumidity2mMean { get; set; }
+
+        [JsonProperty("relative_humidity_2m_max")]
+        public List<int> RelativeHumidity2mMax { get; set; }
+
+        [JsonProperty("relative_humidity_2m_min")]
+        public List<int> RelativeHumidity2mMin { get; set; }
 
         public List<DailyRecord> ToRecords()
         {
@@ -281,25 +241,10 @@ namespace HaruCore
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), true),
                     Temperature2mMax = (int)Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)),
                     Temperature2mMin = (int)Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i)),
-                    ApparentTemperatureMax = (int)Math.Ceiling(ApparentTemperatureMax.ElementAtOrDefault(i)),
-                    ApparentTemperatureMin = (int)Math.Ceiling(ApparentTemperatureMin.ElementAtOrDefault(i)),
-                    Sunrise = DateTime.Parse(Sunrise.ElementAtOrDefault(i)),
-                    Sunset = DateTime.Parse(Sunset.ElementAtOrDefault(i)),
-                    DaylightDuration = DaylightDuration.ElementAtOrDefault(i),
-                    SunshineDuration = SunshineDuration.ElementAtOrDefault(i),
-                    UvIndexMax = UvIndexMax.ElementAtOrDefault(i),
-                    UvIndexClearSkyMax = UvIndexClearSkyMax.ElementAtOrDefault(i),
-                    RainSum = RainSum.ElementAtOrDefault(i),
-                    ShowersSum = ShowersSum.ElementAtOrDefault(i),
-                    SnowfallSum = SnowfallSum.ElementAtOrDefault(i),
                     PrecipitationSum = PrecipitationSum.ElementAtOrDefault(i),
-                    PrecipitationHours = PrecipitationHours.ElementAtOrDefault(i),
                     PrecipitationProbabilityMax = PrecipitationProbabilityMax.ElementAtOrDefault(i),
                     WindSpeed10mMax = WindSpeed10mMax.ElementAtOrDefault(i),
-                    WindGusts10mMax = WindGusts10mMax.ElementAtOrDefault(i),
                     WindDirection10mDominant = WindDirection10mDominant.ElementAtOrDefault(i),
-                    ShortwaveRadiationSum = ShortwaveRadiationSum.ElementAtOrDefault(i),
-                    Et0FaoEvapotranspiration = Et0FaoEvapotranspiration.ElementAtOrDefault(i)
                 });
             }
             return records;
