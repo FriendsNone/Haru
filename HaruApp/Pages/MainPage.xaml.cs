@@ -132,11 +132,11 @@ namespace HaruApp
                     UpdateTile(cw);
                 }
 
-                var hr = forecast.Hourly.ToRecords();
+                var hr = forecast.ToHourlyRecords();
                 if (hr != null && hr.Count > 0)
                     HourlyListBox.ItemsSource = hr;
 
-                var dr = forecast.Daily.ToRecords();
+                var dr = forecast.ToDailyRecords();
                 if (dr != null && dr.Count > 0)
                     DailyListBox.ItemsSource = dr;
 

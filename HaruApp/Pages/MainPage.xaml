@@ -64,7 +64,7 @@
                     </Grid>
 
                     <Grid Grid.Row="2"
-                            Margin="12,0,12,0">
+                          Margin="12,0,12,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="24"/>
@@ -87,84 +87,84 @@
                                     Grid.Column="0"
                                     toolkit:SlideInEffect.LineIndex="3">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="TEMPERATURE"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="TEMPERATURE"/>
                             <TextBlock x:Name="TemperatureTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="0"
                                     Grid.Column="2"
                                     toolkit:SlideInEffect.LineIndex="4">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="FEELS LIKE"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="FEELS LIKE"/>
                             <TextBlock x:Name="ApparentTemperatureTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2"
                                     Grid.Column="0"
                                     toolkit:SlideInEffect.LineIndex="5">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="HUMIDITY"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="HUMIDITY"/>
                             <TextBlock x:Name="RelativeHumidityTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="2"
                                     Grid.Column="2"
                                     toolkit:SlideInEffect.LineIndex="6">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="PRECIPITATION"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="PRECIPITATION"/>
                             <TextBlock x:Name="PrecipitationTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="4"
                                     Grid.Column="0"
                                     toolkit:SlideInEffect.LineIndex="7">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="WIND SPEED"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="WIND SPEED"/>
                             <TextBlock x:Name="WindSpeedTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="4"
                                     Grid.Column="2"
                                     toolkit:SlideInEffect.LineIndex="8">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="WIND DIRECTION"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="WIND DIRECTION"/>
                             <TextBlock x:Name="WindDirectionTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="6"
                                     Grid.Column="0"
                                     toolkit:SlideInEffect.LineIndex="9">
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Text="PRESSURE"/>
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Text="PRESSURE"/>
                             <TextBlock x:Name="PressureTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="8"
@@ -172,10 +172,10 @@
                                     Grid.ColumnSpan="3"
                                     toolkit:SlideInEffect.LineIndex="10">
                             <TextBlock x:Name="TimeTextBlock"
-                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                        FontSize="{StaticResource PhoneFontSizeSmall}"
-                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                        Opacity="0.5"/>
+                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                       FontSize="{StaticResource PhoneFontSizeSmall}"
+                                       Foreground="{StaticResource PhoneSubtleBrush}"
+                                       Opacity="0.5"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -201,10 +201,10 @@
                                                 Background="{StaticResource PhoneAccentBrush}"
                                                 toolkit:SlideInEffect.LineIndex="1">
                                         <TextBlock Margin="6,6,6,6"
-                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                Foreground="White"
-                                                Text="{Binding Time}"/>
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="White"
+                                                   Text="{Binding Time}"/>
                                     </StackPanel>
 
                                     <Grid Grid.Row="2">
@@ -318,10 +318,10 @@
                                                 Background="{StaticResource PhoneAccentBrush}"
                                                 toolkit:SlideInEffect.LineIndex="1">
                                         <TextBlock Margin="6,6,6,6"
-                                                FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                Foreground="White"
-                                                Text="{Binding Time}"/>
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="White"
+                                                   Text="{Binding Time}"/>
                                     </StackPanel>
 
                                     <Grid Grid.Row="2">

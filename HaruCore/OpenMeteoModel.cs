@@ -66,14 +66,81 @@ namespace HaruCore
 
     public class ForecastResponse
     {
+        [JsonProperty("current_units")]
+        public CurrentWeatherUnits CurrentUnits { get; set; }
+
         [JsonProperty("current")]
         public CurrentWeather Current { get; set; }
+
+        [JsonProperty("hourly_units")]
+        public HourlyWeatherUnits HourlyUnits { get; set; }
 
         [JsonProperty("hourly")]
         public HourlyWeather Hourly { get; set; }
 
+        [JsonProperty("daily_units")]
+        public DailyWeatherUnits DailyUnits { get; set; }
+
         [JsonProperty("daily")]
         public DailyWeather Daily { get; set; }
+
+        public List<HourlyRecord> ToHourlyRecords()
+        {
+            var records = new List<HourlyRecord>();
+            for (int i = 0; i < this.Hourly.Time.Count; i++)
+            {
+                DateTime time = DateTime.Parse(this.Hourly.Time[i], null, DateTimeStyles.RoundtripKind);
+
+                records.Add(new HourlyRecord
+                {
+                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
+                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(this.Hourly.WeatherCode.ElementAtOrDefault(i), this.Hourly.IsDay.ElementAtOrDefault(i)),
+                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(this.Hourly.WeatherCode.ElementAtOrDefault(i), this.Hourly.IsDay.ElementAtOrDefault(i)),
+                    Temperature = string.Format("{0}°", Math.Ceiling(this.Hourly.Temperature2m.ElementAtOrDefault(i))),
+                    Humidity = string.Format("{0}%", this.Hourly.RelativeHumidity2m.ElementAtOrDefault(i)),
+                    Precipitation = string.Format("{0}%", this.Hourly.PrecipitationProbability.ElementAtOrDefault(i)),
+                    Wind = string.Format("{0} {1} {2}", this.Hourly.WindSpeed10m.ElementAtOrDefault(i), this.HourlyUnits.WindSpeed10m, UnitModel.InterpretDirection(this.Hourly.WindDirection10m.ElementAtOrDefault(i), true)),
+                });
+            }
+            return records;
+        }
+
+        public List<DailyRecord> ToDailyRecords()
+        {
+            var records = new List<DailyRecord>();
+            for (int i = 0; i < this.Daily.Time.Count; i++)
+            {
+                records.Add(new DailyRecord
+                {
+                    Time = DateTime.Parse(this.Daily.Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
+                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(this.Daily.WeatherCode.ElementAtOrDefault(i), true),
+                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(this.Daily.WeatherCode.ElementAtOrDefault(i), true),
+                    Temperature = string.Format("{0}°/{1}°", Math.Ceiling(this.Daily.Temperature2mMax.ElementAtOrDefault(i)), Math.Ceiling(this.Daily.Temperature2mMin.ElementAtOrDefault(i))),
+                    Humidity = string.Format("{0}%", this.Daily.RelativeHumidity2mMean.ElementAtOrDefault(i)),
+                    Precipitation = string.Format("{0}%", this.Daily.PrecipitationProbabilityMax.ElementAtOrDefault(i)),
+                    Wind = string.Format("{0} {1} {2}", this.Daily.WindSpeed10mMax.ElementAtOrDefault(i), this.DailyUnits.WindSpeed10mMax, UnitModel.InterpretDirection(this.Daily.WindDirection10mDominant.ElementAtOrDefault(i), true)),
+                });
+            }
+            return records;
+        }
+    }
+
+    public class CurrentWeatherUnits
+    {
+        [JsonProperty("temperature_2m")]
+        public string Temperature { get; set; }
+
+        [JsonProperty("apparent_temperature")]
+        public string ApparentTemperature { get; set; }
+
+        [JsonProperty("precipitation")]
+        public string Precipitation { get; set; }
+
+        [JsonProperty("pressure_msl")]
+        public string Pressure { get; set; }
+
+        [JsonProperty("wind_speed_10m")]
+        public string WindSpeed { get; set; }
     }
 
     public class CurrentWeather
@@ -85,7 +152,7 @@ namespace HaruCore
         public double Temperature { get; set; }
 
         [JsonProperty("relative_humidity_2m")]
-        public double RelativeHumidity { get; set; }
+        public int RelativeHumidity { get; set; }
 
         [JsonProperty("apparent_temperature")]
         public double ApparentTemperature { get; set; }
@@ -106,18 +173,13 @@ namespace HaruCore
         public double WindSpeed { get; set; }
 
         [JsonProperty("wind_direction_10m")]
-        public double WindDirection { get; set; }
+        public int WindDirection { get; set; }
     }
 
-    public class HourlyRecord
+    public class HourlyWeatherUnits
     {
-        public string Time { get; set; }
-        public string WeatherIcon { get; set; }
-        public string WeatherDescription { get; set; }
-        public string Temperature { get; set; }
-        public string Humidity { get; set; }
-        public string Precipitation { get; set; }
-        public string Wind { get; set; }
+        [JsonProperty("wind_speed_10m")]
+        public string WindSpeed10m { get; set; }
     }
 
     public class HourlyWeather
@@ -129,7 +191,7 @@ namespace HaruCore
         public List<double> Temperature2m { get; set; }
 
         [JsonProperty("relative_humidity_2m")]
-        public List<double> RelativeHumidity2m { get; set; }
+        public List<int> RelativeHumidity2m { get; set; }
 
         [JsonProperty("precipitation_probability")]
         public List<int> PrecipitationProbability { get; set; }
@@ -145,30 +207,9 @@ namespace HaruCore
 
         [JsonProperty("is_day")]
         public List<bool> IsDay { get; set; }
-
-        public List<HourlyRecord> ToRecords()
-        {
-            var records = new List<HourlyRecord>();
-            for (int i = 0; i < Time.Count; i++)
-            {
-                DateTime time = DateTime.Parse(Time[i], null, DateTimeStyles.RoundtripKind);
-
-                records.Add(new HourlyRecord
-                {
-                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
-                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
-                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), IsDay.ElementAtOrDefault(i)),
-                    Temperature = string.Format("{0}°", Math.Ceiling(Temperature2m.ElementAtOrDefault(i))),
-                    Humidity = string.Format("{0}%", RelativeHumidity2m.ElementAtOrDefault(i)),
-                    Precipitation = string.Format("{0}%", PrecipitationProbability.ElementAtOrDefault(i)),
-                    Wind = string.Format("{0} {1}", WindSpeed10m.ElementAtOrDefault(i), UnitModel.InterpretDirection(WindDirection10m.ElementAtOrDefault(i), true)),
-                });
-            }
-            return records;
-        }
     }
 
-    public class DailyRecord
+    public class HourlyRecord
     {
         public string Time { get; set; }
         public string WeatherIcon { get; set; }
@@ -177,6 +218,12 @@ namespace HaruCore
         public string Humidity { get; set; }
         public string Precipitation { get; set; }
         public string Wind { get; set; }
+    }
+
+    public class DailyWeatherUnits
+    {
+        [JsonProperty("wind_speed_10m_max")]
+        public string WindSpeed10mMax { get; set; }
     }
 
     public class DailyWeather
@@ -200,28 +247,20 @@ namespace HaruCore
         public List<double> WindSpeed10mMax { get; set; }
 
         [JsonProperty("wind_direction_10m_dominant")]
-        public List<double> WindDirection10mDominant { get; set; }
+        public List<int> WindDirection10mDominant { get; set; }
 
         [JsonProperty("relative_humidity_2m_mean")]
         public List<int> RelativeHumidity2mMean { get; set; }
-
-        public List<DailyRecord> ToRecords()
-        {
-            var records = new List<DailyRecord>();
-            for (int i = 0; i < Time.Count; i++)
-            {
-                records.Add(new DailyRecord
-                {
-                    Time = DateTime.Parse(Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
-                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(WeatherCode.ElementAtOrDefault(i), true),
-                    WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(WeatherCode.ElementAtOrDefault(i), true),
-                    Temperature = string.Format("{0}°/{1}°", Math.Ceiling(Temperature2mMax.ElementAtOrDefault(i)), Math.Ceiling(Temperature2mMin.ElementAtOrDefault(i))),
-                    Humidity = string.Format("{0}%", RelativeHumidity2mMean.ElementAtOrDefault(i)),
-                    Precipitation = string.Format("{0}%", PrecipitationProbabilityMax.ElementAtOrDefault(i)),
-                    Wind = string.Format("{0} {1}", WindSpeed10mMax.ElementAtOrDefault(i), UnitModel.InterpretDirection(WindDirection10mDominant.ElementAtOrDefault(i), true)),
-                });
-            }
-            return records;
-        }
+    }
+    
+    public class DailyRecord
+    {
+        public string Time { get; set; }
+        public string WeatherIcon { get; set; }
+        public string WeatherDescription { get; set; }
+        public string Temperature { get; set; }
+        public string Humidity { get; set; }
+        public string Precipitation { get; set; }
+        public string Wind { get; set; }
     }
 }
