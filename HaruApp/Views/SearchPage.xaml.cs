@@ -11,7 +11,7 @@ using System.IO.IsolatedStorage;
 using HaruCore;
 using System.Windows.Input;
 
-namespace HaruApp.Pages
+namespace HaruApp.Views
 {
     public partial class SearchPage : PhoneApplicationPage
     {

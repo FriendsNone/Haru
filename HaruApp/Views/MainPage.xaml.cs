@@ -15,8 +15,9 @@ using System.IO.IsolatedStorage;
 using System.Windows.Navigation;
 using HaruCore;
 using System.Windows.Media.Imaging;
+using HaruApp.ViewModels;
 
-namespace HaruApp
+namespace HaruApp.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
@@ -24,10 +25,12 @@ namespace HaruApp
         private ProgressIndicator progressIndicator;
         private OpenMeteoClient client;
         private string lastLocation;
+        private ForecastViewModel vm = new ForecastViewModel();
 
         public MainPage()
         {
             InitializeComponent();
+            this.DataContext = vm;
             client = new OpenMeteoClient();
             progressIndicator = new ProgressIndicator()
             {
@@ -77,7 +80,7 @@ namespace HaruApp
 
         private void SearchApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/SearchPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
         }
 
         private void RefreshApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -87,12 +90,12 @@ namespace HaruApp
 
         private void SettingsApplicationBarMenuItem_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/SettingsPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/SettingsPage.xaml", UriKind.Relative));
         }
 
         private void AboutApplicationBarMenuItem_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Views/AboutPage.xaml", UriKind.Relative));
         }
 
         private void FetchForecast()
@@ -110,36 +113,14 @@ namespace HaruApp
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
             {
                 if (ferr != null || forecast == null)
-                {
-                    progressIndicator.IsVisible = false;
                     return;
-                }
 
-                CurrentWeather cw = forecast.Current;
-                if (cw != null)
-                {
-                    WeatherCodeImage.Source           = new BitmapImage(new Uri(WeatherInterpretationModel.GetWeatherIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative));
-                    TemperatureTextBlock.Text         = string.Format("{0}{1}", Math.Ceiling(cw.Temperature), UnitModel.GetTemperatureUnit(temperatureUnit));
-                    ApparentTemperatureTextBlock.Text = string.Format("{0}{1}", Math.Ceiling(cw.ApparentTemperature), UnitModel.GetTemperatureUnit(temperatureUnit));
-                    WeatherCodeTextBlock.Text         = WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay);
-                    RelativeHumidityTextBlock.Text    = string.Format("{0}%", cw.RelativeHumidity);
-                    PrecipitationTextBlock.Text       = string.Format("{0} {1}", cw.Precipitation, UnitModel.GetPrecipitationUnit(precipitationUnit));
-                    PressureTextBlock.Text            = string.Format("{0} hPa", cw.Pressure);
-                    WindSpeedTextBlock.Text           = string.Format("{0} {1}", cw.WindSpeed, UnitModel.GetWindSpeedUnit(windSpeedUnit));
-                    WindDirectionTextBlock.Text       = UnitModel.InterpretDirection(cw.WindDirection, false);
-                    TimeTextBlock.Text                = string.Format("Forecast as of {0}", UnitModel.InterpretTimeDifference(cw.Time));
-                    NowScrollViewer.Visibility        = Visibility.Visible;
-                    UpdateTile(cw);
-                }
+                vm.Current = forecast.ToCurrentRecord();
+                vm.Hourly = forecast.ToHourlyRecords();
+                vm.Daily = forecast.ToDailyRecords();
 
-                var hr = forecast.ToHourlyRecords();
-                if (hr != null && hr.Count > 0)
-                    HourlyListBox.ItemsSource = hr;
-
-                var dr = forecast.ToDailyRecords();
-                if (dr != null && dr.Count > 0)
-                    DailyListBox.ItemsSource = dr;
-
+                NowScrollViewer.Visibility = Visibility.Visible;
+                UpdateTile(forecast.Current);
                 progressIndicator.IsVisible = false;
             });
         }
@@ -150,18 +131,18 @@ namespace HaruApp
             if (tile != null)
             {
                 string location = (string)settings["Location"];
+                string temperatureUnit = (string)settings["TemperatureUnit"];
 
                 StandardTileData data = new StandardTileData()
                 {
                     Title = location,
                     BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherTileIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
                     BackTitle = DateTime.Now.ToString("t"),
-                    BackContent = string.Format("{0}°{1}\n{2}",
-                        cw.Temperature,
-                        (string)settings["TemperatureUnit"] == "celsius" ? "C" : "F",
+                    BackContent = string.Format("{0}{1}\n{2}",
+                        System.Math.Ceiling(cw.Temperature),
+                        UnitModel.GetTemperatureUnit(temperatureUnit),
                         WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay)),
                 };
-
 
                 tile.Update(data);
             }

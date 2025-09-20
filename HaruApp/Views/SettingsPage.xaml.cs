@@ -10,7 +10,7 @@ using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
 using System.ComponentModel;
 
-namespace HaruApp.Pages
+namespace HaruApp.Views
 {
     public partial class SettingsPage : PhoneApplicationPage
     {

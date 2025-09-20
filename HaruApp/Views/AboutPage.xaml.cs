@@ -8,7 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace HaruApp.Pages
+namespace HaruApp.Views
 {
     public partial class AboutPage : PhoneApplicationPage
     {

@@ -84,6 +84,24 @@ namespace HaruCore
         [JsonProperty("daily")]
         public DailyWeather Daily { get; set; }
 
+        public CurrentRecord ToCurrentRecord()
+        {
+            var records = new CurrentRecord{
+                WeatherIcon         = WeatherInterpretationModel.GetWeatherIcon(this.Current.WeatherCode, this.Current.IsDay),
+                WeatherDescription  = WeatherInterpretationModel.GetWeatherDescription(this.Current.WeatherCode, this.Current.IsDay),
+                Temperature         = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.Temperature),
+                ApparentTemperature = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.ApparentTemperature),
+                Humidity            = string.Format("{0}%", this.Current.RelativeHumidity),
+                Precipitation       = string.Format("{0} {1}", this.Current.Precipitation, this.CurrentUnits.Precipitation), 
+                WindSpeed           = string.Format("{0} {1}", this.Current.WindSpeed, this.CurrentUnits.WindSpeed),
+                WindDirection       = UnitModel.InterpretDirection(this.Current.WindDirection, false),
+                Pressure            = string.Format("{0} {1}", this.Current.Pressure, this.CurrentUnits.Pressure),
+                Time                = string.Format("Forecast as of {0}", UnitModel.InterpretTimeDifference(this.Current.Time))
+            };
+
+            return records;
+        }
+
         public List<HourlyRecord> ToHourlyRecords()
         {
             var records = new List<HourlyRecord>();
@@ -93,13 +111,13 @@ namespace HaruCore
 
                 records.Add(new HourlyRecord
                 {
-                    Time = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
-                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(this.Hourly.WeatherCode.ElementAtOrDefault(i), this.Hourly.IsDay.ElementAtOrDefault(i)),
+                    Time               = string.Format("{0} {1}", time.ToString("ddd", CultureInfo.CurrentCulture), time.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
+                    WeatherIcon        = WeatherInterpretationModel.GetWeatherIcon(this.Hourly.WeatherCode.ElementAtOrDefault(i), this.Hourly.IsDay.ElementAtOrDefault(i)),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(this.Hourly.WeatherCode.ElementAtOrDefault(i), this.Hourly.IsDay.ElementAtOrDefault(i)),
-                    Temperature = string.Format("{0}°", Math.Ceiling(this.Hourly.Temperature2m.ElementAtOrDefault(i))),
-                    Humidity = string.Format("{0}%", this.Hourly.RelativeHumidity2m.ElementAtOrDefault(i)),
-                    Precipitation = string.Format("{0}%", this.Hourly.PrecipitationProbability.ElementAtOrDefault(i)),
-                    Wind = string.Format("{0} {1} {2}", this.Hourly.WindSpeed10m.ElementAtOrDefault(i), this.HourlyUnits.WindSpeed10m, UnitModel.InterpretDirection(this.Hourly.WindDirection10m.ElementAtOrDefault(i), true)),
+                    Temperature        = string.Format("{0}°", Math.Ceiling(this.Hourly.Temperature.ElementAtOrDefault(i))),
+                    Humidity           = string.Format("{0}%", this.Hourly.RelativeHumidity.ElementAtOrDefault(i)),
+                    Precipitation      = string.Format("{0}%", this.Hourly.PrecipitationProbability.ElementAtOrDefault(i)),
+                    Wind               = string.Format("{0} {1} {2}", this.Hourly.WindSpeed.ElementAtOrDefault(i), this.HourlyUnits.WindSpeed, UnitModel.InterpretDirection(this.Hourly.WindDirection.ElementAtOrDefault(i), true)),
                 });
             }
             return records;
@@ -112,13 +130,13 @@ namespace HaruCore
             {
                 records.Add(new DailyRecord
                 {
-                    Time = DateTime.Parse(this.Daily.Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
-                    WeatherIcon = WeatherInterpretationModel.GetWeatherIcon(this.Daily.WeatherCode.ElementAtOrDefault(i), true),
+                    Time               = DateTime.Parse(this.Daily.Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
+                    WeatherIcon        = WeatherInterpretationModel.GetWeatherIcon(this.Daily.WeatherCode.ElementAtOrDefault(i), true),
                     WeatherDescription = WeatherInterpretationModel.GetWeatherDescription(this.Daily.WeatherCode.ElementAtOrDefault(i), true),
-                    Temperature = string.Format("{0}°/{1}°", Math.Ceiling(this.Daily.Temperature2mMax.ElementAtOrDefault(i)), Math.Ceiling(this.Daily.Temperature2mMin.ElementAtOrDefault(i))),
-                    Humidity = string.Format("{0}%", this.Daily.RelativeHumidity2mMean.ElementAtOrDefault(i)),
-                    Precipitation = string.Format("{0}%", this.Daily.PrecipitationProbabilityMax.ElementAtOrDefault(i)),
-                    Wind = string.Format("{0} {1} {2}", this.Daily.WindSpeed10mMax.ElementAtOrDefault(i), this.DailyUnits.WindSpeed10mMax, UnitModel.InterpretDirection(this.Daily.WindDirection10mDominant.ElementAtOrDefault(i), true)),
+                    Temperature        = string.Format("{0}°/{1}°", Math.Ceiling(this.Daily.TemperatureMax.ElementAtOrDefault(i)), Math.Ceiling(this.Daily.TemperatureMin.ElementAtOrDefault(i))),
+                    Humidity           = string.Format("{0}%", this.Daily.RelativeHumidityMean.ElementAtOrDefault(i)),
+                    Precipitation      = string.Format("{0}%", this.Daily.PrecipitationProbabilityMax.ElementAtOrDefault(i)),
+                    Wind               = string.Format("{0} {1} {2}", this.Daily.WindSpeedMax.ElementAtOrDefault(i), this.DailyUnits.WindSpeedMax, UnitModel.InterpretDirection(this.Daily.WindDirectionDominant.ElementAtOrDefault(i), true)),
                 });
             }
             return records;
@@ -176,10 +194,24 @@ namespace HaruCore
         public int WindDirection { get; set; }
     }
 
+    public class CurrentRecord
+    {
+        public string WeatherIcon { get; set; }
+        public string WeatherDescription { get; set; }
+        public string Temperature { get; set; }
+        public string ApparentTemperature { get; set; }
+        public string Humidity { get; set; }
+        public string Precipitation { get; set; }
+        public string WindSpeed { get; set; }
+        public string WindDirection { get; set; }
+        public string Pressure { get; set; }
+        public string Time { get; set; }
+    }
+
     public class HourlyWeatherUnits
     {
         [JsonProperty("wind_speed_10m")]
-        public string WindSpeed10m { get; set; }
+        public string WindSpeed { get; set; }
     }
 
     public class HourlyWeather
@@ -188,10 +220,10 @@ namespace HaruCore
         public List<string> Time { get; set; }
 
         [JsonProperty("temperature_2m")]
-        public List<double> Temperature2m { get; set; }
+        public List<double> Temperature { get; set; }
 
         [JsonProperty("relative_humidity_2m")]
-        public List<int> RelativeHumidity2m { get; set; }
+        public List<int> RelativeHumidity { get; set; }
 
         [JsonProperty("precipitation_probability")]
         public List<int> PrecipitationProbability { get; set; }
@@ -200,10 +232,10 @@ namespace HaruCore
         public List<int> WeatherCode { get; set; }
 
         [JsonProperty("wind_speed_10m")]
-        public List<double> WindSpeed10m { get; set; }
+        public List<double> WindSpeed { get; set; }
 
         [JsonProperty("wind_direction_10m")]
-        public List<int> WindDirection10m { get; set; }
+        public List<int> WindDirection { get; set; }
 
         [JsonProperty("is_day")]
         public List<bool> IsDay { get; set; }
@@ -223,7 +255,7 @@ namespace HaruCore
     public class DailyWeatherUnits
     {
         [JsonProperty("wind_speed_10m_max")]
-        public string WindSpeed10mMax { get; set; }
+        public string WindSpeedMax { get; set; }
     }
 
     public class DailyWeather
@@ -235,22 +267,22 @@ namespace HaruCore
         public List<int> WeatherCode { get; set; }
 
         [JsonProperty("temperature_2m_max")]
-        public List<double> Temperature2mMax { get; set; }
+        public List<double> TemperatureMax { get; set; }
 
         [JsonProperty("temperature_2m_min")]
-        public List<double> Temperature2mMin { get; set; }
+        public List<double> TemperatureMin { get; set; }
 
         [JsonProperty("precipitation_probability_max")]
         public List<int> PrecipitationProbabilityMax { get; set; }
 
         [JsonProperty("wind_speed_10m_max")]
-        public List<double> WindSpeed10mMax { get; set; }
+        public List<double> WindSpeedMax { get; set; }
 
         [JsonProperty("wind_direction_10m_dominant")]
-        public List<int> WindDirection10mDominant { get; set; }
+        public List<int> WindDirectionDominant { get; set; }
 
         [JsonProperty("relative_humidity_2m_mean")]
-        public List<int> RelativeHumidity2mMean { get; set; }
+        public List<int> RelativeHumidityMean { get; set; }
     }
     
     public class DailyRecord
