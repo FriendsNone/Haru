@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
 using HaruCore;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace HaruApp.Views
 {
@@ -18,14 +19,19 @@ namespace HaruApp.Views
         private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private ProgressIndicator progressIndicator;
         private OpenMeteoClient client;
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
 
         public SearchPage()
         {
             InitializeComponent();
             client = new OpenMeteoClient();
-            progressIndicator = new ProgressIndicator()
+            progressIndicator = new ProgressIndicator();
+
+            timer.Tick += (s, args) =>
             {
-                IsIndeterminate = true
+                timer.Stop();
+                progressIndicator.IsVisible = false;
+                return;
             };
         }
 
@@ -73,14 +79,25 @@ namespace HaruApp.Views
 
         private void FetchLocation(string searchTerm)
         {
+            progressIndicator.IsIndeterminate = true;
             progressIndicator.Text = string.Format("Searching for \"{0}\"", searchTerm);
             progressIndicator.IsVisible = true;
 
             client.SearchLocation(searchTerm, (locations, err) =>
             {
-                if (err != null || locations == null || locations.Count == 0)
+                if (err != null)
                 {
-                    progressIndicator.IsVisible = false;
+                    progressIndicator.IsIndeterminate = false;
+                    progressIndicator.Text = "Something went wrong. Try again later.";
+                    timer.Start();
+                    return;
+                }
+
+                if (locations == null || locations.Count == 0)
+                {
+                    progressIndicator.IsIndeterminate = false;
+                    progressIndicator.Text = string.Format("No results for \"{0}\"", searchTerm);
+                    timer.Start();
                     return;
                 }
 

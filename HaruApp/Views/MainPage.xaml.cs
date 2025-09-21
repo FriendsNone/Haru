@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using HaruCore;
 using System.Windows.Media.Imaging;
 using HaruApp.ViewModels;
+using System.Windows.Threading;
 
 namespace HaruApp.Views
 {
@@ -26,15 +27,20 @@ namespace HaruApp.Views
         private OpenMeteoClient client;
         private string lastLocation;
         private ForecastViewModel vm = new ForecastViewModel();
+        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
 
         public MainPage()
         {
             InitializeComponent();
             this.DataContext = vm;
             client = new OpenMeteoClient();
-            progressIndicator = new ProgressIndicator()
+            progressIndicator = new ProgressIndicator();
+
+            timer.Tick += (s, args) =>
             {
-                IsIndeterminate = true
+                timer.Stop();
+                progressIndicator.IsVisible = false;
+                return;
             };
         }
 
@@ -107,13 +113,19 @@ namespace HaruApp.Views
             string windSpeedUnit = (string)settings["WindSpeedUnit"];
             string precipitationUnit = (string)settings["PrecipitationUnit"];
 
+            progressIndicator.IsIndeterminate = true;
             progressIndicator.Text = "Fetching forecast...";
             progressIndicator.IsVisible = true;
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
             {
                 if (ferr != null || forecast == null)
+                {
+                    progressIndicator.IsIndeterminate = false;
+                    progressIndicator.Text = "Something went wrong. Try again later.";
+                    timer.Start();
                     return;
+                }
 
                 vm.Current = forecast.ToCurrentRecord();
                 vm.Hourly = forecast.ToHourlyRecords();
