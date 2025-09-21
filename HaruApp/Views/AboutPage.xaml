@@ -4,33 +4,140 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="480"
+    d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d"
+    SupportedOrientations="Portrait"
+    Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource TurnstilePageTransition}">
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Grid Background="Transparent">
+        <controls:Pivot Title="HARU">
+            <controls:PivotItem Header="about">
+                <Grid Margin="12,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    
+                    <toolkit:HubTile Grid.Row="0"
+                                     Grid.Column="0"
+                                     Source="/Background.png"
+                                     Title="v1.0.0"
+                                     Message="From Japanese&#10;晴 (haru)&#10;meaning&#10;&#34;clear weather&#34;"/>
+                    
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="2">
+                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                   Text="DEVELOPED BY"/>
+                        <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                   FontSize="{StaticResource PhoneFontSizeLarge}"
+                                   Foreground="{StaticResource PhoneAccentBrush}"
+                                   Text="FriendsNone"/>
+                        <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                   Foreground="{StaticResource PhoneForegroundBrush}"
+                                   Text="@wizzardo.bsky.social"/>
+                    </StackPanel>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="HARU" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="about" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom"
+                               Text="made with love &#60;3"
+                               Foreground="{StaticResource PhoneSubtleBrush}"
+                               FontFamily="{StaticResource PhoneFontFamilyLight}"
+                               FontSize="{StaticResource PhoneFontSizeSmall}"/>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <ScrollViewer Grid.Row="2"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-        </Grid>
+                            <StackPanel Grid.Row="0"
+                                        toolkit:SlideInEffect.LineIndex="3">
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           Text="APP ICON"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Text="Fluent UI System Icons"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           Text="Microsoft"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2"
+                                        toolkit:SlideInEffect.LineIndex="3">
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           Text="WEATHER ICONS"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Text="Meteocons"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           Text="Bas Milius"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4"
+                                        toolkit:SlideInEffect.LineIndex="3">
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           Text="WEATHER FORECAST &#38; GEOCODING API"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Text="Open-Meteo Weather API"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           Text="Open-Meteo.com"/>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="changelog">
+                <Grid/>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
 
 </phone:PhoneApplicationPage>
