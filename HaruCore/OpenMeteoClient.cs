@@ -11,7 +11,9 @@ namespace HaruCore
 {
     public class OpenMeteoClient
     {
-        public void SearchLocation(string query, Action<List<LocationResult>, Exception> callback, int count = 10)
+        public void SearchLocation(string query, 
+                                   Action<GeocodingResponse, Exception> callback,
+                                   int count = 10)
         {
             if (string.IsNullOrWhiteSpace(query))
             {
@@ -35,7 +37,7 @@ namespace HaruCore
                 try
                 {
                     GeocodingResponse geo = JsonConvert.DeserializeObject<GeocodingResponse>(e.Result);
-                    if (callback != null) callback(geo != null ? geo.Results : null, null);
+                    if (callback != null) callback(geo, null);
                 }
                 catch (Exception ex)
                 {

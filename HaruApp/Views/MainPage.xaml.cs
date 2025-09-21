@@ -137,7 +137,7 @@ namespace HaruApp.Views
             });
         }
 
-        private void UpdateTile(CurrentWeather cw)
+        private void UpdateTile(Current cw)
         {
             ShellTile tile = ShellTile.ActiveTiles.First();
             if (tile != null)

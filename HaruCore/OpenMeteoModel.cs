@@ -10,10 +10,41 @@ namespace HaruCore
     public class GeocodingResponse
     {
         [JsonProperty("results")]
-        public List<LocationResult> Results { get; set; }
+        public List<Location> Location { get; set; }
+
+        public List<LocationRecord> ToLocationRecords()
+        {
+            var records = new List<LocationRecord>();
+            for (int i = 0; i < this.Location.Count; i++)
+            {
+                var parts = new List<string>();
+
+                parts.Add(this.Location[i].Name);
+
+                parts.AddRange(new[] {
+                    this.Location[i].Admin1,
+                    this.Location[i].Admin2,
+                    this.Location[i].Admin3,
+                    this.Location[i].Admin4
+                }.Where(a => !string.IsNullOrWhiteSpace(a)));
+
+                if (!string.IsNullOrWhiteSpace(this.Location[i].Country))
+                    parts.Add(this.Location[i].Country);
+
+                records.Add(new LocationRecord
+                {
+                    NameShort   = string.Format("{0}, {1}", this.Location[i].Name, this.Location[i].CountryCode),
+                    NameLong    = string.Join(", ", parts),
+                    Coordinates = string.Format("{0}, {1}", this.Location[i].Latitude, this.Location[i].Longitude),
+                    Latitude    = this.Location[i].Latitude,
+                    Longitude   = this.Location[i].Longitude
+                });
+            }
+            return records;
+        }
     }
 
-    public class LocationResult
+    public class Location
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -41,48 +72,36 @@ namespace HaruCore
 
         [JsonProperty("admin4")]
         public string Admin4 { get; set; }
+    }
 
-        public string LocationName
-        {
-            get
-            {
-                return string.Format("{0}, {1}, {2}",
-                    Name,
-                    Admin1,
-                    Country);
-            }
-        }
-
-        public string LocationCoordinates
-        {
-            get
-            {
-                return string.Format("{0}, {1}",
-                    Latitude,
-                    Longitude);
-            }
-        }
+    public class LocationRecord
+    {
+        public string NameShort { get; set; }
+        public string NameLong { get; set; }
+        public string Coordinates { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
 
     public class ForecastResponse
     {
         [JsonProperty("current_units")]
-        public CurrentWeatherUnits CurrentUnits { get; set; }
+        public CurrentUnits CurrentUnits { get; set; }
 
         [JsonProperty("current")]
-        public CurrentWeather Current { get; set; }
+        public Current Current { get; set; }
 
         [JsonProperty("hourly_units")]
-        public HourlyWeatherUnits HourlyUnits { get; set; }
+        public HourlyUnits HourlyUnits { get; set; }
 
         [JsonProperty("hourly")]
-        public HourlyWeather Hourly { get; set; }
+        public Hourly Hourly { get; set; }
 
         [JsonProperty("daily_units")]
-        public DailyWeatherUnits DailyUnits { get; set; }
+        public DailyUnits DailyUnits { get; set; }
 
         [JsonProperty("daily")]
-        public DailyWeather Daily { get; set; }
+        public Daily Daily { get; set; }
 
         public CurrentRecord ToCurrentRecord()
         {
@@ -143,7 +162,7 @@ namespace HaruCore
         }
     }
 
-    public class CurrentWeatherUnits
+    public class CurrentUnits
     {
         [JsonProperty("temperature_2m")]
         public string Temperature { get; set; }
@@ -161,7 +180,7 @@ namespace HaruCore
         public string WindSpeed { get; set; }
     }
 
-    public class CurrentWeather
+    public class Current
     {
         [JsonProperty("time")]
         public string Time { get; set; }
@@ -208,13 +227,13 @@ namespace HaruCore
         public string Time { get; set; }
     }
 
-    public class HourlyWeatherUnits
+    public class HourlyUnits
     {
         [JsonProperty("wind_speed_10m")]
         public string WindSpeed { get; set; }
     }
 
-    public class HourlyWeather
+    public class Hourly
     {
         [JsonProperty("time")]
         public List<string> Time { get; set; }
@@ -252,13 +271,13 @@ namespace HaruCore
         public string Wind { get; set; }
     }
 
-    public class DailyWeatherUnits
+    public class DailyUnits
     {
         [JsonProperty("wind_speed_10m_max")]
         public string WindSpeedMax { get; set; }
     }
 
-    public class DailyWeather
+    public class Daily
     {
         [JsonProperty("time")]
         public List<string> Time { get; set; }

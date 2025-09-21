@@ -60,6 +60,7 @@
             <ListBox x:Name="ResultListBox"
                      Grid.Row="1"
                      Margin="0,0,0,12"
+                     ItemsSource="{Binding Location}"
                      SelectionChanged="ResultListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -71,10 +72,10 @@
 
                             <TextBlock Grid.Row="0"
                                        Style="{StaticResource PhoneTextLargeStyle}"
-                                       Text="{Binding LocationName}"/>
+                                       Text="{Binding NameLong}"/>
                             <TextBlock Grid.Row="1"
                                        Style="{StaticResource PhoneTextSmallStyle}"
-                                       Text="{Binding LocationCoordinates}"/>
+                                       Text="{Binding Coordinates}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

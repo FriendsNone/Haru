@@ -11,6 +11,7 @@ using System.IO.IsolatedStorage;
 using HaruCore;
 using System.Windows.Input;
 using System.Windows.Threading;
+using HaruApp.ViewModels;
 
 namespace HaruApp.Views
 {
@@ -19,11 +20,13 @@ namespace HaruApp.Views
         private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private ProgressIndicator progressIndicator;
         private OpenMeteoClient client;
+        private GeocodingViewModel vm = new GeocodingViewModel();
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
 
         public SearchPage()
         {
             InitializeComponent();
+            this.DataContext = vm;
             client = new OpenMeteoClient();
             progressIndicator = new ProgressIndicator();
 
@@ -65,11 +68,11 @@ namespace HaruApp.Views
 
         private void ResultListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedLocation = ResultListBox.SelectedItem as LocationResult;
+            var selectedLocation = ResultListBox.SelectedItem as LocationRecord;
             if (selectedLocation == null)
                 return;
 
-            settings["Location"] = string.Format("{0}, {1}", selectedLocation.Name, selectedLocation.CountryCode);
+            settings["Location"] = selectedLocation.NameShort;
             settings["Latitude"] = selectedLocation.Latitude;
             settings["Longitude"] = selectedLocation.Longitude;
             settings.Save();
@@ -93,7 +96,7 @@ namespace HaruApp.Views
                     return;
                 }
 
-                if (locations == null || locations.Count == 0)
+                if (locations == null)
                 {
                     progressIndicator.IsIndeterminate = false;
                     progressIndicator.Text = string.Format("No results for \"{0}\"", searchTerm);
@@ -101,7 +104,7 @@ namespace HaruApp.Views
                     return;
                 }
 
-                ResultListBox.ItemsSource = locations;
+                vm.Location = locations.ToLocationRecords();
                 progressIndicator.IsVisible = false;
             });
         }
