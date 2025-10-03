@@ -3,6 +3,8 @@ using NodaTime;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -83,12 +85,26 @@ namespace HaruCore
             {
                 if (e.Error != null)
                 {
+                    string cache = LoadFromIsolatedStorage("forecast.json");
+                    if (cache != null)
+                    {
+                        try
+                        {
+                            ForecastResponse forecast = JsonConvert.DeserializeObject<ForecastResponse>(cache);
+                            if (callback != null) callback(forecast, e.Error);
+                            return;
+                        }
+                        catch (Exception ex) { }
+                    }
+
                     if (callback != null) callback(null, e.Error);
                     return;
                 }
+
                 try
                 {
                     ForecastResponse forecast = JsonConvert.DeserializeObject<ForecastResponse>(e.Result);
+                    SaveToIsolatedStorage("forecast.json", e.Result);
                     if (callback != null) callback(forecast, null);
                 }
                 catch (Exception ex)
@@ -97,6 +113,38 @@ namespace HaruCore
                 }
             };
             wc.DownloadStringAsync(new Uri(url));
+        }
+
+        private void SaveToIsolatedStorage(string fileName, string content)
+        {
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Create, store))
+                {
+                    using (var writer = new StreamWriter(stream))
+                    {
+                        writer.Write(content);
+                    }
+                }
+            }
+        }
+
+        private string LoadFromIsolatedStorage(string fileName)
+        {
+            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (!store.FileExists(fileName))
+                    return null;
+
+
+                using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Open, store))
+                {
+                    using (var reader = new StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+            }
         }
     }
 }

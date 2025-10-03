@@ -32,37 +32,53 @@
                        Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
-        <Grid Grid.Row="1"
-              Margin="12,0,12,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1"
+                      Margin="12,0,12,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
+                <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
                                 Grid.Row="0"
                                 Header="Temperature unit">
-                <sys:String>celsius</sys:String>
-                <sys:String>fahrenheit</sys:String>
-            </toolkit:ListPicker>
+                    <sys:String>celsius</sys:String>
+                    <sys:String>fahrenheit</sys:String>
+                </toolkit:ListPicker>
 
-            <toolkit:ListPicker x:Name="WindSpeedUnitListPicker"
+                <toolkit:ListPicker x:Name="WindSpeedUnitListPicker"
                                 Grid.Row="1"
                                 Header="Wind speed unit">
-                <sys:String>kmh</sys:String>
-                <sys:String>ms</sys:String>
-                <sys:String>mph</sys:String>
-                <sys:String>kn</sys:String>
-            </toolkit:ListPicker>
+                    <sys:String>kmh</sys:String>
+                    <sys:String>ms</sys:String>
+                    <sys:String>mph</sys:String>
+                    <sys:String>kn</sys:String>
+                </toolkit:ListPicker>
 
-            <toolkit:ListPicker x:Name="PrecipitationUnitListPicker"
+                <toolkit:ListPicker x:Name="PrecipitationUnitListPicker"
                                 Grid.Row="2"
                                 Header="Precipitation unit">
-                <sys:String>mm</sys:String>
-                <sys:String>inch</sys:String>
-            </toolkit:ListPicker>
-        </Grid>
+                    <sys:String>mm</sys:String>
+                    <sys:String>inch</sys:String>
+                </toolkit:ListPicker>
+
+                <StackPanel Grid.Row="3"
+                        Margin="0,12,0,0">
+                    <Button x:Name="ClearSavedForecastButton"
+                            Content="clear saved forecast"
+                            Click="ClearSavedForecastButton_Click"/>
+                    <TextBlock Margin="12,12,12,0"
+                           FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                           FontSize="{StaticResource PhoneFontSizeMedium}"
+                           TextWrapping="Wrap">
+                    Removes the previously saved forecast, making sure Haru gets the freshest and most up-to-date forecast.
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>

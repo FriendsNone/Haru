@@ -119,7 +119,7 @@ namespace HaruApp.Views
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
             {
-                if (ferr != null || forecast == null)
+                if (forecast == null)
                 {
                     progressIndicator.IsIndeterminate = false;
                     progressIndicator.Text = "Something went wrong. Try again later.";
@@ -133,7 +133,17 @@ namespace HaruApp.Views
 
                 NowScrollViewer.Visibility = Visibility.Visible;
                 UpdateTile(forecast.Current);
-                progressIndicator.IsVisible = false;
+
+                if (ferr != null)
+                {
+                    progressIndicator.IsIndeterminate = false;
+                    progressIndicator.Text = "Something went wrong. Showing last update.";
+                    timer.Start();
+                }
+                else
+                {
+                    progressIndicator.IsVisible = false;
+                }
             });
         }
 

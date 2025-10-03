@@ -86,6 +86,24 @@ namespace HaruApp.Views
             }
         }
 
+        private void ClearSavedForecastButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (store.FileExists("forecast.json"))
+                    store.DeleteFile("forecast.json");
+            }
+
+            CustomMessageBox messageBox = new CustomMessageBox()
+            {
+                Caption = "Saved forecast cleared!",
+                Message = "A fresh and up-to-date forecast will be ready the next time you refresh or open the app.",
+                LeftButtonContent = "okay",
+            };
+
+            messageBox.Show();
+        }
+
         private void SaveApplicationBarIconButton_Click(object sender, EventArgs e)
         {
             SaveSettings();
