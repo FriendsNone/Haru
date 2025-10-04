@@ -26,6 +26,9 @@ namespace HaruApp.Views
         {
             base.OnNavigatedTo(e);
 
+            if (settings.Contains("BackgroundUpdateEnable"))
+                BackgroundUpdateToggleSwitch.IsChecked = (bool)settings["BackgroundUpdateEnable"];
+
             if (settings.Contains("TemperatureUnit"))
                 TemperatureUnitListPicker.SelectedItem = settings["TemperatureUnit"];
 
@@ -44,6 +47,7 @@ namespace HaruApp.Views
                 return;
 
             bool hasChanges =
+                (settings.Contains("BackgroundUpdateEnable") && BackgroundUpdateToggleSwitch.IsChecked != (bool?)settings["BackgroundUpdateEnable"]) ||
                 (settings.Contains("TemperatureUnit") && TemperatureUnitListPicker.SelectedItem as string != settings["TemperatureUnit"] as string) ||
                 (settings.Contains("WindSpeedUnit") && WindSpeedUnitListPicker.SelectedItem as string != settings["WindSpeedUnit"] as string) ||
                 (settings.Contains("PrecipitationUnit") && PrecipitationUnitListPicker.SelectedItem as string != settings["PrecipitationUnit"] as string);
@@ -69,7 +73,7 @@ namespace HaruApp.Views
                         {
                             case CustomMessageBoxResult.LeftButton:
                                 SaveSettings();
-                                NavigationService.GoBack();
+                                NavigationService.Navigate(new Uri("/Views/MainPage.xaml?refresh=true", UriKind.Relative));
                                 break;
                             case CustomMessageBoxResult.RightButton:
                                 NavigationService.GoBack();
@@ -107,7 +111,7 @@ namespace HaruApp.Views
         private void SaveApplicationBarIconButton_Click(object sender, EventArgs e)
         {
             SaveSettings();
-            NavigationService.GoBack();
+            NavigationService.Navigate(new Uri("/Views/MainPage.xaml?refresh=true", UriKind.Relative));
         }
 
         private void CancelApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -117,6 +121,7 @@ namespace HaruApp.Views
 
         private void SaveSettings()
         {
+            settings["BackgroundUpdateEnable"] = BackgroundUpdateToggleSwitch.IsChecked;
             settings["TemperatureUnit"] = TemperatureUnitListPicker.SelectedItem as string;
             settings["WindSpeedUnit"] = WindSpeedUnitListPicker.SelectedItem as string;
             settings["PrecipitationUnit"] = PrecipitationUnitListPicker.SelectedItem as string;

@@ -66,6 +66,9 @@ namespace HaruApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            if (!settings.Contains("BackgroundUpdateEnable"))
+                settings["BackgroundUpdateEnable"] = true;
+
             if (!settings.Contains("TemperatureUnit"))
                 settings["TemperatureUnit"] = "celsius";
 

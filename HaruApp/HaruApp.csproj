@@ -155,6 +155,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HaruAgent\HaruAgent.csproj">
+      <Project>{65EC893A-69AA-4743-A85A-16838A115E34}</Project>
+      <Name>HaruAgent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HaruCore\HaruCore.csproj">
       <Project>{266504F0-A06D-45C2-9BD5-31ACD54D1882}</Project>
       <Name>HaruCore</Name>

@@ -17,14 +17,18 @@ using HaruCore;
 using System.Windows.Media.Imaging;
 using HaruApp.ViewModels;
 using System.Windows.Threading;
+using Microsoft.Phone.Scheduler;
 
 namespace HaruApp.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        private const string TASK_NAME = "HaruAgent";
+
         private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-        private ProgressIndicator progressIndicator;
         private OpenMeteoClient client;
+        private PeriodicTask task;
+        private ProgressIndicator progressIndicator;
         private string lastLocation;
         private ForecastViewModel vm = new ForecastViewModel();
         private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
@@ -61,6 +65,20 @@ namespace HaruApp.Views
         {
             base.OnNavigatedTo(e);
 
+            string refresh;
+            if (NavigationContext.QueryString.TryGetValue("refresh", out refresh))
+            {
+                if (Boolean.Parse(refresh))
+                    FetchForecast();
+
+                if (NavigationService.CanGoBack)
+                {
+                    NavigationService.RemoveBackEntry();
+                    if (NavigationService.CanGoBack)
+                        NavigationService.RemoveBackEntry();
+                }
+            }
+
             if (settings.Contains("Location") && settings["Location"] as string != lastLocation)
             {
                 string location = settings["Location"] as string;
@@ -71,7 +89,6 @@ namespace HaruApp.Views
 
                 FetchForecast();
             }
-
         }
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -132,7 +149,8 @@ namespace HaruApp.Views
                 vm.Daily = forecast.ToDailyRecords();
 
                 NowScrollViewer.Visibility = Visibility.Visible;
-                UpdateTile(forecast.Current);
+                UpdateTile(vm.Current);
+                StartPeriodicAgent();
 
                 if (ferr != null)
                 {
@@ -147,7 +165,7 @@ namespace HaruApp.Views
             });
         }
 
-        private void UpdateTile(Current cw)
+        private void UpdateTile(CurrentRecord cr)
         {
             ShellTile tile = ShellTile.ActiveTiles.First();
             if (tile != null)
@@ -158,16 +176,49 @@ namespace HaruApp.Views
                 StandardTileData data = new StandardTileData()
                 {
                     Title = location,
-                    BackgroundImage = new Uri(WeatherInterpretationModel.GetWeatherTileIcon(cw.WeatherCode, cw.IsDay), UriKind.Relative),
-                    BackTitle = DateTime.Now.ToString("t"),
-                    BackContent = string.Format("{0}{1}\n{2}",
-                        System.Math.Ceiling(cw.Temperature),
-                        UnitModel.GetTemperatureUnit(temperatureUnit),
-                        WeatherInterpretationModel.GetWeatherDescription(cw.WeatherCode, cw.IsDay)),
+                    Count = 0,
+                    BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
+                        BackTitle = DateTime.Now.ToString("t"),
+                        BackContent = string.Format("{0}\n{1}",
+                            cr.Temperature,
+                            cr.WeatherDescription),
                 };
 
                 tile.Update(data);
             }
+        }
+
+        private void StartPeriodicAgent()
+        {
+            var oldTask = ScheduledActionService.Find(TASK_NAME);
+            if (oldTask != null)
+                ScheduledActionService.Remove(TASK_NAME);
+
+            task = new PeriodicTask(TASK_NAME)
+            {
+                Description = "Updates the live tile with the latest forecast.",
+                ExpirationTime = DateTime.Now.AddDays(14)
+            };
+
+            if (!((bool?)settings["BackgroundUpdateEnable"] ?? true))
+                return;
+
+            try
+            {
+                ScheduledActionService.Add(task);
+
+#if DEBUG
+                ScheduledActionService.LaunchForTest(TASK_NAME, TimeSpan.FromSeconds(60));
+                System.Diagnostics.Debug.WriteLine("Periodic task is started: " + TASK_NAME);
+#endif
+
+            }
+            catch (InvalidOperationException ex)
+            {
+                if (ex.Message.Contains("BNS Error: The action is disabled"))
+                    MessageBox.Show("Background agents for this application have been disabled by the user.");
+            }
+            catch (SchedulerServiceException) { }
         }
     }
 }

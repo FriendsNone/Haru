@@ -107,6 +107,7 @@ namespace HaruCore
         {
             var records = new CurrentRecord{
                 WeatherIcon         = WeatherInterpretationModel.GetWeatherIcon(this.Current.WeatherCode, this.Current.IsDay),
+                WeatherTile         = WeatherInterpretationModel.GetWeatherTileIcon(this.Current.WeatherCode, this.Current.IsDay),
                 WeatherDescription  = WeatherInterpretationModel.GetWeatherDescription(this.Current.WeatherCode, this.Current.IsDay),
                 Temperature         = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.Temperature),
                 ApparentTemperature = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.ApparentTemperature),
@@ -216,6 +217,7 @@ namespace HaruCore
     public class CurrentRecord
     {
         public string WeatherIcon { get; set; }
+        public string WeatherTile { get; set; }
         public string WeatherDescription { get; set; }
         public string Temperature { get; set; }
         public string ApparentTemperature { get; set; }

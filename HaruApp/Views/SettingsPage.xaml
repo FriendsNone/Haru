@@ -40,6 +40,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
@@ -64,9 +65,13 @@
                     <sys:String>mm</sys:String>
                     <sys:String>inch</sys:String>
                 </toolkit:ListPicker>
+                
+                <toolkit:ToggleSwitch x:Name="BackgroundUpdateToggleSwitch"
+                                      Grid.Row="3"
+                                      Margin="0,12,0,0"
+                                      Header="Allow background updates" />
 
-                <StackPanel Grid.Row="3"
-                        Margin="0,12,0,0">
+                <StackPanel Grid.Row="4">
                     <Button x:Name="ClearSavedForecastButton"
                             Content="clear saved forecast"
                             Click="ClearSavedForecastButton_Click"/>

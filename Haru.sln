@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaruApp", "HaruApp\HaruApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaruCore", "HaruCore\HaruCore.csproj", "{266504F0-A06D-45C2-9BD5-31ACD54D1882}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaruAgent", "HaruAgent\HaruAgent.csproj", "{65EC893A-69AA-4743-A85A-16838A115E34}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{266504F0-A06D-45C2-9BD5-31ACD54D1882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65EC893A-69AA-4743-A85A-16838A115E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65EC893A-69AA-4743-A85A-16838A115E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65EC893A-69AA-4743-A85A-16838A115E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65EC893A-69AA-4743-A85A-16838A115E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
