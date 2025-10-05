@@ -121,12 +121,12 @@ namespace HaruApp.Views
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainPivot.SelectedIndex == 0)
-                if (ApplicationBar != null)
-                    ApplicationBar.Mode = ApplicationBarMode.Default;
-                else
-                if (ApplicationBar != null)
-                    ApplicationBar.Mode = ApplicationBarMode.Minimized;
+            if (ApplicationBar != null)
+            {
+                ApplicationBar.Mode = MainPivot.SelectedIndex == 0
+                    ? ApplicationBarMode.Default
+                    : ApplicationBarMode.Minimized;
+            }
         }
 
         private void SearchApplicationBarIconButton_Click(object sender, EventArgs e)
