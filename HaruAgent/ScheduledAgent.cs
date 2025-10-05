@@ -80,7 +80,7 @@ namespace HaruAgent
                         Count = new Random().Next(99),
 #endif
                         BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
-                        BackTitle = DateTime.Now.ToString("t"),
+                        BackTitle = ferr != null ? "offline" : DateTime.Now.ToString("t"),
                         BackContent = string.Format("{0}\n{1}",
                             cr.Temperature,
                             cr.WeatherDescription),
@@ -92,7 +92,6 @@ namespace HaruAgent
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
                     System.Diagnostics.Debug.WriteLine("Periodic task is started again: " + task.Name);
 #endif
-
                     NotifyComplete();
                 });
             }

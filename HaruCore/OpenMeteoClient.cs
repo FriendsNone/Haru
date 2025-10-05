@@ -13,7 +13,7 @@ namespace HaruCore
 {
     public class OpenMeteoClient
     {
-        public void SearchLocation(string query, 
+        public void SearchLocation(string query,
                                    Action<GeocodingResponse, Exception> callback,
                                    int count = 10)
         {
@@ -94,7 +94,7 @@ namespace HaruCore
                             if (callback != null) callback(forecast, e.Error);
                             return;
                         }
-                        catch (Exception ex) { }
+                        catch (Exception) { }
                     }
 
                     if (callback != null) callback(null, e.Error);

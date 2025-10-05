@@ -105,14 +105,15 @@ namespace HaruCore
 
         public CurrentRecord ToCurrentRecord()
         {
-            var records = new CurrentRecord{
+            var records = new CurrentRecord
+            {
                 WeatherIcon         = WeatherInterpretationModel.GetWeatherIcon(this.Current.WeatherCode, this.Current.IsDay),
                 WeatherTile         = WeatherInterpretationModel.GetWeatherTileIcon(this.Current.WeatherCode, this.Current.IsDay),
                 WeatherDescription  = WeatherInterpretationModel.GetWeatherDescription(this.Current.WeatherCode, this.Current.IsDay),
                 Temperature         = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.Temperature),
                 ApparentTemperature = string.Format("{0}{1}", Math.Ceiling(this.Current.Temperature), this.CurrentUnits.ApparentTemperature),
                 Humidity            = string.Format("{0}%", this.Current.RelativeHumidity),
-                Precipitation       = string.Format("{0} {1}", this.Current.Precipitation, this.CurrentUnits.Precipitation), 
+                Precipitation       = string.Format("{0} {1}", this.Current.Precipitation, this.CurrentUnits.Precipitation),
                 WindSpeed           = string.Format("{0} {1}", this.Current.WindSpeed, this.CurrentUnits.WindSpeed),
                 WindDirection       = UnitModel.InterpretDirection(this.Current.WindDirection, false),
                 Pressure            = string.Format("{0} {1}", this.Current.Pressure, this.CurrentUnits.Pressure),
@@ -305,7 +306,7 @@ namespace HaruCore
         [JsonProperty("relative_humidity_2m_mean")]
         public List<int> RelativeHumidityMean { get; set; }
     }
-    
+
     public class DailyRecord
     {
         public string Time { get; set; }

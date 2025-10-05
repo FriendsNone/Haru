@@ -52,8 +52,39 @@ namespace HaruApp.Views
         {
             SystemTray.ProgressIndicator = progressIndicator;
 
-            if (!settings.Contains("Location"))
+            if (!settings.Contains("Location") || !settings.Contains("Latitude") || !settings.Contains("Longitude"))
                 GuideCanvas.Visibility = Visibility.Visible;
+
+            if (!settings.Contains("FirstTimeLocation"))
+            {
+                CustomMessageBox messageBox = new CustomMessageBox()
+                {
+                    Caption = "No location set",
+                    Message = "If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?",
+                    LeftButtonContent = "yes",
+                    RightButtonContent = "later"
+                };
+
+                messageBox.Dismissed += (s1, e1) =>
+                {
+                    switch (e1.Result)
+                    {
+                        case CustomMessageBoxResult.LeftButton:
+                            settings["FirstTimeLocation"] = true;
+                            settings.Save();
+                            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
+                            break;
+                        case CustomMessageBoxResult.RightButton:
+                        case CustomMessageBoxResult.None:
+                        default:
+                            settings["FirstTimeLocation"] = true;
+                            settings.Save();
+                            break;
+                    }
+                };
+
+                messageBox.Show();
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -68,9 +99,6 @@ namespace HaruApp.Views
             string refresh;
             if (NavigationContext.QueryString.TryGetValue("refresh", out refresh))
             {
-                if (Boolean.Parse(refresh))
-                    FetchForecast();
-
                 if (NavigationService.CanGoBack)
                 {
                     NavigationService.RemoveBackEntry();
@@ -108,7 +136,34 @@ namespace HaruApp.Views
 
         private void RefreshApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            FetchForecast();
+            if (!settings.Contains("Location") || !settings.Contains("Latitude") || !settings.Contains("Longitude"))
+            {
+                CustomMessageBox messageBox = new CustomMessageBox()
+                {
+                    Caption = "No location set",
+                    Message = "You need to set a location before refreshing the forecast. Do you want to set it now?",
+                    LeftButtonContent = "yes",
+                    RightButtonContent = "later"
+                };
+
+                messageBox.Dismissed += (s1, e1) =>
+                {
+                    switch (e1.Result)
+                    {
+                        case CustomMessageBoxResult.LeftButton:
+                            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
+                            break;
+                        case CustomMessageBoxResult.RightButton:
+                        case CustomMessageBoxResult.None:
+                        default:
+                            break;
+                    }
+                };
+
+                messageBox.Show();
+            }
+            else
+                FetchForecast();
         }
 
         private void SettingsApplicationBarMenuItem_Click(object sender, EventArgs e)
@@ -150,7 +205,6 @@ namespace HaruApp.Views
 
                 NowScrollViewer.Visibility = Visibility.Visible;
                 UpdateTile(vm.Current);
-                StartPeriodicAgent();
 
                 if (ferr != null)
                 {
@@ -167,25 +221,25 @@ namespace HaruApp.Views
 
         private void UpdateTile(CurrentRecord cr)
         {
-            ShellTile tile = ShellTile.ActiveTiles.First();
+            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault();
             if (tile != null)
             {
-                string location = (string)settings["Location"];
-                string temperatureUnit = (string)settings["TemperatureUnit"];
-
-                StandardTileData data = new StandardTileData()
-                {
-                    Title = location,
-                    Count = 0,
-                    BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
+                tile.Update(
+                    new StandardTileData()
+                    {
+                        Title = (string)settings["Location"],
+                        Count = 0,
+                        BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
                         BackTitle = DateTime.Now.ToString("t"),
                         BackContent = string.Format("{0}\n{1}",
                             cr.Temperature,
                             cr.WeatherDescription),
-                };
+                    }
+                );
 
-                tile.Update(data);
+                StartPeriodicAgent();
             }
+
         }
 
         private void StartPeriodicAgent()
@@ -194,24 +248,22 @@ namespace HaruApp.Views
             if (oldTask != null)
                 ScheduledActionService.Remove(TASK_NAME);
 
+            if (!(bool?)settings["BackgroundUpdateEnable"] ?? true)
+                return;
+
             task = new PeriodicTask(TASK_NAME)
             {
                 Description = "Updates the live tile with the latest forecast.",
                 ExpirationTime = DateTime.Now.AddDays(14)
             };
 
-            if (!((bool?)settings["BackgroundUpdateEnable"] ?? true))
-                return;
-
             try
             {
                 ScheduledActionService.Add(task);
-
 #if DEBUG
                 ScheduledActionService.LaunchForTest(TASK_NAME, TimeSpan.FromSeconds(60));
                 System.Diagnostics.Debug.WriteLine("Periodic task is started: " + TASK_NAME);
 #endif
-
             }
             catch (InvalidOperationException ex)
             {

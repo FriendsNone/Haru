@@ -26,21 +26,21 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="24"/>
-                        <RowDefinition />
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="24"/>
-                        <ColumnDefinition />
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <toolkit:HubTile Grid.Row="0"
                                      Grid.Column="0"
                                      Source="/Background.png"
                                      Title="v1.0.0"
                                      Message="From Japanese&#10;晴 (haru)&#10;meaning&#10;&#34;clear weather&#34;"/>
-                    
+
                     <StackPanel Grid.Row="0"
                                 Grid.Column="2">
                         <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"

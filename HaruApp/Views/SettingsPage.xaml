@@ -33,7 +33,7 @@
         </StackPanel>
 
         <ScrollViewer Grid.Row="1"
-                      Margin="12,0,12,0">
+                      Margin="12,0,12,24">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -44,15 +44,15 @@
                 </Grid.RowDefinitions>
 
                 <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
-                                Grid.Row="0"
-                                Header="Temperature unit">
+                                    Grid.Row="0"
+                                    Header="Temperature unit">
                     <sys:String>celsius</sys:String>
                     <sys:String>fahrenheit</sys:String>
                 </toolkit:ListPicker>
 
                 <toolkit:ListPicker x:Name="WindSpeedUnitListPicker"
-                                Grid.Row="1"
-                                Header="Wind speed unit">
+                                    Grid.Row="1"
+                                    Header="Wind speed unit">
                     <sys:String>kmh</sys:String>
                     <sys:String>ms</sys:String>
                     <sys:String>mph</sys:String>
@@ -60,25 +60,25 @@
                 </toolkit:ListPicker>
 
                 <toolkit:ListPicker x:Name="PrecipitationUnitListPicker"
-                                Grid.Row="2"
-                                Header="Precipitation unit">
+                                    Grid.Row="2"
+                                    Header="Precipitation unit">
                     <sys:String>mm</sys:String>
                     <sys:String>inch</sys:String>
                 </toolkit:ListPicker>
-                
+
                 <toolkit:ToggleSwitch x:Name="BackgroundUpdateToggleSwitch"
                                       Grid.Row="3"
-                                      Margin="0,12,0,0"
-                                      Header="Allow background updates" />
+                                      Margin="0,12,0,-12"
+                                      Header="Allow background updates"/>
 
                 <StackPanel Grid.Row="4">
                     <Button x:Name="ClearSavedForecastButton"
                             Content="clear saved forecast"
                             Click="ClearSavedForecastButton_Click"/>
                     <TextBlock Margin="12,12,12,0"
-                           FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                           FontSize="{StaticResource PhoneFontSizeMedium}"
-                           TextWrapping="Wrap">
+                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                               FontSize="{StaticResource PhoneFontSizeMedium}"
+                               TextWrapping="Wrap">
                     Removes the previously saved forecast, making sure Haru gets the freshest and most up-to-date forecast.
                     </TextBlock>
                 </StackPanel>

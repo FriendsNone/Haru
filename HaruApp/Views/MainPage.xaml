@@ -420,18 +420,18 @@
                 Margin="0,646,0,0"
                 Opacity="0.2"
                 Visibility="Collapsed">
-            <TextBlock Canvas.Left="220"
+            <TextBlock Canvas.Left="260"
                        Canvas.Top="10"
                        FontFamily="Comic Sans MS"
-                       Text="set your location here"/>
+                       Text="set location here"/>
             <Image Height="50"
                    Width="50"
-                   Canvas.Left="160"
+                   Canvas.Left="200"
                    Visibility="{StaticResource PhoneDarkThemeVisibility}"
                    Source="/Assets/guide.dark.png"/>
             <Image Height="50"
                    Width="50"
-                   Canvas.Left="160"
+                   Canvas.Left="200"
                    Visibility="{StaticResource PhoneLightThemeVisibility}"
                    Source="/Assets/guide.light.png"/>
         </Canvas>
