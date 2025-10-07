@@ -96,7 +96,7 @@ namespace HaruApp.Views
                     return;
                 }
 
-                if (locations == null)
+                if (locations == null || locations.Location == null)
                 {
                     progressIndicator.IsIndeterminate = false;
                     progressIndicator.Text = string.Format("No results for \"{0}\"", searchTerm);
