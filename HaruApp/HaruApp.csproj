@@ -147,7 +147,7 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="SplashScreenImage.jpg.bak" />
+    <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AppBar\appbar.pin.rest.png">
