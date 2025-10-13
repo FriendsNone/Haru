@@ -1,23 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using System.Windows.Navigation;
+using System.IO.IsolatedStorage;
+using System.Windows.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-using System.Windows.Navigation;
-using HaruCore;
-using System.Windows.Media.Imaging;
-using HaruApp.ViewModels;
-using System.Windows.Threading;
 using Microsoft.Phone.Scheduler;
+using HaruCore;
+using HaruApp.ViewModels;
+using HaruApp.Helpers;
 
 namespace HaruApp.Views
 {
@@ -25,79 +18,55 @@ namespace HaruApp.Views
     {
         private const string TASK_NAME = "HaruAgent";
 
-        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-        private OpenMeteoClient client;
-        private PeriodicTask task;
-        private ProgressIndicator progressIndicator;
+        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private readonly OpenMeteoClient client = new OpenMeteoClient();
+        private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
+        private readonly ForecastViewModel vm = new ForecastViewModel();
+        private readonly DispatcherTimer timer;
         private string lastLocation;
-        private ForecastViewModel vm = new ForecastViewModel();
-        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        private PeriodicTask task;
 
         public MainPage()
         {
             InitializeComponent();
-            this.DataContext = vm;
-            client = new OpenMeteoClient();
-            progressIndicator = new ProgressIndicator();
-
-            timer.Tick += (s, args) =>
-            {
-                timer.Stop();
-                progressIndicator.IsVisible = false;
-                return;
-            };
+            DataContext = vm;
+            timer = ProgressHelper.CreateProgressTimer(progressIndicator);
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             SystemTray.ProgressIndicator = progressIndicator;
 
-            if (!settings.Contains("Location") || !settings.Contains("Latitude") || !settings.Contains("Longitude"))
+            if (!HasLocationSettings())
                 GuideCanvas.Visibility = Visibility.Visible;
 
             if (!settings.Contains("FirstTimeLocation"))
             {
-                CustomMessageBox messageBox = new CustomMessageBox()
-                {
-                    Caption = "No location set",
-                    Message = "If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?",
-                    LeftButtonContent = "yes",
-                    RightButtonContent = "later"
-                };
-
-                messageBox.Dismissed += (s1, e1) =>
-                {
-                    switch (e1.Result)
+                PromptHelper.ShowPrompt(
+                    "No location set",
+                    "If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?",
+                    "yes",
+                    "later",
+                    () =>
                     {
-                        case CustomMessageBoxResult.LeftButton:
-                            settings["FirstTimeLocation"] = true;
-                            settings.Save();
-                            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
-                            break;
-                        case CustomMessageBoxResult.RightButton:
-                        case CustomMessageBoxResult.None:
-                        default:
-                            settings["FirstTimeLocation"] = true;
-                            settings.Save();
-                            break;
-                    }
-                };
-
-                messageBox.Show();
+                        settings["FirstTimeLocation"] = true;
+                        settings.Save();
+                        NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
+                    },
+                    null,
+                    () =>
+                    {
+                        settings["FirstTimeLocation"] = true;
+                        settings.Save();
+                    });
             }
-        }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
-            string refresh;
-            if (NavigationContext.QueryString.TryGetValue("refresh", out refresh))
+            if (NavigationContext.QueryString.ContainsKey("refresh"))
             {
                 if (NavigationService.CanGoBack)
                 {
@@ -109,12 +78,10 @@ namespace HaruApp.Views
 
             if (settings.Contains("Location") && settings["Location"] as string != lastLocation)
             {
-                string location = settings["Location"] as string;
-                lastLocation = location;
-
+                lastLocation = settings["Location"] as string;
                 GuideCanvas.Visibility = Visibility.Collapsed;
-                MainPivot.Title = location.ToUpper();
-
+                MainPivot.Title = lastLocation.ToUpper();
+                if (MainPivot.SelectedIndex != 0) MainPivot.SelectedIndex = 0;
                 FetchForecast();
             }
         }
@@ -122,11 +89,7 @@ namespace HaruApp.Views
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ApplicationBar != null)
-            {
-                ApplicationBar.Mode = MainPivot.SelectedIndex == 0
-                    ? ApplicationBarMode.Default
-                    : ApplicationBarMode.Minimized;
-            }
+                ApplicationBar.Mode = MainPivot.SelectedIndex == 0 ? ApplicationBarMode.Default : ApplicationBarMode.Minimized;
         }
 
         private void SearchApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -136,32 +99,13 @@ namespace HaruApp.Views
 
         private void RefreshApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            if (!settings.Contains("Location") || !settings.Contains("Latitude") || !settings.Contains("Longitude"))
-            {
-                CustomMessageBox messageBox = new CustomMessageBox()
-                {
-                    Caption = "No location set",
-                    Message = "You need to set a location before refreshing the forecast. Do you want to set it now?",
-                    LeftButtonContent = "yes",
-                    RightButtonContent = "later"
-                };
-
-                messageBox.Dismissed += (s1, e1) =>
-                {
-                    switch (e1.Result)
-                    {
-                        case CustomMessageBoxResult.LeftButton:
-                            NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
-                            break;
-                        case CustomMessageBoxResult.RightButton:
-                        case CustomMessageBoxResult.None:
-                        default:
-                            break;
-                    }
-                };
-
-                messageBox.Show();
-            }
+            if (!HasLocationSettings())
+                PromptHelper.ShowPrompt(
+                    "No location set",
+                    "You need to set a location before refreshing the forecast. Do you want to set it now?",
+                    "yes",
+                    "later",
+                    () => NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative)));
             else
                 FetchForecast();
         }
@@ -178,68 +122,50 @@ namespace HaruApp.Views
 
         private void FetchForecast()
         {
-            double latitude = (double)settings["Latitude"];
-            double longitude = (double)settings["Longitude"];
+            var latitude = (double)settings["Latitude"];
+            var longitude = (double)settings["Longitude"];
+            var temperatureUnit = (string)settings["TemperatureUnit"];
+            var windSpeedUnit = (string)settings["WindSpeedUnit"];
+            var precipitationUnit = (string)settings["PrecipitationUnit"];
 
-            string temperatureUnit = (string)settings["TemperatureUnit"];
-            string windSpeedUnit = (string)settings["WindSpeedUnit"];
-            string precipitationUnit = (string)settings["PrecipitationUnit"];
+            ProgressHelper.ShowProgress(progressIndicator, "Fetching forecast...");
 
-            progressIndicator.IsIndeterminate = true;
-            progressIndicator.Text = "Fetching forecast...";
-            progressIndicator.IsVisible = true;
-
-            client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
+            client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
             {
                 if (forecast == null)
                 {
-                    progressIndicator.IsIndeterminate = false;
-                    progressIndicator.Text = "Something went wrong. Try again later.";
-                    timer.Start();
+                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Try again later.", true, timer);
                     return;
                 }
 
                 vm.Current = forecast.ToCurrentRecord();
                 vm.Hourly = forecast.ToHourlyRecords();
                 vm.Daily = forecast.ToDailyRecords();
-
                 NowScrollViewer.Visibility = Visibility.Visible;
                 UpdateTile(vm.Current);
 
-                if (ferr != null)
-                {
-                    progressIndicator.IsIndeterminate = false;
-                    progressIndicator.Text = "Something went wrong. Showing last update.";
-                    timer.Start();
-                }
+                if (error != null)
+                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Showing last update.", true, timer);
                 else
-                {
-                    progressIndicator.IsVisible = false;
-                }
+                    ProgressHelper.HideProgress(progressIndicator);
             });
         }
 
         private void UpdateTile(CurrentRecord cr)
         {
-            ShellTile tile = ShellTile.ActiveTiles.FirstOrDefault();
+            var tile = ShellTile.ActiveTiles.FirstOrDefault();
             if (tile != null)
             {
-                tile.Update(
-                    new StandardTileData()
-                    {
-                        Title = (string)settings["Location"],
-                        Count = 0,
-                        BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
-                        BackTitle = DateTime.Now.ToString("t"),
-                        BackContent = string.Format("{0}\n{1}",
-                            cr.Temperature,
-                            cr.WeatherDescription),
-                    }
-                );
-
+                tile.Update(new StandardTileData
+                {
+                    Title = (string)settings["Location"],
+                    Count = 0,
+                    BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
+                    BackTitle = DateTime.Now.ToString("t"),
+                    BackContent = string.Format("{0}\n{1}", cr.Temperature, cr.WeatherDescription)
+                });
                 StartPeriodicAgent();
             }
-
         }
 
         private void StartPeriodicAgent()
@@ -271,6 +197,11 @@ namespace HaruApp.Views
                     MessageBox.Show("Background agents for this application have been disabled by the user.");
             }
             catch (SchedulerServiceException) { }
+        }
+
+        private bool HasLocationSettings()
+        {
+            return settings.Contains("Location") && settings.Contains("Latitude") && settings.Contains("Longitude");
         }
     }
 }

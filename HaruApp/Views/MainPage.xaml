@@ -171,7 +171,7 @@
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
                                     toolkit:SlideInEffect.LineIndex="10">
-                            <TextBlock Text="{Binding Current.Time}"
+                            <TextBlock Text="{Binding Current.Time, StringFormat='Forecast as of {0}'}"
                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"

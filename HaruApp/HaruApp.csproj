@@ -66,6 +66,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ProgressHelper.cs" />
+    <Compile Include="Helpers\PromptHelper.cs" />
     <Compile Include="ViewModels\GeocodingViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">

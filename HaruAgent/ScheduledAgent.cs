@@ -1,18 +1,20 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
+using System.IO.IsolatedStorage;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-using System.Linq;
-using System;
 using HaruCore;
+
 
 namespace HaruAgent
 {
     public class ScheduledAgent : ScheduledTaskAgent
     {
         private static volatile bool _classInitialized;
-        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-        private OpenMeteoClient client;
+        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private readonly OpenMeteoClient client = new OpenMeteoClient();
 
         /// <remarks>
         /// ScheduledAgent constructor, initializes the UnhandledException handler
@@ -22,7 +24,6 @@ namespace HaruAgent
             if (!_classInitialized)
             {
                 _classInitialized = true;
-                client = new OpenMeteoClient();
                 // Subscribe to the managed exception handler
                 Deployment.Current.Dispatcher.BeginInvoke(delegate
                 {
@@ -52,53 +53,58 @@ namespace HaruAgent
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
-            string location = (string)settings["Location"];
-            double latitude = (double)settings["Latitude"];
-            double longitude = (double)settings["Longitude"];
-
-            string temperatureUnit = (string)settings["TemperatureUnit"];
-            string windSpeedUnit = (string)settings["WindSpeedUnit"];
-            string precipitationUnit = (string)settings["PrecipitationUnit"];
-
-            ShellTile tile = ShellTile.ActiveTiles.First();
-            if (tile != null)
+            var tile = ShellTile.ActiveTiles.FirstOrDefault();
+            if (tile == null)
             {
-                client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, ferr) =>
+                NotifyComplete();
+                return;
+            }
+
+            if (!DeviceNetworkInformation.IsNetworkAvailable)
+            {
+                tile.Update(new StandardTileData
                 {
-                    if (forecast == null)
-                    {
-                        NotifyComplete();
-                        return;
-                    }
+#if DEBUG
+                    Count = DateTime.Now.Minute,
+#endif
+                    BackTitle = "offline"
+                });
 
-                    CurrentRecord cr = forecast.ToCurrentRecord();
+                NotifyComplete();
+                return;
+            }
 
-                    StandardTileData data = new StandardTileData()
+            var location = (string)settings["Location"];
+            var latitude = (double)settings["Latitude"];
+            var longitude = (double)settings["Longitude"];
+            var temperatureUnit = (string)settings["TemperatureUnit"];
+            var windSpeedUnit = (string)settings["WindSpeedUnit"];
+            var precipitationUnit = (string)settings["PrecipitationUnit"];
+
+            client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
+            {
+                if (forecast != null)
+                {
+                    var current = forecast.ToCurrentRecord();
+                    tile.Update(new StandardTileData
                     {
                         Title = location,
 #if DEBUG
-                        Count = new Random().Next(99),
+                        Count = DateTime.Now.Minute,
 #endif
-                        BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
-                        BackTitle = ferr != null ? "offline" : DateTime.Now.ToString("t"),
-                        BackContent = string.Format("{0}\n{1}",
-                            cr.Temperature,
-                            cr.WeatherDescription),
-                    };
-
-                    tile.Update(data);
+                        BackgroundImage = new Uri(current.WeatherTile, UriKind.Relative),
+                        BackTitle = error != null ? current.Time : DateTime.Now.ToString("t"),
+                        BackContent = string.Format("{0}\n{1}", current.Temperature, current.WeatherDescription)
+                    });
 
 #if DEBUG
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
                     System.Diagnostics.Debug.WriteLine("Periodic task is started again: " + task.Name);
 #endif
-                    NotifyComplete();
-                });
-            }
-            else
-            {
+                }
+
                 NotifyComplete();
-            }
+            });
         }
     }
 }

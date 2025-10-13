@@ -58,8 +58,7 @@
     <Compile Include="OpenMeteoClient.cs" />
     <Compile Include="OpenMeteoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitModel.cs" />
-    <Compile Include="WeatherInterpretationModel.cs" />
+    <Compile Include="UnitHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

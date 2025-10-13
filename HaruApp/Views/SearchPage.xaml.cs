@@ -1,41 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-using HaruCore;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using HaruCore;
 using HaruApp.ViewModels;
+using HaruApp.Helpers;
 
 namespace HaruApp.Views
 {
     public partial class SearchPage : PhoneApplicationPage
     {
-        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-        private ProgressIndicator progressIndicator;
-        private OpenMeteoClient client;
-        private GeocodingViewModel vm = new GeocodingViewModel();
-        private DispatcherTimer timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
+        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+        private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
+        private readonly OpenMeteoClient client = new OpenMeteoClient();
+        private readonly GeocodingViewModel vm = new GeocodingViewModel();
+        private readonly DispatcherTimer timer;
 
         public SearchPage()
         {
             InitializeComponent();
-            this.DataContext = vm;
-            client = new OpenMeteoClient();
-            progressIndicator = new ProgressIndicator();
-
-            timer.Tick += (s, args) =>
-            {
-                timer.Stop();
-                progressIndicator.IsVisible = false;
-                return;
-            };
+            DataContext = vm;
+            timer = ProgressHelper.CreateProgressTimer(progressIndicator);
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -44,33 +33,30 @@ namespace HaruApp.Views
             SearchPhoneTextBox.Focus();
         }
 
-        private void SearchPhoneTextBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void SearchPhoneTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                string searchTerm = SearchPhoneTextBox.Text.Trim();
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                    return;
-
-                FetchLocation(searchTerm);
-                this.Focus();
+                var searchTerm = SearchPhoneTextBox.Text.Trim();
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    FetchLocation(searchTerm);
+                    Focus();
+                }
             }
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string searchTerm = SearchPhoneTextBox.Text.Trim();
-            if (string.IsNullOrWhiteSpace(searchTerm))
-                return;
-
-            FetchLocation(searchTerm);
+            var searchTerm = SearchPhoneTextBox.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+                FetchLocation(searchTerm);
         }
 
         private void ResultListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedLocation = ResultListBox.SelectedItem as LocationRecord;
-            if (selectedLocation == null)
-                return;
+            if (selectedLocation == null) return;
 
             settings["Location"] = selectedLocation.NameShort;
             settings["Latitude"] = selectedLocation.Latitude;
@@ -82,30 +68,24 @@ namespace HaruApp.Views
 
         private void FetchLocation(string searchTerm)
         {
-            progressIndicator.IsIndeterminate = true;
-            progressIndicator.Text = string.Format("Searching for \"{0}\"", searchTerm);
-            progressIndicator.IsVisible = true;
+            ProgressHelper.ShowProgress(progressIndicator, string.Format("Searching for \"{0}\"", searchTerm));
 
-            client.SearchLocation(searchTerm, (locations, err) =>
+            client.SearchLocation(searchTerm, (locations, error) =>
             {
-                if (err != null)
+                if (error != null)
                 {
-                    progressIndicator.IsIndeterminate = false;
-                    progressIndicator.Text = "Something went wrong. Try again later.";
-                    timer.Start();
+                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Try again later.", true, timer);
                     return;
                 }
 
                 if (locations == null || locations.Location == null)
                 {
-                    progressIndicator.IsIndeterminate = false;
-                    progressIndicator.Text = string.Format("No results for \"{0}\"", searchTerm);
-                    timer.Start();
+                    ProgressHelper.ShowProgress(progressIndicator, string.Format("No results for \"{0}\"", searchTerm), true, timer);
                     return;
                 }
 
                 vm.Location = locations.ToLocationRecords();
-                progressIndicator.IsVisible = false;
+                ProgressHelper.HideProgress(progressIndicator);
             });
         }
     }

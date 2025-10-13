@@ -1,9 +1,6 @@
 ﻿using HaruCore;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace HaruApp.ViewModels
 {
@@ -27,11 +24,8 @@ namespace HaruApp.ViewModels
 
         protected void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
