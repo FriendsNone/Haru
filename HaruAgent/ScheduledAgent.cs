@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using System.IO.IsolatedStorage;
-using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using HaruCore;
@@ -56,20 +55,6 @@ namespace HaruAgent
             var tile = ShellTile.ActiveTiles.FirstOrDefault();
             if (tile == null)
             {
-                NotifyComplete();
-                return;
-            }
-
-            if (!DeviceNetworkInformation.IsNetworkAvailable)
-            {
-                tile.Update(new StandardTileData
-                {
-#if DEBUG
-                    Count = DateTime.Now.Minute,
-#endif
-                    BackTitle = "offline"
-                });
-
                 NotifyComplete();
                 return;
             }
