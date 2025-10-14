@@ -53,7 +53,11 @@ namespace HaruApp.Views
                         settings.Save();
                         NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
                     },
-                    null,
+                    () =>
+                    {
+                        settings["FirstTimeLocation"] = true;
+                        settings.Save();
+                    },
                     () =>
                     {
                         settings["FirstTimeLocation"] = true;
