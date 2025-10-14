@@ -135,7 +135,28 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="changelog">
-                <Grid/>
+                <StackPanel Margin="12,0,12,0">
+                    <StackPanel>
+                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}"
+                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                   FontSize="{StaticResource PhoneFontSizeLarge}"
+                                   Text="[1.0.0] - 2025-10-16" />
+                        <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                   FontSize="{StaticResource PhoneFontSizeNormal}"
+                                   Text="Added" />
+                        <StackPanel Margin="24,0,0,0">
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Current weather conditions with detailed metrics" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; 12-hour hourly forecast" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; 7-day daily forecast" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Global location search with geocoding" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Live tile with automatic background updates" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Offline support with smart caching" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Customizable weather units (temperature, wind speed, precipitation)" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Background tile updates toggle" />
+                            <TextBlock TextWrapping="Wrap" Text="&#8226; Day/night weather icon variants" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
