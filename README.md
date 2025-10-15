@@ -52,7 +52,9 @@ A clean, modern weather application for Windows Phone that brings beautiful weat
 ## Installation
 
 > [!IMPORTANT]
-> Make sure your device is configured to allow app sideloading.
+> Make sure your device is configured to allow app sideloading, and have installed the relevant SDKs.
+>
+> If your device is running Windows Phone 7, make sure the **Zune software** is installed.
 
 ### Option 1: From XAP File (Sideloading)
 1. Download the latest `.xap` file from the [Releases](../../releases) page
