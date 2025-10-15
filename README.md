@@ -3,7 +3,6 @@
 A clean, modern weather application for Windows Phone that brings beautiful weather forecasts to your device.
 
 ![Windows Phone 7](https://img.shields.io/badge/Windows%20Phone-7.5+-blue.svg)
-![.NET](https://img.shields.io/badge/.NET-Framework%204.0-512BD4.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## Features
@@ -41,13 +40,23 @@ A clean, modern weather application for Windows Phone that brings beautiful weat
 
 ## Screenshots
 
-*Coming soon*
+|![Splash screen](Screenshots/splash.webp)|![Current weather](Screenshots/right-now.webp)|![Location search](Screenshots/location-search.webp)|![Settings](Screenshots/settings.webp)|
+|:---:|:---:|:---:|:---:|
+|Splash Screen|Current Weather|Location Search|Settings|
+
+|![Front (no location)](Screenshots/tile1.webp)|![Back (no location)](Screenshots/tile2.webp)|![Front (location set)](Screenshots/tile3.webp)|![Back (location set)](Screenshots/tile4.webp)|
+|:---:|:---:|:---:|:---:|
+|Live Tile Front (no location)|Live Tile Back (no location)|Live Tile Front (location set)|Live Tile Back (location set)|
+
 
 ## Installation
 
+> [!IMPORTANT]
+> Make sure your device is configured to allow app sideloading.
+
 ### Option 1: From XAP File (Sideloading)
 1. Download the latest `.xap` file from the [Releases](../../releases) page
-2. Connect your Windows Phone 7 device to your computer
+2. Connect your Windows Phone device to your computer
 3. Use the **Windows Phone Application Deployment Tool** to deploy the XAP
 4. Launch Haru from your app list
 
@@ -60,9 +69,9 @@ See [Build Instructions](#build-instructions) below
 
 - **Windows 7** or higher
 - **Zune software** (for Windows Phone 7 device deployment)
-- **Git** (for cloning the repository)
-- **NuGet** (for managing dependencies)
-- **Visual Studio 2012** 
+- **Git**
+- **NuGet**
+- **Visual Studio 2010** or **Visual Studio 2012**
 - **Windows Phone SDK 7.1**
 
 ### Required NuGet Packages
@@ -86,24 +95,20 @@ The project uses the following NuGet packages:
 
 3. **Restore NuGet packages**
    - Right-click on the solution in Solution Explorer
-   - Select "Restore NuGet Packages"
-   - Or use Package Manager Console:
-     ```
-     Update-Package -Reinstall
-     ```
+   - Select **Manage NuGet Packages for Solution...**
+   - Click **Restore** to download missing packages
 
 4. **Set HaruApp as startup project**
    - Right-click on `HaruApp` project
-   - Select "Set as StartUp Project"
+   - Select **Set as StartUp Project**
 
 5. **Build the solution**
-   - Press `F6` or select **Build > Build Solution**
+   - Select **Build > Build Solution**
    - Ensure `HaruCore`, `HaruApp`, and `HaruAgent` projects build successfully
 
 6. **Deploy to device or emulator**
-   - Press `F5` to run with debugging
-   - Or `Ctrl+F5` to run without debugging
-   - Select Windows Phone Emulator or connected device
+   - Select **Emulator** or **Device** from the dropdown
+   - Select **Debug > Start Debugging** or press `F5`
 
 ## Contributing
 
