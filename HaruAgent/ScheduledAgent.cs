@@ -71,16 +71,15 @@ namespace HaruAgent
                 if (forecast != null)
                 {
                     var current = forecast.ToCurrentRecord();
-                    tile.Update(new StandardTileData
-                    {
-                        Title = location,
-#if DEBUG
-                        Count = DateTime.Now.Minute,
-#endif
-                        BackgroundImage = new Uri(current.WeatherTile, UriKind.Relative),
-                        BackTitle = error != null ? current.Time : DateTime.Now.ToString("t"),
-                        BackContent = string.Format("{0}\n{1}", current.Temperature, current.WeatherDescription)
-                    });
+
+                    TileHelper.UpdateTile(
+                        location,
+                        current.Temperature,
+                        current.WeatherDescription,
+                        current.WeatherIcon,
+                        current.WeatherTile,
+                        error != null ? current.Time : DateTime.Now.ToString("t")
+                    );
 
 #if DEBUG
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));

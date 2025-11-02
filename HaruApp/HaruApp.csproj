@@ -130,6 +130,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\guide.light.png" />
+    <Content Include="Assets\small-tile.png" />
     <Content Include="Assets\WeatherIcons\clear-day.png" />
     <Content Include="Assets\WeatherIcons\clear-night.png" />
     <Content Include="Assets\WeatherIcons\cloudy.png" />
@@ -148,6 +149,15 @@
     <Content Include="Assets\WeatherIcons\Tile\sleet.png" />
     <Content Include="Assets\WeatherIcons\Tile\snow.png" />
     <Content Include="Assets\WeatherIcons\Tile\thunderstorms.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\clear-day.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\clear-night.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\cloudy.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\mist.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\not-available.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\rain.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\sleet.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\snow.png" />
+    <Content Include="Assets\WeatherIcons\WideTile\thunderstorms.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

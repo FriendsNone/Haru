@@ -157,19 +157,16 @@ namespace HaruApp.Views
 
         private void UpdateTile(CurrentRecord cr)
         {
-            var tile = ShellTile.ActiveTiles.FirstOrDefault();
-            if (tile != null)
-            {
-                tile.Update(new StandardTileData
-                {
-                    Title = (string)settings["Location"],
-                    Count = 0,
-                    BackgroundImage = new Uri(cr.WeatherTile, UriKind.Relative),
-                    BackTitle = DateTime.Now.ToString("t"),
-                    BackContent = string.Format("{0}\n{1}", cr.Temperature, cr.WeatherDescription)
-                });
-                StartPeriodicAgent();
-            }
+            TileHelper.UpdateTile(
+                (string)settings["Location"],
+                cr.Temperature,
+                cr.WeatherDescription,
+                cr.WeatherIcon,
+                cr.WeatherTile,
+                DateTime.Now.ToString("t")
+            );
+
+            StartPeriodicAgent();
         }
 
         private void StartPeriodicAgent()

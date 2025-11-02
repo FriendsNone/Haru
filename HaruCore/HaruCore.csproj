@@ -43,6 +43,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Phone" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\sl4-windowsphone71\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -60,6 +61,7 @@
     <Compile Include="OpenMeteoClient.cs" />
     <Compile Include="OpenMeteoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileHelper.cs" />
     <Compile Include="UnitHelper.cs" />
   </ItemGroup>
   <ItemGroup>
