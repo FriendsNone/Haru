@@ -182,7 +182,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="next 12 hours">
-                <ScrollViewer>
+                <ScrollViewer x:Name="HoursScrollViewer">
                     <ItemsControl ItemsSource="{Binding Hourly}"
                                   Margin="12,0,0,0">
                         <ItemsControl.ItemTemplate>
@@ -299,7 +299,7 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="next 7 days">
-                <ScrollViewer>
+                <ScrollViewer x:Name="DaysScrollViewer">
                     <ItemsControl ItemsSource="{Binding Daily}"
                                   Margin="12,0,0,0">
                         <ItemsControl.ItemTemplate>

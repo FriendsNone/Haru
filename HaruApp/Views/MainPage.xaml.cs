@@ -93,7 +93,11 @@ namespace HaruApp.Views
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ApplicationBar != null)
+            {
                 ApplicationBar.Mode = MainPivot.SelectedIndex == 0 ? ApplicationBarMode.Default : ApplicationBarMode.Minimized;
+                HoursScrollViewer.ScrollToVerticalOffset(0);
+                DaysScrollViewer.ScrollToVerticalOffset(0);
+            }
         }
 
         private void SearchApplicationBarIconButton_Click(object sender, EventArgs e)
