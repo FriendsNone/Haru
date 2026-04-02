@@ -82,8 +82,7 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0"
-                                        toolkit:SlideInEffect.LineIndex="3">
+                            <StackPanel Grid.Row="0">
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"
@@ -98,8 +97,7 @@
                                            Text="Microsoft"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="2"
-                                        toolkit:SlideInEffect.LineIndex="3">
+                            <StackPanel Grid.Row="2">
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"
@@ -114,8 +112,7 @@
                                            Text="Bas Milius"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Row="4"
-                                        toolkit:SlideInEffect.LineIndex="3">
+                            <StackPanel Grid.Row="4">
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"

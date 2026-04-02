@@ -15,7 +15,8 @@
     Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
-    Style="{StaticResource TurnstilePageTransition}">
+    Style="{StaticResource TurnstilePageTransition}"
+    toolkit:TiltEffect.IsTiltEnabled="True">
 
     <Grid Background="Transparent">
         <Grid.RowDefinitions>

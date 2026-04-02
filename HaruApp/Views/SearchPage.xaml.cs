@@ -63,7 +63,10 @@ namespace HaruApp.Views
             settings["Longitude"] = selectedLocation.Longitude;
             settings.Save();
 
-            NavigationService.GoBack();
+            if (NavigationService.CanGoBack)
+                NavigationService.RemoveBackEntry();
+
+            NavigationService.Navigate(new Uri("/Views/MainPage.xaml?refresh=true", UriKind.Relative));
         }
 
         private void FetchLocation(string searchTerm)

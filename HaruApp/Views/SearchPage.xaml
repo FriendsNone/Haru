@@ -15,6 +15,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True"
     Style="{StaticResource TurnstilePageTransition}"
+    toolkit:TiltEffect.IsTiltEnabled="True"
     Loaded="PhoneApplicationPage_Loaded">
 
     <Grid Background="Transparent">
