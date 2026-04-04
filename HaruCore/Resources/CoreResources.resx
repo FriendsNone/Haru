@@ -117,196 +117,127 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppBarAbout" xml:space="preserve">
-    <value>about</value>
+  <data name="DirectionEast" xml:space="preserve">
+    <value>east</value>
   </data>
-  <data name="AppBarCancel" xml:space="preserve">
-    <value>cancel</value>
+  <data name="DirectionNorth" xml:space="preserve">
+    <value>north</value>
   </data>
-  <data name="AppBarRefresh" xml:space="preserve">
-    <value>refresh</value>
+  <data name="DirectionNortheast" xml:space="preserve">
+    <value>northeast</value>
   </data>
-  <data name="AppBarSave" xml:space="preserve">
-    <value>save</value>
+  <data name="DirectionNorthwest" xml:space="preserve">
+    <value>northwest</value>
   </data>
-  <data name="AppBarSearch" xml:space="preserve">
-    <value>search</value>
+  <data name="DirectionSouth" xml:space="preserve">
+    <value>south</value>
   </data>
-  <data name="AppBarSettings" xml:space="preserve">
-    <value>settings</value>
+  <data name="DirectionSoutheast" xml:space="preserve">
+    <value>southeast</value>
   </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>HARU</value>
+  <data name="DirectionSouthwest" xml:space="preserve">
+    <value>southwest</value>
   </data>
-  <data name="BackgroundAgentDisabled" xml:space="preserve">
-    <value>Background agents for this application have been disabled by the user.</value>
+  <data name="DirectionWest" xml:space="preserve">
+    <value>west</value>
   </data>
-  <data name="LabelAppIcon" xml:space="preserve">
-    <value>APP ICON</value>
+  <data name="TimeHourAgo" xml:space="preserve">
+    <value>{0} hour ago</value>
   </data>
-  <data name="LabelAvgHum" xml:space="preserve">
-    <value>AVG HUM</value>
+  <data name="TimeHoursAgo" xml:space="preserve">
+    <value>{0} hours ago</value>
   </data>
-  <data name="LabelCondition" xml:space="preserve">
-    <value>CONDITION</value>
+  <data name="TimeMinuteAgo" xml:space="preserve">
+    <value>{0} minute ago</value>
   </data>
-  <data name="LabelDevelopedBy" xml:space="preserve">
-    <value>DEVELOPED BY</value>
+  <data name="TimeMinutesAgo" xml:space="preserve">
+    <value>{0} minutes ago</value>
   </data>
-  <data name="LabelFeelsLike" xml:space="preserve">
-    <value>FEELS LIKE</value>
+  <data name="TimeNow" xml:space="preserve">
+    <value>now</value>
   </data>
-  <data name="LabelHum" xml:space="preserve">
-    <value>HUM</value>
+  <data name="WeatherClear" xml:space="preserve">
+    <value>clear</value>
   </data>
-  <data name="LabelHumidity" xml:space="preserve">
-    <value>HUMIDITY</value>
+  <data name="WeatherDenseFreezingDrizzle" xml:space="preserve">
+    <value>dense freezing drizzle</value>
   </data>
-  <data name="LabelMaxPrec" xml:space="preserve">
-    <value>MAX PREC</value>
+  <data name="WeatherFog" xml:space="preserve">
+    <value>fog</value>
   </data>
-  <data name="LabelMaxWind" xml:space="preserve">
-    <value>MAX WIND</value>
+  <data name="WeatherHeavyDrizzle" xml:space="preserve">
+    <value>heavy drizzle</value>
   </data>
-  <data name="LabelPrec" xml:space="preserve">
-    <value>PREC</value>
+  <data name="WeatherHeavyFreezingRain" xml:space="preserve">
+    <value>heavy freezing rain</value>
   </data>
-  <data name="LabelPrecipitation" xml:space="preserve">
-    <value>PRECIPITATION</value>
+  <data name="WeatherHeavyHail" xml:space="preserve">
+    <value>heavy hail</value>
   </data>
-  <data name="LabelPressure" xml:space="preserve">
-    <value>PRESSURE</value>
+  <data name="WeatherHeavyRain" xml:space="preserve">
+    <value>heavy rain</value>
   </data>
-  <data name="LabelTemp" xml:space="preserve">
-    <value>TEMP</value>
+  <data name="WeatherHeavyRainShowers" xml:space="preserve">
+    <value>heavy rain showers</value>
   </data>
-  <data name="LabelTemperature" xml:space="preserve">
-    <value>TEMPERATURE</value>
+  <data name="WeatherHeavySnow" xml:space="preserve">
+    <value>heavy snow</value>
   </data>
-  <data name="LabelWeatherApi" xml:space="preserve">
-    <value>WEATHER FORECAST &amp; GEOCODING API</value>
+  <data name="WeatherHeavySnowShowers" xml:space="preserve">
+    <value>heavy snow showers</value>
   </data>
-  <data name="LabelWeatherIcons" xml:space="preserve">
-    <value>WEATHER ICONS</value>
+  <data name="WeatherLightDrizzle" xml:space="preserve">
+    <value>light drizzle</value>
   </data>
-  <data name="LabelWind" xml:space="preserve">
-    <value>WIND</value>
+  <data name="WeatherLightFreezingDrizzle" xml:space="preserve">
+    <value>light freezing drizzle</value>
   </data>
-  <data name="LabelWindDirection" xml:space="preserve">
-    <value>WIND DIRECTION</value>
+  <data name="WeatherLightFreezingRain" xml:space="preserve">
+    <value>light freezing rain</value>
   </data>
-  <data name="LabelWindSpeed" xml:space="preserve">
-    <value>WIND SPEED</value>
+  <data name="WeatherLightHail" xml:space="preserve">
+    <value>light hail</value>
   </data>
-  <data name="MadeWithLove" xml:space="preserve">
-    <value>made with love &lt;3</value>
+  <data name="WeatherLightRain" xml:space="preserve">
+    <value>light rain</value>
   </data>
-  <data name="NoLocation" xml:space="preserve">
-    <value>NO LOCATION</value>
+  <data name="WeatherLightRainShowers" xml:space="preserve">
+    <value>light rain showers</value>
   </data>
-  <data name="PageAbout" xml:space="preserve">
-    <value>about</value>
+  <data name="WeatherLightSnow" xml:space="preserve">
+    <value>light snow</value>
   </data>
-  <data name="PageSearch" xml:space="preserve">
-    <value>search</value>
+  <data name="WeatherLightSnowShowers" xml:space="preserve">
+    <value>light snow showers</value>
   </data>
-  <data name="PageSettings" xml:space="preserve">
-    <value>settings</value>
+  <data name="WeatherModerateDrizzle" xml:space="preserve">
+    <value>moderate drizzle</value>
   </data>
-  <data name="PivotChangelog" xml:space="preserve">
-    <value>changelog</value>
+  <data name="WeatherModerateRain" xml:space="preserve">
+    <value>moderate rain</value>
   </data>
-  <data name="PivotNext12Hours" xml:space="preserve">
-    <value>next 12 hours</value>
+  <data name="WeatherModerateRainShowers" xml:space="preserve">
+    <value>moderate rain showers</value>
   </data>
-  <data name="PivotNext7Days" xml:space="preserve">
-    <value>next 7 days</value>
+  <data name="WeatherModerateSnow" xml:space="preserve">
+    <value>moderate snow</value>
   </data>
-  <data name="PivotRightNow" xml:space="preserve">
-    <value>right now</value>
+  <data name="WeatherOvercast" xml:space="preserve">
+    <value>overcast</value>
   </data>
-  <data name="ProgressError" xml:space="preserve">
-    <value>Something went wrong. Try again later.</value>
+  <data name="WeatherPartlyCloudy" xml:space="preserve">
+    <value>partly cloudy</value>
   </data>
-  <data name="ProgressFetchingForecast" xml:space="preserve">
-    <value>Fetching forecast...</value>
+  <data name="WeatherSnowGrains" xml:space="preserve">
+    <value>snow grains</value>
   </data>
-  <data name="ProgressNoResults" xml:space="preserve">
-    <value>No results for "{0}"</value>
+  <data name="WeatherSunny" xml:space="preserve">
+    <value>sunny</value>
   </data>
-  <data name="ProgressSearching" xml:space="preserve">
-    <value>Searching for "{0}"...</value>
+  <data name="WeatherThunderstorm" xml:space="preserve">
+    <value>thunderstorm</value>
   </data>
-  <data name="ProgressShowingLastUpdate" xml:space="preserve">
-    <value>Something went wrong. Showing last update.</value>
-  </data>
-  <data name="PromptDontSave" xml:space="preserve">
-    <value>don't save</value>
-  </data>
-  <data name="PromptLater" xml:space="preserve">
-    <value>later</value>
-  </data>
-  <data name="PromptNoLocationFirstTime" xml:space="preserve">
-    <value>If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?</value>
-  </data>
-  <data name="PromptNoLocationRefresh" xml:space="preserve">
-    <value>You need to set a location before refreshing the forecast. Do you want to set it now?</value>
-  </data>
-  <data name="PromptNoLocationTitle" xml:space="preserve">
-    <value>No location set</value>
-  </data>
-  <data name="PromptOkay" xml:space="preserve">
-    <value>okay</value>
-  </data>
-  <data name="PromptSave" xml:space="preserve">
-    <value>save</value>
-  </data>
-  <data name="PromptSaveChangesMessage" xml:space="preserve">
-    <value>Your changes will be lost if you don't save them.</value>
-  </data>
-  <data name="PromptSaveChangesTitle" xml:space="preserve">
-    <value>Do you want to save changes?</value>
-  </data>
-  <data name="PromptYes" xml:space="preserve">
-    <value>yes</value>
-  </data>
-  <data name="SearchButton" xml:space="preserve">
-    <value>search</value>
-  </data>
-  <data name="SearchHint" xml:space="preserve">
-    <value>enter location</value>
-  </data>
-  <data name="SettingBackgroundUpdates" xml:space="preserve">
-    <value>Allow background updates</value>
-  </data>
-  <data name="SettingClearForecast" xml:space="preserve">
-    <value>clear saved forecast</value>
-  </data>
-  <data name="SettingClearForecastDescription" xml:space="preserve">
-    <value>Removes the previously saved forecast, making sure Haru gets the freshest and most up-to-date forecast.</value>
-  </data>
-  <data name="SettingClearForecastSuccessMessage" xml:space="preserve">
-    <value>A fresh and up-to-date forecast will be ready the next time you refresh or open the app.</value>
-  </data>
-  <data name="SettingClearForecastSuccessTitle" xml:space="preserve">
-    <value>Saved forecast cleared!</value>
-  </data>
-  <data name="SettingPrecipitationUnit" xml:space="preserve">
-    <value>Precipitation unit</value>
-  </data>
-  <data name="SettingTemperatureUnit" xml:space="preserve">
-    <value>Temperature unit</value>
-  </data>
-  <data name="SettingWindSpeedUnit" xml:space="preserve">
-    <value>Wind speed unit</value>
-  </data>
-  <data name="HaruMeaning" xml:space="preserve">
-    <value>From Japanese
-晴 (haru)
-meaning
-"clear weather"</value>
-  </data>
-  <data name="ForecastAsOf" xml:space="preserve">
-    <value>Forecast as of {0}</value>
+  <data name="WeatherUnknown" xml:space="preserve">
+    <value>unknown</value>
   </data>
 </root>

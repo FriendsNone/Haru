@@ -306,4 +306,7 @@
 que significa
 "tiempo despejado"</value>
   </data>
+  <data name="ForecastAsOf" xml:space="preserve">
+    <value>Pronóstico de {0}</value>
+  </data>
 </root>

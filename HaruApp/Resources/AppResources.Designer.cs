@@ -133,6 +133,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forecast as of {0}.
+        /// </summary>
+        public static string ForecastAsOf {
+            get {
+                return ResourceManager.GetString("ForecastAsOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From Japanese
         ///晴 (haru)
         ///meaning

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HaruCore.Resources;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -9,21 +10,22 @@ namespace HaruCore
         private const string IconBase = "/Assets/WeatherIcons/";
         private const string TileBase = "/Assets/WeatherIcons/Tile/";
 
-        private static readonly string[] Directions = { "north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest" };
-        private static readonly string[] DirectionsShort = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
-
-        private static readonly Dictionary<int, string> WeatherDescriptions = new Dictionary<int, string>
+        private static string[] GetDirections()
         {
-            { 0, "clear" }, { 1, "clear" }, { 2, "partly cloudy" }, { 3, "overcast" },
-            { 45, "fog" }, { 48, "fog" }, { 51, "light drizzle" }, { 53, "moderate drizzle" },
-            { 55, "heavy drizzle" }, { 56, "light freezing drizzle" }, { 57, "dense freezing drizzle" },
-            { 61, "light rain" }, { 63, "moderate rain" }, { 65, "heavy rain" },
-            { 66, "light freezing rain" }, { 67, "heavy freezing rain" },
-            { 71, "light snow" }, { 73, "moderate snow" }, { 75, "heavy snow" }, { 77, "snow grains" },
-            { 80, "light rain showers" }, { 81, "moderate rain showers" }, { 82, "heavy rain showers" },
-            { 85, "light snow showers" }, { 86, "heavy snow showers" },
-            { 95, "thunderstorm" }, { 96, "light hail" }, { 99, "heavy hail" }
-        };
+            return new[]
+            {
+                CoreResources.DirectionNorth,
+                CoreResources.DirectionNortheast,
+                CoreResources.DirectionEast,
+                CoreResources.DirectionSoutheast,
+                CoreResources.DirectionSouth,
+                CoreResources.DirectionSouthwest,
+                CoreResources.DirectionWest,
+                CoreResources.DirectionNorthwest
+            };
+        }
+
+        private static readonly string[] DirectionsShort = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
 
         private static readonly Dictionary<int, string> IconMap = new Dictionary<int, string>
         {
@@ -40,7 +42,7 @@ namespace HaruCore
         {
             azimuth = (azimuth % 360 + 360) % 360;
             int index = (int)Math.Round(azimuth / 45.0) % 8;
-            return shorthand ? DirectionsShort[index] : Directions[index];
+            return shorthand ? DirectionsShort[index] : GetDirections()[index];
         }
 
         public static string InterpretTimeDifference(string dateTime)
@@ -48,17 +50,61 @@ namespace HaruCore
             var dt = DateTime.Parse(dateTime, null, DateTimeStyles.RoundtripKind);
             var diff = DateTime.Now - dt;
 
-            if (diff.TotalSeconds < 60) return "now";
-            if (diff.TotalMinutes < 60) return string.Format("{0} minute{1} ago", (int)diff.TotalMinutes, diff.TotalMinutes >= 2 ? "s" : "");
-            if (diff.TotalHours < 24) return string.Format("{0} hour{1} ago", (int)diff.TotalHours, diff.TotalHours >= 2 ? "s" : "");
+            if (diff.TotalSeconds < 60) return CoreResources.TimeNow;
+
+            if (diff.TotalMinutes < 60)
+            {
+                int mins = (int)diff.TotalMinutes;
+                return string.Format(mins == 1
+                    ? CoreResources.TimeMinuteAgo
+                    : CoreResources.TimeMinutesAgo, mins);
+            }
+
+            if (diff.TotalHours < 24)
+            {
+                int hours = (int)diff.TotalHours;
+                return string.Format(hours == 1
+                    ? CoreResources.TimeHourAgo
+                    : CoreResources.TimeHoursAgo, hours);
+            }
+
             return dt.ToString("t", CultureInfo.CurrentCulture);
         }
 
         public static string GetWeatherDescription(int weatherCode, bool isDay)
         {
-            if (weatherCode <= 1) return isDay ? "sunny" : "clear";
-            string desc;
-            return WeatherDescriptions.TryGetValue(weatherCode, out desc) ? desc : "unknown";
+            if (weatherCode <= 1) return isDay ? CoreResources.WeatherSunny : CoreResources.WeatherClear;
+
+            switch (weatherCode)
+            {
+                case 2: return CoreResources.WeatherPartlyCloudy;
+                case 3: return CoreResources.WeatherOvercast;
+                case 45:
+                case 48: return CoreResources.WeatherFog;
+                case 51: return CoreResources.WeatherLightDrizzle;
+                case 53: return CoreResources.WeatherModerateDrizzle;
+                case 55: return CoreResources.WeatherHeavyDrizzle;
+                case 56: return CoreResources.WeatherLightFreezingDrizzle;
+                case 57: return CoreResources.WeatherDenseFreezingDrizzle;
+                case 61: return CoreResources.WeatherLightRain;
+                case 63: return CoreResources.WeatherModerateRain;
+                case 65: return CoreResources.WeatherHeavyRain;
+                case 66: return CoreResources.WeatherLightFreezingRain;
+                case 67: return CoreResources.WeatherHeavyFreezingRain;
+                case 71: return CoreResources.WeatherLightSnow;
+                case 73: return CoreResources.WeatherModerateSnow;
+                case 75: return CoreResources.WeatherHeavySnow;
+                case 77: return CoreResources.WeatherSnowGrains;
+                case 80: return CoreResources.WeatherLightRainShowers;
+                case 81: return CoreResources.WeatherModerateRainShowers;
+                case 82: return CoreResources.WeatherHeavyRainShowers;
+                case 85: return CoreResources.WeatherLightSnowShowers;
+                case 86: return CoreResources.WeatherHeavySnowShowers;
+                case 95: return CoreResources.WeatherThunderstorm;
+                case 96: return CoreResources.WeatherLightHail;
+                case 99: return CoreResources.WeatherHeavyHail;
+                default: return CoreResources.WeatherUnknown;
+            }
         }
 
         public static string GetWeatherIcon(int weatherCode, bool isDay)

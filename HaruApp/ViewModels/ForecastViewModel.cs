@@ -1,4 +1,5 @@
-﻿using HaruCore;
+﻿using HaruApp.Resources;
+using HaruCore;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -10,7 +11,25 @@ namespace HaruApp.ViewModels
         public CurrentRecord Current
         {
             get { return current; }
-            set { if (current != value) { current = value; OnPropertyChanged("Current"); } }
+            set
+            {
+                if (current != value)
+                {
+                    current = value;
+                    OnPropertyChanged("Current");
+                    OnPropertyChanged("ForecastTime");
+                }
+            }
+        }
+
+        public string ForecastTime
+        {
+            get
+            {
+                return current == null
+                    ? null
+                    : string.Format(AppResources.ForecastAsOf, current.Time);
+            }
         }
 
         private List<HourlyRecord> hourly;
