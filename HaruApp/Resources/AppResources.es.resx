@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppBarAbout" xml:space="preserve">
+    <value>acerca de</value>
+  </data>
+  <data name="AppBarCancel" xml:space="preserve">
+    <value>cancelar</value>
+  </data>
+  <data name="AppBarRefresh" xml:space="preserve">
+    <value>actualizar</value>
+  </data>
+  <data name="AppBarSave" xml:space="preserve">
+    <value>guardar</value>
+  </data>
+  <data name="AppBarSearch" xml:space="preserve">
+    <value>buscar</value>
+  </data>
+  <data name="AppBarSettings" xml:space="preserve">
+    <value>ajustes</value>
+  </data>
+  <data name="AppTitle" xml:space="preserve">
+    <value>HARU</value>
+  </data>
+  <data name="BackgroundAgentDisabled" xml:space="preserve">
+    <value>El usuario ha desactivado los agentes en segundo plano para esta aplicación.</value>
+  </data>
+  <data name="LabelAppIcon" xml:space="preserve">
+    <value>ÍCONO DE LA APP</value>
+  </data>
+  <data name="LabelAvgHum" xml:space="preserve">
+    <value>HUM PROM</value>
+  </data>
+  <data name="LabelCondition" xml:space="preserve">
+    <value>CONDICIÓN</value>
+  </data>
+  <data name="LabelDevelopedBy" xml:space="preserve">
+    <value>DESARROLLADO POR</value>
+  </data>
+  <data name="LabelFeelsLike" xml:space="preserve">
+    <value>SENSACIÓN</value>
+  </data>
+  <data name="LabelHum" xml:space="preserve">
+    <value>HUM</value>
+  </data>
+  <data name="LabelHumidity" xml:space="preserve">
+    <value>HUMEDAD</value>
+  </data>
+  <data name="LabelMaxPrec" xml:space="preserve">
+    <value>PREC MÁX</value>
+  </data>
+  <data name="LabelMaxWind" xml:space="preserve">
+    <value>VIENTO MÁX</value>
+  </data>
+  <data name="LabelPrec" xml:space="preserve">
+    <value>PREC</value>
+  </data>
+  <data name="LabelPrecipitation" xml:space="preserve">
+    <value>PRECIPITACIÓN</value>
+  </data>
+  <data name="LabelPressure" xml:space="preserve">
+    <value>PRESIÓN</value>
+  </data>
+  <data name="LabelTemp" xml:space="preserve">
+    <value>TEMP</value>
+  </data>
+  <data name="LabelTemperature" xml:space="preserve">
+    <value>TEMPERATURA</value>
+  </data>
+  <data name="LabelWeatherApi" xml:space="preserve">
+    <value>PRONÓSTICO DEL TIEMPO &amp; API DE GEOCODIFICACIÓN</value>
+  </data>
+  <data name="LabelWeatherIcons" xml:space="preserve">
+    <value>ÍCONOS DEL TIEMPO</value>
+  </data>
+  <data name="LabelWind" xml:space="preserve">
+    <value>VIENTO</value>
+  </data>
+  <data name="LabelWindDirection" xml:space="preserve">
+    <value>DIRECCIÓN DEL VIENTO</value>
+  </data>
+  <data name="LabelWindSpeed" xml:space="preserve">
+    <value>VELOCIDAD DEL VIENTO</value>
+  </data>
+  <data name="MadeWithLove" xml:space="preserve">
+    <value>hecho con amor &lt;3</value>
+  </data>
+  <data name="NoLocation" xml:space="preserve">
+    <value>SIN UBICACIÓN</value>
+  </data>
+  <data name="PageAbout" xml:space="preserve">
+    <value>acerca de</value>
+  </data>
+  <data name="PageSearch" xml:space="preserve">
+    <value>buscar</value>
+  </data>
+  <data name="PageSettings" xml:space="preserve">
+    <value>ajustes</value>
+  </data>
+  <data name="PivotChangelog" xml:space="preserve">
+    <value>historial de cambios</value>
+  </data>
+  <data name="PivotNext12Hours" xml:space="preserve">
+    <value>próximas 12 horas</value>
+  </data>
+  <data name="PivotNext7Days" xml:space="preserve">
+    <value>próximos 7 días</value>
+  </data>
+  <data name="PivotRightNow" xml:space="preserve">
+    <value>ahora mismo</value>
+  </data>
+  <data name="ProgressError" xml:space="preserve">
+    <value>Algo salió mal. Inténtalo de nuevo más tarde.</value>
+  </data>
+  <data name="ProgressFetchingForecast" xml:space="preserve">
+    <value>Obteniendo pronóstico...</value>
+  </data>
+  <data name="ProgressNoResults" xml:space="preserve">
+    <value>Sin resultados para "{0}"</value>
+  </data>
+  <data name="ProgressSearching" xml:space="preserve">
+    <value>Buscando "{0}"...</value>
+  </data>
+  <data name="ProgressShowingLastUpdate" xml:space="preserve">
+    <value>Algo salió mal. Mostrando última actualización.</value>
+  </data>
+  <data name="PromptDontSave" xml:space="preserve">
+    <value>no guardar</value>
+  </data>
+  <data name="PromptLater" xml:space="preserve">
+    <value>después</value>
+  </data>
+  <data name="PromptNoLocationFirstTime" xml:space="preserve">
+    <value>Si es la primera vez que usas Haru, debes establecer una ubicación antes de obtener el pronóstico. ¿Quieres hacerlo ahora?</value>
+  </data>
+  <data name="PromptNoLocationRefresh" xml:space="preserve">
+    <value>Debes establecer una ubicación antes de actualizar el pronóstico. ¿Quieres hacerlo ahora?</value>
+  </data>
+  <data name="PromptNoLocationTitle" xml:space="preserve">
+    <value>Sin ubicación establecida</value>
+  </data>
+  <data name="PromptOkay" xml:space="preserve">
+    <value>aceptar</value>
+  </data>
+  <data name="PromptSave" xml:space="preserve">
+    <value>guardar</value>
+  </data>
+  <data name="PromptSaveChangesMessage" xml:space="preserve">
+    <value>Los cambios se perderán si no los guardas.</value>
+  </data>
+  <data name="PromptSaveChangesTitle" xml:space="preserve">
+    <value>¿Deseas guardar los cambios?</value>
+  </data>
+  <data name="PromptYes" xml:space="preserve">
+    <value>sí</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>buscar</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>ingresa una ubicación</value>
+  </data>
+  <data name="SettingBackgroundUpdates" xml:space="preserve">
+    <value>Permitir actualizaciones en segundo plano</value>
+  </data>
+  <data name="SettingClearForecast" xml:space="preserve">
+    <value>borrar pronóstico guardado</value>
+  </data>
+  <data name="SettingClearForecastDescription" xml:space="preserve">
+    <value>Elimina el pronóstico guardado anteriormente, asegurando que Haru obtenga el pronóstico más reciente y actualizado.</value>
+  </data>
+  <data name="SettingClearForecastSuccessMessage" xml:space="preserve">
+    <value>Un pronóstico actualizado estará listo la próxima vez que actualices o abras la app.</value>
+  </data>
+  <data name="SettingClearForecastSuccessTitle" xml:space="preserve">
+    <value>¡Pronóstico guardado eliminado!</value>
+  </data>
+  <data name="SettingPrecipitationUnit" xml:space="preserve">
+    <value>Unidad de precipitación</value>
+  </data>
+  <data name="SettingTemperatureUnit" xml:space="preserve">
+    <value>Unidad de temperatura</value>
+  </data>
+  <data name="SettingWindSpeedUnit" xml:space="preserve">
+    <value>Unidad de velocidad del viento</value>
+  </data>
+  <data name="HaruMeaning" xml:space="preserve">
+    <value>Del japonés
+晴 (haru)
+que significa
+"tiempo despejado"</value>
+  </data>
+</root>

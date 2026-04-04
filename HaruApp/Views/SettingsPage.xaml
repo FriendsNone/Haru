@@ -26,9 +26,9 @@
 
         <StackPanel Grid.Row="0"
                     Margin="12,17,0,28">
-            <TextBlock Text="HARU"
+            <TextBlock Text="{Binding LocalizedResources.AppTitle, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="settings"
+            <TextBlock Text="{Binding LocalizedResources.PageSettings, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
@@ -46,14 +46,14 @@
 
                 <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
                                     Grid.Row="0"
-                                    Header="Temperature unit">
+                                    Header="{Binding LocalizedResources.SettingTemperatureUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>celsius</sys:String>
                     <sys:String>fahrenheit</sys:String>
                 </toolkit:ListPicker>
 
                 <toolkit:ListPicker x:Name="WindSpeedUnitListPicker"
                                     Grid.Row="1"
-                                    Header="Wind speed unit">
+                                    Header="{Binding LocalizedResources.SettingWindSpeedUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>kmh</sys:String>
                     <sys:String>ms</sys:String>
                     <sys:String>mph</sys:String>
@@ -62,7 +62,7 @@
 
                 <toolkit:ListPicker x:Name="PrecipitationUnitListPicker"
                                     Grid.Row="2"
-                                    Header="Precipitation unit">
+                                    Header="{Binding LocalizedResources.SettingPrecipitationUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>mm</sys:String>
                     <sys:String>inch</sys:String>
                 </toolkit:ListPicker>
@@ -70,34 +70,20 @@
                 <toolkit:ToggleSwitch x:Name="BackgroundUpdateToggleSwitch"
                                       Grid.Row="3"
                                       Margin="0,12,0,-12"
-                                      Header="Allow background updates"/>
+                                      Header="{Binding LocalizedResources.SettingBackgroundUpdates, Source={StaticResource LocalizedStrings}}"/>
 
                 <StackPanel Grid.Row="4">
                     <Button x:Name="ClearSavedForecastButton"
-                            Content="clear saved forecast"
+                            Content="{Binding LocalizedResources.SettingClearForecast, Source={StaticResource LocalizedStrings}}"
                             Click="ClearSavedForecastButton_Click"/>
                     <TextBlock Margin="12,12,12,0"
                                FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                FontSize="{StaticResource PhoneFontSizeMedium}"
-                               TextWrapping="Wrap">
-                    Removes the previously saved forecast, making sure Haru gets the freshest and most up-to-date forecast.
-                    </TextBlock>
+                               TextWrapping="Wrap"
+                               Text="{Binding LocalizedResources.SettingClearForecastDescription, Source={StaticResource LocalizedStrings}}"/>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
     </Grid>
-
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton x:Name="SaveApplicationBarIconButton"
-                                            IconUri="/Assets/AppBar/appbar.save.rest.png"
-                                            Text="save"
-                                            Click="SaveApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton x:Name="CancelApplicationBarIconButton"
-                                            IconUri="/Assets/AppBar/appbar.cancel.rest.png"
-                                            Text="cancel"
-                                            Click="CancelApplicationBarIconButton_Click"/>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

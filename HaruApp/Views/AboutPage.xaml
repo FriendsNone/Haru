@@ -20,8 +20,8 @@
     Style="{StaticResource TurnstilePageTransition}">
 
     <Grid Background="Transparent">
-        <controls:Pivot Title="HARU">
-            <controls:PivotItem Header="about">
+        <controls:Pivot Title="{Binding LocalizedResources.AppTitle, Source={StaticResource LocalizedStrings}}">
+            <controls:PivotItem Header="{Binding LocalizedResources.PageAbout, Source={StaticResource LocalizedStrings}}">
                 <Grid Margin="12,0,12,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -39,14 +39,14 @@
                                      Grid.Column="0"
                                      Source="/Background.png"
                                      Title="v1.0.0"
-                                     Message="From Japanese&#10;晴 (haru)&#10;meaning&#10;&#34;clear weather&#34;"/>
+                                     Message="{Binding LocalizedResources.HaruMeaning, Source={StaticResource LocalizedStrings}}"/>
 
                     <StackPanel Grid.Row="0"
                                 Grid.Column="2">
                         <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                    FontSize="{StaticResource PhoneFontSizeSmall}"
                                    Foreground="{StaticResource PhoneSubtleBrush}"
-                                   Text="DEVELOPED BY"/>
+                                   Text="{Binding LocalizedResources.LabelDevelopedBy, Source={StaticResource LocalizedStrings}}"/>
                         <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                    FontSize="{StaticResource PhoneFontSizeLarge}"
                                    Foreground="{StaticResource PhoneAccentBrush}"
@@ -61,7 +61,7 @@
                                Grid.Column="2"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Bottom"
-                               Text="made with love &#60;3"
+                               Text="{Binding LocalizedResources.MadeWithLove, Source={StaticResource LocalizedStrings}}"
                                Foreground="{StaticResource PhoneSubtleBrush}"
                                FontFamily="{StaticResource PhoneFontFamilyLight}"
                                FontSize="{StaticResource PhoneFontSizeSmall}"/>
@@ -86,7 +86,7 @@
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"
-                                           Text="APP ICON"/>
+                                           Text="{Binding LocalizedResources.LabelAppIcon, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            Foreground="{StaticResource PhoneAccentBrush}"
@@ -101,7 +101,7 @@
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"
-                                           Text="WEATHER ICONS"/>
+                                           Text="{Binding LocalizedResources.LabelWeatherIcons, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            Foreground="{StaticResource PhoneAccentBrush}"
@@ -116,7 +116,7 @@
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                            FontSize="{StaticResource PhoneFontSizeSmall}"
                                            Foreground="{StaticResource PhoneSubtleBrush}"
-                                           Text="WEATHER FORECAST &#38; GEOCODING API"/>
+                                           Text="{Binding LocalizedResources.LabelWeatherApi, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
                                            Foreground="{StaticResource PhoneAccentBrush}"
@@ -131,26 +131,35 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="changelog">
+            <controls:PivotItem Header="{Binding LocalizedResources.PivotChangelog, Source={StaticResource LocalizedStrings}}">
                 <StackPanel Margin="12,0,12,0">
                     <StackPanel>
                         <TextBlock Foreground="{StaticResource PhoneAccentBrush}"
                                    FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                    FontSize="{StaticResource PhoneFontSizeLarge}"
-                                   Text="[1.0.0] - 2025-10-16" />
+                                   Text="[1.0.0] - 2025-10-16"/>
                         <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                    FontSize="{StaticResource PhoneFontSizeNormal}"
-                                   Text="Added" />
+                                   Text="Added"/>
                         <StackPanel Margin="24,0,0,0">
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Current weather conditions with detailed metrics" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; 12-hour hourly forecast" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; 7-day daily forecast" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Global location search with geocoding" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Live tile with automatic background updates" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Offline support with smart caching" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Customizable weather units (temperature, wind speed, precipitation)" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Background tile updates toggle" />
-                            <TextBlock TextWrapping="Wrap" Text="&#8226; Day/night weather icon variants" />
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Current weather conditions with detailed metrics"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; 12-hour hourly forecast"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; 7-day daily forecast"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Global location search with geocoding"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Live tile with automatic background updates"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Offline support with smart caching"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Customizable weather units (temperature, wind speed, precipitation)"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Background tile updates toggle"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Text="&#8226; Day/night weather icon variants"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

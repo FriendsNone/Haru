@@ -9,6 +9,7 @@ using Microsoft.Phone.Shell;
 using HaruCore;
 using HaruApp.ViewModels;
 using HaruApp.Helpers;
+using HaruApp.Resources;
 
 namespace HaruApp.Views
 {
@@ -71,19 +72,19 @@ namespace HaruApp.Views
 
         private void FetchLocation(string searchTerm)
         {
-            ProgressHelper.ShowProgress(progressIndicator, string.Format("Searching for \"{0}\"", searchTerm));
+            ProgressHelper.ShowProgress(progressIndicator, string.Format(AppResources.ProgressSearching, searchTerm));
 
             client.SearchLocation(searchTerm, (locations, error) =>
             {
                 if (error != null)
                 {
-                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Try again later.", true, timer);
+                    ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressError, true, timer);
                     return;
                 }
 
                 if (locations == null || locations.Location == null)
                 {
-                    ProgressHelper.ShowProgress(progressIndicator, string.Format("No results for \"{0}\"", searchTerm), true, timer);
+                    ProgressHelper.ShowProgress(progressIndicator, string.Format(AppResources.ProgressNoResults, searchTerm), true, timer);
                     return;
                 }
 

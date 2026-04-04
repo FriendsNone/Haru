@@ -11,6 +11,7 @@ using Microsoft.Phone.Scheduler;
 using HaruCore;
 using HaruApp.ViewModels;
 using HaruApp.Helpers;
+using HaruApp.Resources;
 
 namespace HaruApp.Views
 {
@@ -29,6 +30,7 @@ namespace HaruApp.Views
         public MainPage()
         {
             InitializeComponent();
+            BuildApplicationBar();
             DataContext = vm;
             timer = ProgressHelper.CreateProgressTimer(progressIndicator);
         }
@@ -37,16 +39,13 @@ namespace HaruApp.Views
         {
             SystemTray.ProgressIndicator = progressIndicator;
 
-            if (!HasLocationSettings())
-                GuideCanvas.Visibility = Visibility.Visible;
-
             if (!settings.Contains("FirstTimeLocation"))
             {
                 PromptHelper.ShowPrompt(
-                    "No location set",
-                    "If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?",
-                    "yes",
-                    "later",
+                    AppResources.PromptNoLocationTitle,
+                    AppResources.PromptNoLocationFirstTime,
+                    AppResources.PromptYes,
+                    AppResources.PromptLater,
                     () =>
                     {
                         settings["FirstTimeLocation"] = true;
@@ -83,7 +82,6 @@ namespace HaruApp.Views
             if (settings.Contains("Location") && settings["Location"] as string != lastLocation)
             {
                 lastLocation = settings["Location"] as string;
-                GuideCanvas.Visibility = Visibility.Collapsed;
                 MainPivot.Title = lastLocation.ToUpper();
                 if (MainPivot.SelectedIndex != 0) MainPivot.SelectedIndex = 0;
                 FetchForecast();
@@ -109,10 +107,10 @@ namespace HaruApp.Views
         {
             if (!HasLocationSettings())
                 PromptHelper.ShowPrompt(
-                    "No location set",
-                    "You need to set a location before refreshing the forecast. Do you want to set it now?",
-                    "yes",
-                    "later",
+                    AppResources.PromptNoLocationTitle,
+                    AppResources.PromptNoLocationRefresh,
+                    AppResources.PromptYes,
+                    AppResources.PromptLater,
                     () => NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative)));
             else
                 FetchForecast();
@@ -136,13 +134,13 @@ namespace HaruApp.Views
             var windSpeedUnit = (string)settings["WindSpeedUnit"];
             var precipitationUnit = (string)settings["PrecipitationUnit"];
 
-            ProgressHelper.ShowProgress(progressIndicator, "Fetching forecast...");
+            ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressFetchingForecast);
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
             {
                 if (forecast == null)
                 {
-                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Try again later.", true, timer);
+                    ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressError, true, timer);
                     return;
                 }
 
@@ -153,7 +151,7 @@ namespace HaruApp.Views
                 UpdateTile(vm.Current);
 
                 if (error != null)
-                    ProgressHelper.ShowProgress(progressIndicator, "Something went wrong. Showing last update.", true, timer);
+                    ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressShowingLastUpdate, true, timer);
                 else
                     ProgressHelper.HideProgress(progressIndicator);
             });
@@ -199,7 +197,7 @@ namespace HaruApp.Views
             catch (InvalidOperationException ex)
             {
                 if (ex.Message.Contains("BNS Error: The action is disabled"))
-                    MessageBox.Show("Background agents for this application have been disabled by the user.");
+                    MessageBox.Show(AppResources.BackgroundAgentDisabled);
             }
             catch (SchedulerServiceException) { }
         }
@@ -207,6 +205,31 @@ namespace HaruApp.Views
         private bool HasLocationSettings()
         {
             return settings.Contains("Location") && settings.Contains("Latitude") && settings.Contains("Longitude");
+        }
+
+        private void BuildApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+
+            ApplicationBarIconButton searchButton = new ApplicationBarIconButton();
+            searchButton.IconUri = new Uri("/Assets/AppBar/appbar.feature.search.rest.png", UriKind.Relative);
+            searchButton.Text = AppResources.AppBarSearch;
+            searchButton.Click += SearchApplicationBarIconButton_Click;
+            ApplicationBar.Buttons.Add(searchButton);
+
+            ApplicationBarIconButton refreshButton = new ApplicationBarIconButton();
+            refreshButton.IconUri = new Uri("/Assets/AppBar/appbar.refresh.rest.png", UriKind.Relative);
+            refreshButton.Text = AppResources.AppBarRefresh;
+            refreshButton.Click += RefreshApplicationBarIconButton_Click;
+            ApplicationBar.Buttons.Add(refreshButton);
+
+            ApplicationBarMenuItem settingsItem = new ApplicationBarMenuItem(AppResources.AppBarSettings);
+            settingsItem.Click += SettingsApplicationBarMenuItem_Click;
+            ApplicationBar.MenuItems.Add(settingsItem);
+
+            ApplicationBarMenuItem aboutItem = new ApplicationBarMenuItem(AppResources.AppBarAbout);
+            aboutItem.Click += AboutApplicationBarMenuItem_Click;
+            ApplicationBar.MenuItems.Add(aboutItem);
         }
     }
 }

@@ -26,9 +26,9 @@
 
         <StackPanel Grid.Row="0"
                     Margin="12,17,0,28">
-            <TextBlock Text="HARU"
+            <TextBlock Text="{Binding LocalizedResources.AppTitle, Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="search"
+            <TextBlock Text="{Binding LocalizedResources.PageSearch, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
@@ -48,13 +48,13 @@
 
                 <toolkit:PhoneTextBox x:Name="SearchPhoneTextBox"
                                       Grid.Column="0"
-                                      Hint="enter location"
+                                      Hint="{Binding LocalizedResources.SearchHint, Source={StaticResource LocalizedStrings}}"
                                       InputScope="Text"
                                       KeyUp="SearchPhoneTextBox_KeyUp"/>
 
                 <Button x:Name="SearchButton"
                         Grid.Column="1"
-                        Content="search"
+                        Content="{Binding LocalizedResources.SearchButton, Source={StaticResource LocalizedStrings}}"
                         Click="SearchButton_Click"/>
             </Grid>
 

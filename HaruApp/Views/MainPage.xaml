@@ -22,9 +22,9 @@
 
     <Grid Background="Transparent">
         <controls:Pivot x:Name="MainPivot"
-                        Title="NO LOCATION"
+                        Title="{Binding LocalizedResources.NoLocation, Source={StaticResource LocalizedStrings}}"
                         SelectionChanged="MainPivot_SelectionChanged">
-            <controls:PivotItem Header="right now">
+            <controls:PivotItem Header="{Binding LocalizedResources.PivotRightNow, Source={StaticResource LocalizedStrings}}">
                 <Grid x:Name="NowScrollViewer"
                       Visibility="Collapsed">
                     <Grid.RowDefinitions>
@@ -54,7 +54,7 @@
                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="CONDITION"/>
+                                       Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.WeatherDescription}"
                                        Margin="0,0,0,0"
                                        FontFamily="{StaticResource PhoneFontFamilySemiLight}"
@@ -89,7 +89,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="TEMPERATURE"/>
+                                       Text="{Binding LocalizedResources.LabelTemperature, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.Temperature}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -101,7 +101,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="FEELS LIKE"/>
+                                       Text="{Binding LocalizedResources.LabelFeelsLike, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.ApparentTemperature}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -113,7 +113,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="HUMIDITY"/>
+                                       Text="{Binding LocalizedResources.LabelHumidity, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.Humidity}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -125,7 +125,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="PRECIPITATION"/>
+                                       Text="{Binding LocalizedResources.LabelPrecipitation, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.Precipitation}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -137,7 +137,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="WIND SPEED"/>
+                                       Text="{Binding LocalizedResources.LabelWindSpeed, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.WindSpeed}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -149,7 +149,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="WIND DIRECTION"/>
+                                       Text="{Binding LocalizedResources.LabelWindDirection, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.WindDirection}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -161,7 +161,7 @@
                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                       Text="PRESSURE"/>
+                                       Text="{Binding LocalizedResources.LabelPressure, Source={StaticResource LocalizedStrings}}"/>
                             <TextBlock Text="{Binding Current.Pressure}"
                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                        FontSize="{StaticResource PhoneFontSizeLarge}"/>
@@ -181,7 +181,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="next 12 hours">
+            <controls:PivotItem Header="{Binding LocalizedResources.PivotNext12Hours, Source={StaticResource LocalizedStrings}}">
                 <ScrollViewer x:Name="HoursScrollViewer">
                     <ItemsControl ItemsSource="{Binding Hourly}"
                                   Margin="12,0,0,0">
@@ -227,7 +227,7 @@
                                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="CONDITION"/>
+                                                       Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding WeatherDescription}"
                                                        Margin="0,0,0,0"
                                                        FontFamily="{StaticResource PhoneFontFamilySemiLight}"
@@ -252,7 +252,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="TEMP"/>
+                                                       Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Temperature}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -263,7 +263,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="HUM"/>
+                                                       Text="{Binding LocalizedResources.LabelHum, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Humidity}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -274,7 +274,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="PREC"/>
+                                                       Text="{Binding LocalizedResources.LabelPrec, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Precipitation}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -285,7 +285,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="WIND"/>
+                                                       Text="{Binding LocalizedResources.LabelWind, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Wind}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -298,7 +298,7 @@
                 </ScrollViewer>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="next 7 days">
+            <controls:PivotItem Header="{Binding LocalizedResources.PivotNext7Days, Source={StaticResource LocalizedStrings}}">
                 <ScrollViewer x:Name="DaysScrollViewer">
                     <ItemsControl ItemsSource="{Binding Daily}"
                                   Margin="12,0,0,0">
@@ -344,7 +344,7 @@
                                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="CONDITION"/>
+                                                       Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding WeatherDescription}"
                                                        Margin="0,0,0,0"
                                                        FontFamily="{StaticResource PhoneFontFamilySemiLight}"
@@ -369,7 +369,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="TEMP"/>
+                                                       Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Temperature}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -380,7 +380,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="AVG HUM"/>
+                                                       Text="{Binding LocalizedResources.LabelAvgHum, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Humidity}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -391,7 +391,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="MAX PREC"/>
+                                                       Text="{Binding LocalizedResources.LabelMaxPrec, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Precipitation}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -402,7 +402,7 @@
                                             <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        FontSize="{StaticResource PhoneFontSizeSmall}"
                                                        Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="MAX WIND"/>
+                                                       Text="{Binding LocalizedResources.LabelMaxWind, Source={StaticResource LocalizedStrings}}"/>
                                             <TextBlock Text="{Binding Wind}"
                                                        FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                                        FontSize="{StaticResource PhoneFontSizeNormal}"/>
@@ -415,48 +415,6 @@
                 </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
-
-        <Canvas x:Name="GuideCanvas"
-                Margin="0,646,0,0"
-                Opacity="0.2"
-                Visibility="Collapsed">
-            <TextBlock Canvas.Left="260"
-                       Canvas.Top="10"
-                       FontFamily="Comic Sans MS"
-                       Text="set location here"/>
-            <Image Height="50"
-                   Width="50"
-                   Canvas.Left="200"
-                   Visibility="{StaticResource PhoneDarkThemeVisibility}"
-                   Source="/Assets/guide.dark.png"/>
-            <Image Height="50"
-                   Width="50"
-                   Canvas.Left="200"
-                   Visibility="{StaticResource PhoneLightThemeVisibility}"
-                   Source="/Assets/guide.light.png"/>
-        </Canvas>
     </Grid>
-
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar>
-            <shell:ApplicationBarIconButton x:Name="SearchApplicationBarIconButton"
-                                            IconUri="/Assets/AppBar/appbar.feature.search.rest.png"
-                                            Text="search"
-                                            Click="SearchApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton x:Name="RefreshApplicationBarIconButton"
-                                            IconUri="/Assets/AppBar/appbar.refresh.rest.png"
-                                            Text="refresh"
-                                            Click="RefreshApplicationBarIconButton_Click"/>
-
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="SettingsApplicationBarMenuItem"
-                                              Text="settings"
-                                              Click="SettingsApplicationBarMenuItem_Click"/>
-                <shell:ApplicationBarMenuItem x:Name="AboutApplicationBarMenuItem"
-                                              Text="about"
-                                              Click="AboutApplicationBarMenuItem_Click"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

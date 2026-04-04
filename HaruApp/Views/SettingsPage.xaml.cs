@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using HaruApp.Helpers;
+using HaruApp.Resources;
+using Microsoft.Phone.Shell;
 
 namespace HaruApp.Views
 {
@@ -16,6 +18,7 @@ namespace HaruApp.Views
         public SettingsPage()
         {
             InitializeComponent();
+            BuildApplicationBar();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -44,10 +47,10 @@ namespace HaruApp.Views
             Dispatcher.BeginInvoke(() =>
             {
                 PromptHelper.ShowPrompt(
-                    "Do you want to save changes?",
-                    "Your changes will be lost if you don't save them.",
-                    "save",
-                    "don't save",
+                    AppResources.PromptSaveChangesTitle,
+                    AppResources.PromptSaveChangesMessage,
+                    AppResources.PromptSave,
+                    AppResources.PromptDontSave,
                     () =>
                     {
                         SaveSettings();
@@ -67,8 +70,9 @@ namespace HaruApp.Views
             }
 
             PromptHelper.ShowAlert(
-                "Saved forecast cleared!",
-                "A fresh and up-to-date forecast will be ready the next time you refresh or open the app.");
+                AppResources.SettingClearForecastSuccessTitle,
+                AppResources.SettingClearForecastSuccessMessage,
+                AppResources.PromptOkay);
         }
 
         private void SaveApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -97,6 +101,23 @@ namespace HaruApp.Views
             settings["WindSpeedUnit"] = WindSpeedUnitListPicker.SelectedItem as string;
             settings["PrecipitationUnit"] = PrecipitationUnitListPicker.SelectedItem as string;
             settings.Save();
+        }
+
+        private void BuildApplicationBar()
+        {
+            ApplicationBar = new ApplicationBar();
+
+            ApplicationBarIconButton saveButton = new ApplicationBarIconButton();
+            saveButton.IconUri = new Uri("/Assets/AppBar/appbar.save.rest.png", UriKind.Relative);
+            saveButton.Text = AppResources.AppBarSave;
+            saveButton.Click += SaveApplicationBarIconButton_Click;
+            ApplicationBar.Buttons.Add(saveButton);
+
+            ApplicationBarIconButton cancelButton = new ApplicationBarIconButton();
+            cancelButton.IconUri = new Uri("/Assets/AppBar/appbar.cancel.rest.png", UriKind.Relative);
+            cancelButton.Text = AppResources.AppBarCancel;
+            cancelButton.Click += CancelApplicationBarIconButton_Click;
+            ApplicationBar.Buttons.Add(cancelButton);
         }
     }
 }

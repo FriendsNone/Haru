@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Phone.Controls;
+using HaruApp.Resources;
 
 namespace HaruApp.Helpers
 {
@@ -34,7 +35,7 @@ namespace HaruApp.Helpers
             messageBox.Show();
         }
 
-        public static void ShowAlert(string caption, string message, string buttonText = "okay")
+        public static void ShowAlert(string caption, string message, string buttonText)
         {
             new CustomMessageBox
             {
