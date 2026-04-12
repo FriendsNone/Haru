@@ -116,9 +116,9 @@ namespace HaruCore
 
         public static string GetWeatherTileIcon(int weatherCode, bool isDay)
         {
-            if (weatherCode <= 1) return (isDay ? "clear-day.png" : "clear-night.png");
+            if (weatherCode <= 1) return isDay ? "clear-day" : "clear-night";
             string icon;
-            return IconMap.TryGetValue(weatherCode, out icon) ? icon + ".png" : "not-available.png";
+            return IconMap.TryGetValue(weatherCode, out icon) ? icon : "not-available";
         }
     }
 }

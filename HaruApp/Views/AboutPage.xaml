@@ -37,7 +37,7 @@
 
                     <toolkit:HubTile Grid.Row="0"
                                      Grid.Column="0"
-                                     Source="/Background.png"
+                                     Source="/Assets/ApplicationTile.png"
                                      Title="v1.0.0"
                                      Message="{Binding LocalizedResources.HaruMeaning, Source={StaticResource LocalizedStrings}}"/>
 

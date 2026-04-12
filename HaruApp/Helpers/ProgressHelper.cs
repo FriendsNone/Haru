@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Phone.Shell;
+using System;
 using System.Windows.Threading;
-using Microsoft.Phone.Shell;
 
 namespace HaruApp.Helpers
 {

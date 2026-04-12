@@ -69,6 +69,9 @@ namespace HaruApp
             if (!settings.Contains("BackgroundUpdateEnable"))
                 settings["BackgroundUpdateEnable"] = true;
 
+            if (!settings.Contains("MonochromeTileEnable"))
+                settings["MonochromeTileEnable"] = false;
+
             if (!settings.Contains("TemperatureUnit"))
                 settings["TemperatureUnit"] = "celsius";
 

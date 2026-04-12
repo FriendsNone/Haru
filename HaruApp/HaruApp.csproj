@@ -126,23 +126,48 @@
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApplicationIcon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\AppBar\appbar.cancel.rest.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\AppBar\appbar.feature.search.rest.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\AppBar\appbar.refresh.rest.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\AppBar\appbar.save.rest.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\guide.light.png" />
-    <Content Include="Assets\small-tile.png" />
+    <Content Include="Assets\ApplicationIcon.png" />
+    <Content Include="Assets\AppBar\appbar.cancel.rest.png" />
+    <Content Include="Assets\AppBar\appbar.feature.search.rest.png" />
+    <Content Include="Assets\AppBar\appbar.refresh.rest.png" />
+    <Content Include="Assets\AppBar\appbar.save.rest.png" />
+    <Content Include="Assets\ApplicationTileSmall.png" />
+    <Content Include="Assets\LiveTile\clear-day.png" />
+    <Content Include="Assets\LiveTile\clear-day_mono.png" />
+    <Content Include="Assets\LiveTile\clear-day_wide.png" />
+    <Content Include="Assets\LiveTile\clear-day_wide_mono.png" />
+    <Content Include="Assets\LiveTile\clear-night.png" />
+    <Content Include="Assets\LiveTile\clear-night_mono.png" />
+    <Content Include="Assets\LiveTile\clear-night_wide.png" />
+    <Content Include="Assets\LiveTile\clear-night_wide_mono.png" />
+    <Content Include="Assets\LiveTile\cloudy.png" />
+    <Content Include="Assets\LiveTile\cloudy_mono.png" />
+    <Content Include="Assets\LiveTile\cloudy_wide.png" />
+    <Content Include="Assets\LiveTile\cloudy_wide_mono.png" />
+    <Content Include="Assets\LiveTile\mist.png" />
+    <Content Include="Assets\LiveTile\mist_mono.png" />
+    <Content Include="Assets\LiveTile\mist_wide.png" />
+    <Content Include="Assets\LiveTile\mist_wide_mono.png" />
+    <Content Include="Assets\LiveTile\not-available.png" />
+    <Content Include="Assets\LiveTile\not-available_mono.png" />
+    <Content Include="Assets\LiveTile\not-available_wide.png" />
+    <Content Include="Assets\LiveTile\not-available_wide_mono.png" />
+    <Content Include="Assets\LiveTile\rain.png" />
+    <Content Include="Assets\LiveTile\rain_mono.png" />
+    <Content Include="Assets\LiveTile\rain_wide.png" />
+    <Content Include="Assets\LiveTile\rain_wide_mono.png" />
+    <Content Include="Assets\LiveTile\sleet.png" />
+    <Content Include="Assets\LiveTile\sleet_mono.png" />
+    <Content Include="Assets\LiveTile\sleet_wide.png" />
+    <Content Include="Assets\LiveTile\sleet_wide_mono.png" />
+    <Content Include="Assets\LiveTile\snow.png" />
+    <Content Include="Assets\LiveTile\snow_mono.png" />
+    <Content Include="Assets\LiveTile\snow_wide.png" />
+    <Content Include="Assets\LiveTile\snow_wide_mono.png" />
+    <Content Include="Assets\LiveTile\thunderstorms.png" />
+    <Content Include="Assets\LiveTile\thunderstorms_mono.png" />
+    <Content Include="Assets\LiveTile\thunderstorms_wide.png" />
+    <Content Include="Assets\LiveTile\thunderstorms_wide_mono.png" />
     <Content Include="Assets\WeatherIcons\clear-day.png" />
     <Content Include="Assets\WeatherIcons\clear-night.png" />
     <Content Include="Assets\WeatherIcons\cloudy.png" />
@@ -152,33 +177,11 @@
     <Content Include="Assets\WeatherIcons\sleet.png" />
     <Content Include="Assets\WeatherIcons\snow.png" />
     <Content Include="Assets\WeatherIcons\thunderstorms.png" />
-    <Content Include="Assets\WeatherIcons\Tile\clear-day.png" />
-    <Content Include="Assets\WeatherIcons\Tile\clear-night.png" />
-    <Content Include="Assets\WeatherIcons\Tile\cloudy.png" />
-    <Content Include="Assets\WeatherIcons\Tile\mist.png" />
-    <Content Include="Assets\WeatherIcons\Tile\not-available.png" />
-    <Content Include="Assets\WeatherIcons\Tile\rain.png" />
-    <Content Include="Assets\WeatherIcons\Tile\sleet.png" />
-    <Content Include="Assets\WeatherIcons\Tile\snow.png" />
-    <Content Include="Assets\WeatherIcons\Tile\thunderstorms.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\clear-day.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\clear-night.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\cloudy.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\mist.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\not-available.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\rain.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\sleet.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\snow.png" />
-    <Content Include="Assets\WeatherIcons\WideTile\thunderstorms.png" />
-    <Content Include="Background.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\ApplicationTile.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\AppBar\appbar.pin.rest.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Assets\AppBar\appbar.pin.rest.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HaruAgent\HaruAgent.csproj">
@@ -189,9 +192,6 @@
       <Project>{266504F0-A06D-45C2-9BD5-31ACD54D1882}</Project>
       <Name>HaruCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\guide.dark.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.resx">

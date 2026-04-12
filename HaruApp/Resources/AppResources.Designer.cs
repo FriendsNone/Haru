@@ -604,6 +604,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use monochrome tile icons.
+        /// </summary>
+        public static string SettingMonochromeTile {
+            get {
+                return ResourceManager.GetString("SettingMonochromeTile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Precipitation unit.
         /// </summary>
         public static string SettingPrecipitationUnit {

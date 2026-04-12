@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.Phone.Controls;
-using HaruApp.Resources;
+﻿using Microsoft.Phone.Controls;
+using System;
 
 namespace HaruApp.Helpers
 {

@@ -1,12 +1,12 @@
-﻿using System;
+﻿using HaruApp.Helpers;
+using HaruApp.Resources;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System;
 using System.ComponentModel;
 using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using HaruApp.Helpers;
-using HaruApp.Resources;
-using Microsoft.Phone.Shell;
 
 namespace HaruApp.Views
 {
@@ -27,6 +27,8 @@ namespace HaruApp.Views
 
             if (settings.Contains("BackgroundUpdateEnable"))
                 BackgroundUpdateToggleSwitch.IsChecked = (bool)settings["BackgroundUpdateEnable"];
+            if (settings.Contains("MonochromeTileEnable"))
+                MonochromeTileToggleSwitch.IsChecked = (bool)settings["MonochromeTileEnable"];
             if (settings.Contains("TemperatureUnit"))
                 TemperatureUnitListPicker.SelectedItem = settings["TemperatureUnit"];
             if (settings.Contains("WindSpeedUnit"))
@@ -89,6 +91,7 @@ namespace HaruApp.Views
         private bool HasChanges()
         {
             return (settings.Contains("BackgroundUpdateEnable") && BackgroundUpdateToggleSwitch.IsChecked != (bool?)settings["BackgroundUpdateEnable"]) ||
+                   (settings.Contains("MonochromeTileEnable") && MonochromeTileToggleSwitch.IsChecked != (bool?)settings["MonochromeTileEnable"]) ||
                    (settings.Contains("TemperatureUnit") && TemperatureUnitListPicker.SelectedItem as string != settings["TemperatureUnit"] as string) ||
                    (settings.Contains("WindSpeedUnit") && WindSpeedUnitListPicker.SelectedItem as string != settings["WindSpeedUnit"] as string) ||
                    (settings.Contains("PrecipitationUnit") && PrecipitationUnitListPicker.SelectedItem as string != settings["PrecipitationUnit"] as string);
@@ -97,6 +100,7 @@ namespace HaruApp.Views
         private void SaveSettings()
         {
             settings["BackgroundUpdateEnable"] = BackgroundUpdateToggleSwitch.IsChecked;
+            settings["MonochromeTileEnable"] = MonochromeTileToggleSwitch.IsChecked;
             settings["TemperatureUnit"] = TemperatureUnitListPicker.SelectedItem as string;
             settings["WindSpeedUnit"] = WindSpeedUnitListPicker.SelectedItem as string;
             settings["PrecipitationUnit"] = PrecipitationUnitListPicker.SelectedItem as string;

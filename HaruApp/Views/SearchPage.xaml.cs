@@ -1,15 +1,15 @@
-﻿using System;
+﻿using HaruApp.Helpers;
+using HaruApp.Resources;
+using HaruApp.ViewModels;
+using HaruCore;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using System;
 using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using HaruCore;
-using HaruApp.ViewModels;
-using HaruApp.Helpers;
-using HaruApp.Resources;
 
 namespace HaruApp.Views
 {

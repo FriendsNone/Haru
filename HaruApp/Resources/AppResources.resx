@@ -309,4 +309,7 @@ meaning
   <data name="ForecastAsOf" xml:space="preserve">
     <value>Forecast as of {0}</value>
   </data>
+  <data name="SettingMonochromeTile" xml:space="preserve">
+    <value>Use monochrome tile icons</value>
+  </data>
 </root>

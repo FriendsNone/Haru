@@ -1,51 +1,71 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Phone.Info;
+﻿using Mangopollo.Tiles;
 using Microsoft.Phone.Shell;
+using System;
+using System.Linq;
 
 namespace HaruCore
 {
     public static class TileHelper
     {
-        private static bool? _isWP8;
+        private const string LiveTileBase = "/Assets/LiveTile/";
+        private const string SmallTileImage = "/Assets/ApplicationTileSmall.png";
 
-        public static bool IsWindowsPhone8()
+        private static Uri TileUri(string name, bool wide, bool mono)
         {
-            if (_isWP8.HasValue)
-                return _isWP8.Value;
+            var suffix = (wide ? "_wide" : "") + (mono ? "_mono" : "");
+            return new Uri(LiveTileBase + name + suffix + ".png", UriKind.Relative);
+        }
 
-            try
-            {
-                var version = Environment.OSVersion.Version;
-                _isWP8 = version.Major >= 8;
-            }
-            catch
-            {
-                _isWP8 = false;
-            }
+        private static bool? _canUseFlipTile;
 
-            return _isWP8.Value;
+        private static bool CanUseFlipTile()
+        {
+            if (_canUseFlipTile.HasValue)
+                return _canUseFlipTile.Value;
+
+            var version = Environment.OSVersion.Version;
+            _canUseFlipTile = version.Major >= 8 ||
+                              (version.Major == 7 && version.Build >= 8858);
+
+            return _canUseFlipTile.Value;
         }
 
         public static void UpdateTile(string location, string temperature, string weatherDescription,
-                                     string weatherIcon, string weatherTile, string time)
+                                      string weatherIcon, string weatherTile, string time, bool mono = false)
         {
             var tile = ShellTile.ActiveTiles.FirstOrDefault();
             if (tile == null) return;
 
-            if (IsWindowsPhone8())
-            {
-                UpdateWP8Tile(tile, location, temperature, weatherDescription, weatherTile, time);
-            }
+            if (CanUseFlipTile())
+                UpdateFlipTile(tile, location, temperature, weatherDescription, weatherTile, time, mono);
             else
-            {
-                UpdateWP7Tile(tile, location, temperature, weatherDescription, weatherTile, time);
-            }
+                UpdateStandardTile(tile, location, temperature, weatherDescription, weatherTile, time, mono);
         }
 
-        private static void UpdateWP7Tile(ShellTile tile, string location, string temperature,
-                                         string weatherDescription, string weatherTile, string time)
+        private static void UpdateFlipTile(ShellTile tile, string location, string temperature,
+                                           string weatherDescription, string weatherTile, string time, bool mono)
+        {
+            var data = new FlipTileData
+            {
+                Title = location,
+#if DEBUG
+                Count = DateTime.Now.Minute,
+#else
+                Count = 0,
+#endif
+                SmallBackgroundImage = new Uri(SmallTileImage, UriKind.Relative),
+                BackgroundImage = TileUri(weatherTile, wide: false, mono: mono),
+                WideBackgroundImage = TileUri(weatherTile, wide: true, mono: mono),
+                BackTitle = time,
+                BackContent = string.Format("{0}\n{1}", temperature, weatherDescription),
+                WideBackContent = string.Format("{0}\n{1}", temperature, weatherDescription)
+            };
+
+            tile.Update(data);
+        }
+
+        private static void UpdateStandardTile(ShellTile tile, string location, string temperature,
+                                               string weatherDescription, string weatherTile, string time, bool mono)
         {
             tile.Update(new StandardTileData
             {
@@ -55,64 +75,10 @@ namespace HaruCore
 #else
                 Count = 0,
 #endif
-                BackgroundImage = new Uri("/Assets/WeatherIcons/Tile/" + weatherTile, UriKind.Relative),
+                BackgroundImage = TileUri(weatherTile, wide: false, mono: mono),
                 BackTitle = time,
                 BackContent = string.Format("{0}\n{1}", temperature, weatherDescription)
             });
-        }
-
-        private static void UpdateWP8Tile(ShellTile tile, string location, string temperature,
-                                         string weatherDescription, string weatherTile, string time)
-        {
-            try
-            {
-                var flipTileDataType = Type.GetType("Microsoft.Phone.Shell.FlipTileData, Microsoft.Phone");
-                if (flipTileDataType == null)
-                {
-                    UpdateWP7Tile(tile, location, temperature, weatherDescription, weatherTile, time);
-                    return;
-                }
-
-                var tileData = Activator.CreateInstance(flipTileDataType);
-
-                SetProperty(tileData, "Title", location);
-#if DEBUG
-                SetProperty(tileData, "Count", DateTime.Now.Minute);
-#else
-                SetProperty(tileData, "Count", 0);
-#endif
-                SetProperty(tileData, "BackgroundImage", new Uri("/Assets/WeatherIcons/Tile/" + weatherTile, UriKind.Relative));
-
-                SetProperty(tileData, "WideBackgroundImage", new Uri("/Assets/WeatherIcons/WideTile/" + weatherTile, UriKind.Relative));
-                SetProperty(tileData, "WideBackContent", string.Format("{0}\n{1}", temperature, weatherDescription));
-
-                SetProperty(tileData, "BackTitle", time);
-                SetProperty(tileData, "BackContent", string.Format("{0}\n{1}", temperature, weatherDescription));
-                //SetProperty(tileData, "BackBackgroundImage", new Uri("/Assets/Background.png", UriKind.Relative));
-
-                //SetProperty(tileData, "WideBackBackgroundImage", new Uri("/Assets/Background.png", UriKind.Relative));
-
-                SetProperty(tileData, "SmallBackgroundImage", new Uri("/Assets/small-tile.png", UriKind.Relative));
-
-                var updateMethod = tile.GetType().GetMethod("Update", new[] { typeof(ShellTileData) });
-                if (updateMethod != null)
-                {
-                    updateMethod.Invoke(tile, new[] { tileData });
-                }
-            }
-            catch
-            {
-                UpdateWP7Tile(tile, location, temperature, weatherDescription, weatherTile, time);
-            }
-        }
-
-        private static void SetProperty(object obj, string propertyName, object value)
-        {
-            var property = obj.GetType().GetProperty(propertyName);
-            if (property != null && property.CanWrite)
-            {
-                property.SetValue(obj, value, null);
-            }
         }
     }
 }

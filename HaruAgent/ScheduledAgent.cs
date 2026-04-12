@@ -1,10 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using System.IO.IsolatedStorage;
+﻿using HaruCore;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using HaruCore;
+using System;
+using System.IO.IsolatedStorage;
+using System.Linq;
+using System.Windows;
 
 
 namespace HaruAgent
@@ -78,7 +78,8 @@ namespace HaruAgent
                         current.WeatherDescription,
                         current.WeatherIcon,
                         current.WeatherTile,
-                        error != null ? current.Time : DateTime.Now.ToString("t")
+                        error != null ? current.Time : DateTime.Now.ToString("t"),
+                        (bool)settings["MonochromeTileEnable"]
                     );
 
 #if DEBUG

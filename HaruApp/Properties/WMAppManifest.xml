@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
   <App xmlns="" ProductID="{94e9332f-10cf-4fd8-94e0-9797a93c3f65}" Title="Haru" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="FriendsNone" Description="A sleek and modern weather app designed for Windows Phone." Publisher="FriendsNone">
-    <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
+    <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
     </Capabilities>
@@ -14,7 +14,7 @@
     <Tokens>
       <PrimaryToken TokenID="HaruAppToken" TaskName="_default">
         <TemplateType5>
-          <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
+          <BackgroundImageURI IsRelative="true" IsResource="false">Assets\ApplicationTile.png</BackgroundImageURI>
           <Count>0</Count>
           <Title>Haru</Title>
           <BackTitle>Haru</BackTitle>

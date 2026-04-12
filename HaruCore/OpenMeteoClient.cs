@@ -26,8 +26,8 @@ namespace HaruCore
             DownloadJson<GeocodingResponse>(url, callback);
         }
 
-        public void GetForecast(double latitude, double longitude, string temperatureUnit, string windSpeedUnit, 
-            string precipitationUnit, Action<ForecastResponse, Exception> callback, string timeFormat = "iso8601", 
+        public void GetForecast(double latitude, double longitude, string temperatureUnit, string windSpeedUnit,
+            string precipitationUnit, Action<ForecastResponse, Exception> callback, string timeFormat = "iso8601",
             int forecastDays = 7, int forecastHours = 12)
         {
             var url = string.Format(
