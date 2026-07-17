@@ -10,9 +10,11 @@ namespace HaruCore
         private const string IconBase = "/Assets/WeatherIcons/";
         private const string TileBase = "/Assets/WeatherIcons/Tile/";
 
+        private static string[] _directions;
+
         private static string[] GetDirections()
         {
-            return new[]
+            return _directions ?? (_directions = new[]
             {
                 CoreResources.DirectionNorth,
                 CoreResources.DirectionNortheast,
@@ -22,7 +24,7 @@ namespace HaruCore
                 CoreResources.DirectionSouthwest,
                 CoreResources.DirectionWest,
                 CoreResources.DirectionNorthwest
-            };
+            });
         }
 
         private static readonly string[] DirectionsShort = { "N", "NE", "E", "SE", "S", "SW", "W", "NW" };
