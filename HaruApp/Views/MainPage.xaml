@@ -41,7 +41,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Source="{Binding Current.WeatherIcon}"
+                        <Image Source="{Binding Current.WeatherIcon, Converter={StaticResource IconConverter}}"
                                Grid.Column="0"
                                Width="100"
                                Height="100"
@@ -214,7 +214,7 @@
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Source="{Binding WeatherIcon}"
+                                        <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
                                                Grid.Column="0"
                                                Width="66"
                                                Height="66"
@@ -331,7 +331,7 @@
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <Image Source="{Binding WeatherIcon}"
+                                        <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
                                                Grid.Column="0"
                                                Width="66"
                                                Height="66"

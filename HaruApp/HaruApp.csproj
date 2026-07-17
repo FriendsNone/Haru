@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CachedImageConverter.cs" />
     <Compile Include="Helpers\ProgressHelper.cs" />
     <Compile Include="Helpers\PromptHelper.cs" />
     <Compile Include="Resources\AppResources.es.Designer.cs">
