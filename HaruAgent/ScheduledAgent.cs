@@ -59,6 +59,21 @@ namespace HaruAgent
                 return;
             }
 
+            string[] requiredKeys =
+            {
+                "Location", "Latitude", "Longitude",
+                "TemperatureUnit", "WindSpeedUnit", "PrecipitationUnit", "MonochromeTileEnable"
+            };
+
+            foreach (var key in requiredKeys)
+            {
+                if (!settings.Contains(key))
+                {
+                    NotifyComplete();
+                    return;
+                }
+            }
+
             var location = (string)settings["Location"];
             var latitude = (double)settings["Latitude"];
             var longitude = (double)settings["Longitude"];
