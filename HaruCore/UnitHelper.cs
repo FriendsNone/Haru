@@ -45,10 +45,11 @@ namespace HaruCore
             return shorthand ? DirectionsShort[index] : GetDirections()[index];
         }
 
-        public static string InterpretTimeDifference(string dateTime)
+        public static string InterpretTimeDifference(string dateTime, int utcOffsetSeconds)
         {
-            var dt = DateTime.Parse(dateTime, null, DateTimeStyles.RoundtripKind);
-            var diff = DateTime.Now - dt;
+            var local = DateTime.Parse(dateTime, null, DateTimeStyles.RoundtripKind);
+            var observedUtc = local - TimeSpan.FromSeconds(utcOffsetSeconds);
+            var diff = DateTime.UtcNow - observedUtc;
 
             if (diff.TotalSeconds < 60) return CoreResources.TimeNow;
 
@@ -68,7 +69,7 @@ namespace HaruCore
                     : CoreResources.TimeHoursAgo, hours);
             }
 
-            return dt.ToString("t", CultureInfo.CurrentCulture);
+            return local.ToString("t", CultureInfo.CurrentCulture);
         }
 
         public static string GetWeatherDescription(int weatherCode, bool isDay)

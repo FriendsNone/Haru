@@ -48,6 +48,7 @@ namespace HaruCore
 
     public class ForecastResponse
     {
+        [JsonProperty("utc_offset_seconds")] public int UtcOffsetSeconds { get; set; }
         [JsonProperty("current_units")] public CurrentUnits CurrentUnits { get; set; }
         [JsonProperty("current")] public Current Current { get; set; }
         [JsonProperty("hourly_units")] public HourlyUnits HourlyUnits { get; set; }
@@ -71,7 +72,7 @@ namespace HaruCore
                 WindSpeed = string.Format("{0} {1}", c.WindSpeed, cu.WindSpeed),
                 WindDirection = UnitHelper.InterpretDirection(c.WindDirection, false),
                 Pressure = string.Format("{0} {1}", c.Pressure, cu.Pressure),
-                Time = UnitHelper.InterpretTimeDifference(c.Time)
+                Time = UnitHelper.InterpretTimeDifference(c.Time, UtcOffsetSeconds)
             };
         }
 
