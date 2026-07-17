@@ -123,5 +123,12 @@ namespace HaruCore
             string icon;
             return IconMap.TryGetValue(weatherCode, out icon) ? icon : "not-available";
         }
+
+        public static string GetWeatherCategory(int weatherCode)
+        {
+            if (weatherCode <= 1) return "clear";
+            string category;
+            return IconMap.TryGetValue(weatherCode, out category) ? category : "unknown";
+        }
     }
 }

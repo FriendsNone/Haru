@@ -69,6 +69,12 @@ namespace HaruApp
             if (!settings.Contains("BackgroundUpdateEnable"))
                 settings["BackgroundUpdateEnable"] = true;
 
+            if (!settings.Contains("LiveTileEnable"))
+                settings["LiveTileEnable"] = true;
+
+            if (!settings.Contains("NotificationEnable"))
+                settings["NotificationEnable"] = true;
+
             if (!settings.Contains("MonochromeTileEnable"))
                 settings["MonochromeTileEnable"] = false;
 

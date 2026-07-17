@@ -1,5 +1,6 @@
 ﻿using HaruApp.Helpers;
 using HaruApp.Resources;
+using HaruCore;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System;
@@ -14,6 +15,7 @@ namespace HaruApp.Views
     {
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private bool isPromptShown;
+        private bool suppressToggleEvents;
 
         public SettingsPage()
         {
@@ -25,10 +27,14 @@ namespace HaruApp.Views
         {
             base.OnNavigatedTo(e);
 
-            if (settings.Contains("BackgroundUpdateEnable"))
-                BackgroundUpdateToggleSwitch.IsChecked = (bool)settings["BackgroundUpdateEnable"];
-            if (settings.Contains("MonochromeTileEnable"))
-                MonochromeTileToggleSwitch.IsChecked = (bool)settings["MonochromeTileEnable"];
+            suppressToggleEvents = true;
+            BackgroundUpdateToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true);
+            LiveTileToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "LiveTileEnable", true);
+            NotificationToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "NotificationEnable", true);
+            MonochromeTileToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "MonochromeTileEnable", false);
+            suppressToggleEvents = false;
+            ApplyToggleDependencies();
+
             if (settings.Contains("TemperatureUnit"))
                 TemperatureUnitListPicker.SelectedItem = settings["TemperatureUnit"];
             if (settings.Contains("WindSpeedUnit"))
@@ -90,8 +96,10 @@ namespace HaruApp.Views
 
         private bool HasChanges()
         {
-            return (settings.Contains("BackgroundUpdateEnable") && BackgroundUpdateToggleSwitch.IsChecked != (bool?)settings["BackgroundUpdateEnable"]) ||
-                   (settings.Contains("MonochromeTileEnable") && MonochromeTileToggleSwitch.IsChecked != (bool?)settings["MonochromeTileEnable"]) ||
+            return BackgroundUpdateToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true) ||
+                   LiveTileToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "LiveTileEnable", true) ||
+                   NotificationToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "NotificationEnable", true) ||
+                   MonochromeTileToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "MonochromeTileEnable", false) ||
                    (settings.Contains("TemperatureUnit") && TemperatureUnitListPicker.SelectedItem as string != settings["TemperatureUnit"] as string) ||
                    (settings.Contains("WindSpeedUnit") && WindSpeedUnitListPicker.SelectedItem as string != settings["WindSpeedUnit"] as string) ||
                    (settings.Contains("PrecipitationUnit") && PrecipitationUnitListPicker.SelectedItem as string != settings["PrecipitationUnit"] as string);
@@ -100,11 +108,66 @@ namespace HaruApp.Views
         private void SaveSettings()
         {
             settings["BackgroundUpdateEnable"] = BackgroundUpdateToggleSwitch.IsChecked;
+            settings["LiveTileEnable"] = LiveTileToggleSwitch.IsChecked;
+            settings["NotificationEnable"] = NotificationToggleSwitch.IsChecked;
             settings["MonochromeTileEnable"] = MonochromeTileToggleSwitch.IsChecked;
             settings["TemperatureUnit"] = TemperatureUnitListPicker.SelectedItem as string;
             settings["WindSpeedUnit"] = WindSpeedUnitListPicker.SelectedItem as string;
             settings["PrecipitationUnit"] = PrecipitationUnitListPicker.SelectedItem as string;
             settings.Save();
+
+            if (BackgroundUpdateToggleSwitch.IsChecked != true || LiveTileToggleSwitch.IsChecked != true)
+                TileHelper.ResetTile();
+        }
+
+        private void ApplyToggleDependencies()
+        {
+            var master = BackgroundUpdateToggleSwitch.IsChecked == true;
+            var liveTile = LiveTileToggleSwitch.IsChecked == true;
+
+            LiveTileToggleSwitch.IsEnabled = master;
+            NotificationToggleSwitch.IsEnabled = master;
+            MonochromeTileToggleSwitch.IsEnabled = master && liveTile;
+        }
+
+        private void MasterToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            if (suppressToggleEvents) return;
+
+            if (LiveTileToggleSwitch.IsChecked != true && NotificationToggleSwitch.IsChecked != true)
+            {
+                suppressToggleEvents = true;
+                LiveTileToggleSwitch.IsChecked = true;
+                suppressToggleEvents = false;
+            }
+
+            ApplyToggleDependencies();
+        }
+
+        private void MasterToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (suppressToggleEvents) return;
+            ApplyToggleDependencies();
+        }
+
+        private void ChildToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            if (suppressToggleEvents) return;
+            ApplyToggleDependencies();
+        }
+
+        private void ChildToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (suppressToggleEvents) return;
+
+            if (LiveTileToggleSwitch.IsChecked != true && NotificationToggleSwitch.IsChecked != true)
+            {
+                suppressToggleEvents = true;
+                BackgroundUpdateToggleSwitch.IsChecked = false;
+                suppressToggleEvents = false;
+            }
+
+            ApplyToggleDependencies();
         }
 
         private void BuildApplicationBar()

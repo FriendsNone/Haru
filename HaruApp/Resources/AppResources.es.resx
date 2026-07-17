@@ -312,4 +312,10 @@ que significa
   <data name="SettingMonochromeTile" xml:space="preserve">
     <value>Utiliza iconos de mosaico monocromáticos</value>
   </data>
+  <data name="SettingLiveTile" xml:space="preserve">
+    <value>Actualizar el mosaico dinámico</value>
+  </data>
+  <data name="SettingNotifications" xml:space="preserve">
+    <value>Avisar sobre cambios del clima</value>
+  </data>
 </root>

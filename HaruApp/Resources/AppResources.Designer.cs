@@ -611,6 +611,24 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("SettingMonochromeTile", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Update live tile.
+        /// </summary>
+        public static string SettingLiveTile {
+            get {
+                return ResourceManager.GetString("SettingLiveTile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Notify on weather changes.
+        /// </summary>
+        public static string SettingNotifications {
+            get {
+                return ResourceManager.GetString("SettingNotifications", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Precipitation unit.

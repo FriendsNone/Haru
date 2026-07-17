@@ -9,6 +9,8 @@ namespace HaruCore
     {
         private const string LiveTileBase = "/Assets/LiveTile/";
         private const string SmallTileImage = "/Assets/ApplicationTileSmall.png";
+        private const string DefaultTileImage = "/Assets/ApplicationTile.png";
+        private const string DefaultTitle = "Haru";
 
         private static Uri TileUri(string name, bool wide, bool mono)
         {
@@ -28,6 +30,41 @@ namespace HaruCore
                               (version.Major == 7 && version.Build >= 8858);
 
             return _canUseFlipTile.Value;
+        }
+
+        public static void ResetTile()
+        {
+            var tile = ShellTile.ActiveTiles.FirstOrDefault();
+            if (tile == null) return;
+
+            var defaultImage = new Uri(DefaultTileImage, UriKind.Relative);
+            var clearImage = new Uri("", UriKind.Relative);
+
+            if (CanUseFlipTile())
+            {
+                tile.Update(new FlipTileData
+                {
+                    Title = DefaultTitle,
+                    Count = 0,
+                    SmallBackgroundImage = new Uri(SmallTileImage, UriKind.Relative),
+                    BackgroundImage = defaultImage,
+                    WideBackgroundImage = clearImage,
+                    BackTitle = string.Empty,
+                    BackContent = string.Empty,
+                    WideBackContent = string.Empty
+                });
+            }
+            else
+            {
+                tile.Update(new StandardTileData
+                {
+                    Title = DefaultTitle,
+                    Count = 0,
+                    BackgroundImage = defaultImage,
+                    BackTitle = string.Empty,
+                    BackContent = string.Empty
+                });
+            }
         }
 
         public static void UpdateTile(string location, string temperature, string weatherDescription,

@@ -167,15 +167,21 @@ namespace HaruApp.Views
 
         private void UpdateTile(CurrentRecord cr)
         {
-            TileHelper.UpdateTile(
-                (string)settings["Location"],
-                cr.Temperature,
-                cr.WeatherDescription,
-                cr.WeatherIcon,
-                cr.WeatherTile,
-                DateTime.Now.ToString("t"),
-                (bool)settings["MonochromeTileEnable"]
-            );
+            var showWeatherTile = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true)
+                && SettingsHelper.GetBool(settings, "LiveTileEnable", true);
+
+            if (showWeatherTile)
+                TileHelper.UpdateTile(
+                    (string)settings["Location"],
+                    cr.Temperature,
+                    cr.WeatherDescription,
+                    cr.WeatherIcon,
+                    cr.WeatherTile,
+                    DateTime.Now.ToString("t"),
+                    SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
+                );
+            else
+                TileHelper.ResetTile();
 
             StartPeriodicAgent();
         }
@@ -186,14 +192,16 @@ namespace HaruApp.Views
             if (oldTask != null)
                 ScheduledActionService.Remove(TASK_NAME);
 
-            var backgroundUpdateEnabled = !settings.Contains("BackgroundUpdateEnable")
-                || (bool)settings["BackgroundUpdateEnable"];
-            if (!backgroundUpdateEnabled)
+            var backgroundUpdateEnabled = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true);
+            var liveTileEnabled = SettingsHelper.GetBool(settings, "LiveTileEnable", true);
+            var notificationEnabled = SettingsHelper.GetBool(settings, "NotificationEnable", true);
+
+            if (!backgroundUpdateEnabled || (!liveTileEnabled && !notificationEnabled))
                 return;
 
             task = new PeriodicTask(TASK_NAME)
             {
-                Description = "Updates the live tile with the latest forecast.",
+                Description = "Updates the live tile and weather alerts with the latest forecast.",
                 ExpirationTime = DateTime.Now.AddDays(14)
             };
 

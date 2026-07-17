@@ -59,10 +59,16 @@ namespace HaruAgent
                 return;
             }
 
+            if (!SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true))
+            {
+                NotifyComplete();
+                return;
+            }
+
             string[] requiredKeys =
             {
                 "Location", "Latitude", "Longitude",
-                "TemperatureUnit", "WindSpeedUnit", "PrecipitationUnit", "MonochromeTileEnable"
+                "TemperatureUnit", "WindSpeedUnit", "PrecipitationUnit"
             };
 
             foreach (var key in requiredKeys)
@@ -86,16 +92,26 @@ namespace HaruAgent
                 if (forecast != null)
                 {
                     var current = forecast.ToCurrentRecord();
+                    var currentData = forecast.Current;
 
-                    TileHelper.UpdateTile(
-                        location,
-                        current.Temperature,
-                        current.WeatherDescription,
-                        current.WeatherIcon,
-                        current.WeatherTile,
-                        error != null ? current.Time : DateTime.Now.ToString("t"),
-                        (bool)settings["MonochromeTileEnable"]
-                    );
+                    if (SettingsHelper.GetBool(settings, "LiveTileEnable", true))
+                    {
+                        TileHelper.UpdateTile(
+                            location,
+                            current.Temperature,
+                            current.WeatherDescription,
+                            current.WeatherIcon,
+                            current.WeatherTile,
+                            error != null ? current.Time : DateTime.Now.ToString("t"),
+                            SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
+                        );
+                    }
+
+                    if (SettingsHelper.GetBool(settings, "NotificationEnable", true) && currentData != null)
+                    {
+                        NotificationHelper.MaybeNotify(settings, location, current,
+                            currentData.Temperature, currentData.WeatherCode, temperatureUnit);
+                    }
 
 #if DEBUG
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
