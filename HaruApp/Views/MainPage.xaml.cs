@@ -68,6 +68,9 @@ namespace HaruApp.Views
         {
             base.OnNavigatedTo(e);
 
+            // Arrived here via a "?refresh=true" redirect from Search or Settings. Drop the
+            // intermediate page(s) from the back stack (up to two) so pressing Back exits the
+            // app to the Start screen instead of returning to those transient pages.
             if (NavigationContext.QueryString.ContainsKey("refresh"))
             {
                 if (NavigationService.CanGoBack)
@@ -177,7 +180,9 @@ namespace HaruApp.Views
             if (oldTask != null)
                 ScheduledActionService.Remove(TASK_NAME);
 
-            if (!(bool?)settings["BackgroundUpdateEnable"] ?? true)
+            var backgroundUpdateEnabled = !settings.Contains("BackgroundUpdateEnable")
+                || (bool)settings["BackgroundUpdateEnable"];
+            if (!backgroundUpdateEnabled)
                 return;
 
             task = new PeriodicTask(TASK_NAME)

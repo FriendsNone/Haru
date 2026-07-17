@@ -16,11 +16,23 @@ namespace HaruCore
             return (Location ?? new List<Location>()).Select(l => new LocationRecord
             {
                 NameShort = string.Format("{0}, {1}", l.Name, l.CountryCode),
-                NameLong = string.Join(", ", new[] { l.Name }.Concat(new[] { l.Admin1, l.Admin2, l.Admin3, l.Admin4 }.Where(a => !string.IsNullOrWhiteSpace(a))).Concat(string.IsNullOrWhiteSpace(l.Country) ? new string[0] : new[] { l.Country })),
+                NameLong = BuildLongName(l),
                 Coordinates = string.Format("{0}, {1}", l.Latitude, l.Longitude),
                 Latitude = l.Latitude,
                 Longitude = l.Longitude
             }).ToList();
+        }
+
+        // "Name, <non-blank admin regions>, Country" — omitting any parts that are blank.
+        private static string BuildLongName(Location l)
+        {
+            var parts = new List<string> { l.Name };
+            parts.AddRange(new[] { l.Admin1, l.Admin2, l.Admin3, l.Admin4 }
+                .Where(a => !string.IsNullOrWhiteSpace(a)));
+            if (!string.IsNullOrWhiteSpace(l.Country))
+                parts.Add(l.Country);
+
+            return string.Join(", ", parts);
         }
     }
 
@@ -78,34 +90,54 @@ namespace HaruCore
 
         public List<HourlyRecord> ToHourlyRecords()
         {
-            return (Hourly == null || Hourly.Time == null ? new List<string>() : Hourly.Time).Select((t, i) =>
+            var records = new List<HourlyRecord>();
+            if (Hourly == null || Hourly.Time == null) return records;
+
+            var h = Hourly;
+            var units = HourlyUnits;
+            for (int i = 0; i < h.Time.Count; i++)
             {
-                var dt = DateTime.Parse(t, null, DateTimeStyles.RoundtripKind);
-                return new HourlyRecord
+                var dt = DateTime.Parse(h.Time[i], null, DateTimeStyles.RoundtripKind);
+                int weatherCode = h.WeatherCode[i];
+                bool isDay = h.IsDay[i];
+
+                records.Add(new HourlyRecord
                 {
                     Time = string.Format("{0} {1}", dt.ToString("ddd", CultureInfo.CurrentCulture), dt.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
-                    WeatherIcon = UnitHelper.GetWeatherIcon(Hourly.WeatherCode.ElementAtOrDefault(i), Hourly.IsDay.ElementAtOrDefault(i)),
-                    WeatherDescription = UnitHelper.GetWeatherDescription(Hourly.WeatherCode.ElementAtOrDefault(i), Hourly.IsDay.ElementAtOrDefault(i)),
-                    Temperature = Math.Ceiling(Hourly.Temperature.ElementAtOrDefault(i)) + HourlyUnits.Temperature,
-                    Humidity = Hourly.RelativeHumidity.ElementAtOrDefault(i) + "%",
-                    Precipitation = Hourly.PrecipitationProbability.ElementAtOrDefault(i) + "%",
-                    Wind = string.Format("{0} {1} {2}", Hourly.WindSpeed.ElementAtOrDefault(i), HourlyUnits.WindSpeed, UnitHelper.InterpretDirection(Hourly.WindDirection.ElementAtOrDefault(i), true))
-                };
-            }).ToList();
+                    WeatherIcon = UnitHelper.GetWeatherIcon(weatherCode, isDay),
+                    WeatherDescription = UnitHelper.GetWeatherDescription(weatherCode, isDay),
+                    Temperature = Math.Ceiling(h.Temperature[i]) + units.Temperature,
+                    Humidity = h.RelativeHumidity[i] + "%",
+                    Precipitation = h.PrecipitationProbability[i] + "%",
+                    Wind = string.Format("{0} {1} {2}", h.WindSpeed[i], units.WindSpeed, UnitHelper.InterpretDirection(h.WindDirection[i], true))
+                });
+            }
+            return records;
         }
 
         public List<DailyRecord> ToDailyRecords()
         {
-            return (Daily == null || Daily.Time == null ? new List<string>() : Daily.Time).Select((t, i) => new DailyRecord
+            var records = new List<DailyRecord>();
+            if (Daily == null || Daily.Time == null) return records;
+
+            var d = Daily;
+            var units = DailyUnits;
+            for (int i = 0; i < d.Time.Count; i++)
             {
-                Time = DateTime.Parse(t).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
-                WeatherIcon = UnitHelper.GetWeatherIcon(Daily.WeatherCode.ElementAtOrDefault(i), true),
-                WeatherDescription = UnitHelper.GetWeatherDescription(Daily.WeatherCode.ElementAtOrDefault(i), true),
-                Temperature = string.Format("{0}°/{1}{2}", Math.Ceiling(Daily.TemperatureMax.ElementAtOrDefault(i)), Math.Ceiling(Daily.TemperatureMin.ElementAtOrDefault(i)), DailyUnits.TemperatureMin),
-                Humidity = Daily.RelativeHumidityMean.ElementAtOrDefault(i) + "%",
-                Precipitation = Daily.PrecipitationProbabilityMax.ElementAtOrDefault(i) + "%",
-                Wind = string.Format("{0} {1} {2}", Daily.WindSpeedMax.ElementAtOrDefault(i), DailyUnits.WindSpeedMax, UnitHelper.InterpretDirection(Daily.WindDirectionDominant.ElementAtOrDefault(i), true))
-            }).ToList();
+                int weatherCode = d.WeatherCode[i];
+
+                records.Add(new DailyRecord
+                {
+                    Time = DateTime.Parse(d.Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
+                    WeatherIcon = UnitHelper.GetWeatherIcon(weatherCode, true),
+                    WeatherDescription = UnitHelper.GetWeatherDescription(weatherCode, true),
+                    Temperature = string.Format("{0}°/{1}{2}", Math.Ceiling(d.TemperatureMax[i]), Math.Ceiling(d.TemperatureMin[i]), units.TemperatureMin),
+                    Humidity = d.RelativeHumidityMean[i] + "%",
+                    Precipitation = d.PrecipitationProbabilityMax[i] + "%",
+                    Wind = string.Format("{0} {1} {2}", d.WindSpeedMax[i], units.WindSpeedMax, UnitHelper.InterpretDirection(d.WindDirectionDominant[i], true))
+                });
+            }
+            return records;
         }
     }
 
