@@ -20,6 +20,25 @@
     Style="{StaticResource TurnstilePageTransition}"
     Loaded="PhoneApplicationPage_Loaded">
 
+    <phone:PhoneApplicationPage.Resources>
+        <!-- Non-interactive list rows: no selection highlight or padding, so a
+             virtualizing ListBox renders identically to the previous ItemsControl. -->
+        <Style x:Key="PlainListBoxItem"
+               TargetType="ListBoxItem">
+            <Setter Property="Padding"
+                    Value="0"/>
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+
     <Grid Background="Transparent">
         <controls:Pivot x:Name="MainPivot"
                         Title="{Binding LocalizedResources.NoLocation, Source={StaticResource LocalizedStrings}}"
@@ -182,237 +201,237 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="{Binding LocalizedResources.PivotNext12Hours, Source={StaticResource LocalizedStrings}}">
-                <ScrollViewer x:Name="HoursScrollViewer">
-                    <ItemsControl ItemsSource="{Binding Hourly}"
-                                  Margin="12,0,0,0">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,0,0,48">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                <ListBox x:Name="HoursListBox"
+                         ItemsSource="{Binding Hourly}"
+                         Margin="12,0,0,0"
+                         ItemContainerStyle="{StaticResource PlainListBoxItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,48">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                                    <StackPanel Grid.Row="0"
-                                                HorizontalAlignment="Left"
-                                                Background="{StaticResource PhoneAccentBrush}"
-                                                toolkit:SlideInEffect.LineIndex="1">
-                                        <TextBlock Margin="6,6,6,6"
+                                <StackPanel Grid.Row="0"
+                                            HorizontalAlignment="Left"
+                                            Background="{StaticResource PhoneAccentBrush}"
+                                            toolkit:SlideInEffect.LineIndex="1">
+                                    <TextBlock Margin="6,6,6,6"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="{StaticResource PhoneFontSizeSmall}"
+                                               Foreground="White"
+                                               Text="{Binding Time}"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="36"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
+                                           Grid.Column="0"
+                                           Width="66"
+                                           Height="66"
+                                           VerticalAlignment="Center"
+                                           toolkit:SlideInEffect.LineIndex="2"/>
+
+                                    <StackPanel Grid.Column="2"
+                                                toolkit:SlideInEffect.LineIndex="3">
+                                        <TextBlock Margin="0,0,0,-8"
                                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                    FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                   Foreground="White"
-                                                   Text="{Binding Time}"/>
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding WeatherDescription}"
+                                                   Margin="0,0,0,0"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0"
+                                                toolkit:SlideInEffect.LineIndex="4">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Temperature}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                     </StackPanel>
 
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="36"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="2"
+                                                toolkit:SlideInEffect.LineIndex="5">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelHum, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Humidity}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
 
-                                        <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
-                                               Grid.Column="0"
-                                               Width="66"
-                                               Height="66"
-                                               VerticalAlignment="Center"
-                                               toolkit:SlideInEffect.LineIndex="2"/>
+                                    <StackPanel Grid.Column="4"
+                                                toolkit:SlideInEffect.LineIndex="6">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelPrec, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Precipitation}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
 
-                                        <StackPanel Grid.Column="2"
-                                                    toolkit:SlideInEffect.LineIndex="3">
-                                            <TextBlock Margin="0,0,0,-8"
-                                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding WeatherDescription}"
-                                                       Margin="0,0,0,0"
-                                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"
-                                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}"
-                                                       Foreground="{StaticResource PhoneAccentBrush}"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <Grid Grid.Row="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1.5*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Grid.Column="0"
-                                                    toolkit:SlideInEffect.LineIndex="4">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Temperature}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="2"
-                                                    toolkit:SlideInEffect.LineIndex="5">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelHum, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Humidity}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="4"
-                                                    toolkit:SlideInEffect.LineIndex="6">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelPrec, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Precipitation}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="6"
-                                                    toolkit:SlideInEffect.LineIndex="7">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelWind, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Wind}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <StackPanel Grid.Column="6"
+                                                toolkit:SlideInEffect.LineIndex="7">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelWind, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Wind}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
                                 </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </controls:PivotItem>
 
             <controls:PivotItem Header="{Binding LocalizedResources.PivotNext7Days, Source={StaticResource LocalizedStrings}}">
-                <ScrollViewer x:Name="DaysScrollViewer">
-                    <ItemsControl ItemsSource="{Binding Daily}"
-                                  Margin="12,0,0,0">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,0,0,48">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="12"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
+                <ListBox x:Name="DaysListBox"
+                         ItemsSource="{Binding Daily}"
+                         Margin="12,0,0,0"
+                         ItemContainerStyle="{StaticResource PlainListBoxItem}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,48">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                                    <StackPanel Grid.Row="0"
-                                                HorizontalAlignment="Left"
-                                                Background="{StaticResource PhoneAccentBrush}"
-                                                toolkit:SlideInEffect.LineIndex="1">
-                                        <TextBlock Margin="6,6,6,6"
+                                <StackPanel Grid.Row="0"
+                                            HorizontalAlignment="Left"
+                                            Background="{StaticResource PhoneAccentBrush}"
+                                            toolkit:SlideInEffect.LineIndex="1">
+                                    <TextBlock Margin="6,6,6,6"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="{StaticResource PhoneFontSizeSmall}"
+                                               Foreground="White"
+                                               Text="{Binding Time}"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="36"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
+                                           Grid.Column="0"
+                                           Width="66"
+                                           Height="66"
+                                           VerticalAlignment="Center"
+                                           toolkit:SlideInEffect.LineIndex="2"/>
+
+                                    <StackPanel Grid.Column="2"
+                                                toolkit:SlideInEffect.LineIndex="3">
+                                        <TextBlock Margin="0,0,0,-8"
                                                    FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                    FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                   Foreground="White"
-                                                   Text="{Binding Time}"/>
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding WeatherDescription}"
+                                                   Margin="0,0,0,0"
+                                                   FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+                                                   FontSize="{StaticResource PhoneFontSizeExtraLarge}"
+                                                   Foreground="{StaticResource PhoneAccentBrush}"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="12"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0"
+                                                toolkit:SlideInEffect.LineIndex="4">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Temperature}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
                                     </StackPanel>
 
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="36"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="2"
+                                                toolkit:SlideInEffect.LineIndex="5">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelAvgHum, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Humidity}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
 
-                                        <Image Source="{Binding WeatherIcon, Converter={StaticResource IconConverter}}"
-                                               Grid.Column="0"
-                                               Width="66"
-                                               Height="66"
-                                               VerticalAlignment="Center"
-                                               toolkit:SlideInEffect.LineIndex="2"/>
+                                    <StackPanel Grid.Column="4"
+                                                toolkit:SlideInEffect.LineIndex="6">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelMaxPrec, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Precipitation}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
 
-                                        <StackPanel Grid.Column="2"
-                                                    toolkit:SlideInEffect.LineIndex="3">
-                                            <TextBlock Margin="0,0,0,-8"
-                                                       FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelCondition, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding WeatherDescription}"
-                                                       Margin="0,0,0,0"
-                                                       FontFamily="{StaticResource PhoneFontFamilySemiLight}"
-                                                       FontSize="{StaticResource PhoneFontSizeExtraLarge}"
-                                                       Foreground="{StaticResource PhoneAccentBrush}"/>
-                                        </StackPanel>
-                                    </Grid>
-
-                                    <Grid Grid.Row="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="12"/>
-                                            <ColumnDefinition Width="1.5*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Grid.Column="0"
-                                                    toolkit:SlideInEffect.LineIndex="4">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelTemp, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Temperature}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="2"
-                                                    toolkit:SlideInEffect.LineIndex="5">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelAvgHum, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Humidity}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="4"
-                                                    toolkit:SlideInEffect.LineIndex="6">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelMaxPrec, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Precipitation}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-
-                                        <StackPanel Grid.Column="6"
-                                                    toolkit:SlideInEffect.LineIndex="7">
-                                            <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                                       FontSize="{StaticResource PhoneFontSizeSmall}"
-                                                       Foreground="{StaticResource PhoneSubtleBrush}"
-                                                       Text="{Binding LocalizedResources.LabelMaxWind, Source={StaticResource LocalizedStrings}}"/>
-                                            <TextBlock Text="{Binding Wind}"
-                                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                                       FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <StackPanel Grid.Column="6"
+                                                toolkit:SlideInEffect.LineIndex="7">
+                                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                                   FontSize="{StaticResource PhoneFontSizeSmall}"
+                                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                                                   Text="{Binding LocalizedResources.LabelMaxWind, Source={StaticResource LocalizedStrings}}"/>
+                                        <TextBlock Text="{Binding Wind}"
+                                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                                   FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                    </StackPanel>
                                 </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

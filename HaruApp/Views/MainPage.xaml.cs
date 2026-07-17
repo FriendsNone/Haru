@@ -95,9 +95,15 @@ namespace HaruApp.Views
             if (ApplicationBar != null)
             {
                 ApplicationBar.Mode = MainPivot.SelectedIndex == 0 ? ApplicationBarMode.Default : ApplicationBarMode.Minimized;
-                HoursScrollViewer.ScrollToVerticalOffset(0);
-                DaysScrollViewer.ScrollToVerticalOffset(0);
+                ScrollToTop(HoursListBox);
+                ScrollToTop(DaysListBox);
             }
+        }
+
+        private static void ScrollToTop(ListBox list)
+        {
+            if (list.Items.Count > 0)
+                list.ScrollIntoView(list.Items[0]);
         }
 
         private void SearchApplicationBarIconButton_Click(object sender, EventArgs e)
