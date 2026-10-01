@@ -345,4 +345,7 @@ meaning
   <data name="BackgroundAgentDescription" xml:space="preserve">
     <value>Updates the live tile and weather alerts with the latest forecast.</value>
   </data>
+  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
+    <value>Couldn't clear saved forecast</value>
+  </data>
 </root>

@@ -345,4 +345,7 @@ que significa
   <data name="BackgroundAgentDescription" xml:space="preserve">
     <value>Actualiza el mosaico dinámico y los avisos del clima con el pronóstico más reciente.</value>
   </data>
+  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
+    <value>No se pudo eliminar el pronóstico guardado</value>
+  </data>
 </root>

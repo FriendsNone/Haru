@@ -5,7 +5,6 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System;
 using System.ComponentModel;
-using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -67,16 +66,16 @@ namespace HaruApp.Views
 
         private void ClearSavedForecastButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-                if (store.FileExists("forecast.json"))
-                    store.DeleteFile("forecast.json");
-            }
-
-            PromptHelper.ShowAlert(
-                AppResources.SettingClearForecastSuccessTitle,
-                AppResources.SettingClearForecastSuccessMessage,
-                AppResources.PromptOkay);
+            if (OpenMeteoClient.ClearCache())
+                PromptHelper.ShowAlert(
+                    AppResources.SettingClearForecastSuccessTitle,
+                    AppResources.SettingClearForecastSuccessMessage,
+                    AppResources.PromptOkay);
+            else
+                PromptHelper.ShowAlert(
+                    AppResources.SettingClearForecastFailedTitle,
+                    AppResources.ProgressError,
+                    AppResources.PromptOkay);
         }
 
         private void SaveApplicationBarIconButton_Click(object sender, EventArgs e)

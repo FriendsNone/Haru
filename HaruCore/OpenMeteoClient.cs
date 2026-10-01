@@ -154,6 +154,20 @@ namespace HaruCore
             if (callback != null) callback(result, error);
         }
 
+        public static bool ClearCache()
+        {
+            try
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    if (store.FileExists(CacheFileName))
+                        store.DeleteFile(CacheFileName);
+                }
+                return true;
+            }
+            catch { return false; }
+        }
+
         private void SaveToCache(string content)
         {
             try

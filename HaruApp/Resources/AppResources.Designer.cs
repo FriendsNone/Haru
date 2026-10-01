@@ -737,5 +737,14 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("BackgroundAgentDescription", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t clear saved forecast.
+        /// </summary>
+        public static string SettingClearForecastFailedTitle {
+            get {
+                return ResourceManager.GetString("SettingClearForecastFailedTitle", resourceCulture);
+            }
+        }
     }
 }
