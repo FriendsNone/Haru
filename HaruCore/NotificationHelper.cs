@@ -12,6 +12,7 @@ namespace HaruCore
         private const string BaselineFileName = "notification.json";
         private const int MutexTimeoutMilliseconds = 5000;
         private static readonly Mutex BaselineMutex = new Mutex(false, "HaruNotificationBaseline");
+        private static readonly TimeSpan Cooldown = TimeSpan.FromHours(2);
 
         private static readonly string[] LegacyKeys =
         {
@@ -50,6 +51,7 @@ namespace HaruCore
         {
 #if DEBUG
             ShowToast(next.Location, current);
+            next.LastToastUtc = DateTime.UtcNow;
             SaveBaseline(next);
 #else
             var comparable = last != null
@@ -58,17 +60,36 @@ namespace HaruCore
 
             if (comparable)
             {
-                var categoryChanged = !string.Equals(last.Category, next.Category, StringComparison.Ordinal);
+                var precipitationChanged = GetPrecipitationLevel(last.Category) != GetPrecipitationLevel(next.Category);
                 var tempJumped = Math.Abs(next.Temperature - last.Temperature) >= TemperatureThreshold(next.TemperatureUnit);
 
-                if (!categoryChanged && !tempJumped)
+                if (!precipitationChanged && !tempJumped)
+                    return;
+
+                if (last.LastToastUtc.HasValue && DateTime.UtcNow - last.LastToastUtc.Value < Cooldown)
                     return;
 
                 ShowToast(next.Location, current);
+                next.LastToastUtc = DateTime.UtcNow;
             }
 
             SaveBaseline(next);
 #endif
+        }
+
+        private static int GetPrecipitationLevel(string category)
+        {
+            switch (category)
+            {
+                case "rain":
+                case "sleet":
+                case "snow":
+                    return 1;
+                case "thunderstorms":
+                    return 2;
+                default:
+                    return 0;
+            }
         }
 
         private static double TemperatureThreshold(string temperatureUnit)
@@ -125,5 +146,6 @@ namespace HaruCore
         public string Category { get; set; }
         public string TemperatureUnit { get; set; }
         public string Location { get; set; }
+        public DateTime? LastToastUtc { get; set; }
     }
 }
