@@ -77,8 +77,8 @@ namespace HaruCore
                 WeatherIcon = UnitHelper.GetWeatherIcon(c.WeatherCode, c.IsDay),
                 WeatherTile = UnitHelper.GetWeatherTileIcon(c.WeatherCode, c.IsDay),
                 WeatherDescription = UnitHelper.GetWeatherDescription(c.WeatherCode, c.IsDay),
-                Temperature = string.Format("{0}{1}", Math.Ceiling(c.Temperature), cu.Temperature),
-                ApparentTemperature = string.Format("{0}{1}", Math.Ceiling(c.ApparentTemperature), cu.ApparentTemperature),
+                Temperature = string.Format("{0}{1}", RoundTemperature(c.Temperature), cu.Temperature),
+                ApparentTemperature = string.Format("{0}{1}", RoundTemperature(c.ApparentTemperature), cu.ApparentTemperature),
                 Humidity = c.RelativeHumidity + "%",
                 Precipitation = string.Format("{0} {1}", c.Precipitation, cu.Precipitation),
                 WindSpeed = string.Format("{0} {1}", c.WindSpeed, cu.WindSpeed),
@@ -86,6 +86,11 @@ namespace HaruCore
                 Pressure = string.Format("{0} {1}", c.Pressure, cu.Pressure),
                 Time = UnitHelper.InterpretTimeDifference(c.Time, UtcOffsetSeconds)
             };
+        }
+
+        private static double RoundTemperature(double temperature)
+        {
+            return Math.Sign(temperature) * Math.Floor(Math.Abs(temperature) + 0.5);
         }
 
         public List<HourlyRecord> ToHourlyRecords()
@@ -106,7 +111,7 @@ namespace HaruCore
                     Time = string.Format("{0} {1}", dt.ToString("ddd", CultureInfo.CurrentCulture), dt.ToString("t", CultureInfo.CurrentCulture)).ToUpper(),
                     WeatherIcon = UnitHelper.GetWeatherIcon(weatherCode, isDay),
                     WeatherDescription = UnitHelper.GetWeatherDescription(weatherCode, isDay),
-                    Temperature = Math.Ceiling(h.Temperature[i]) + units.Temperature,
+                    Temperature = RoundTemperature(h.Temperature[i]) + units.Temperature,
                     Humidity = h.RelativeHumidity[i] + "%",
                     Precipitation = h.PrecipitationProbability[i] + "%",
                     Wind = string.Format("{0} {1} {2}", h.WindSpeed[i], units.WindSpeed, UnitHelper.InterpretDirection(h.WindDirection[i], true))
@@ -131,7 +136,7 @@ namespace HaruCore
                     Time = DateTime.Parse(d.Time[i]).ToString("ddd M/dd", CultureInfo.CurrentCulture).ToUpper(),
                     WeatherIcon = UnitHelper.GetWeatherIcon(weatherCode, true),
                     WeatherDescription = UnitHelper.GetWeatherDescription(weatherCode, true),
-                    Temperature = string.Format("{0}°/{1}{2}", Math.Ceiling(d.TemperatureMax[i]), Math.Ceiling(d.TemperatureMin[i]), units.TemperatureMin),
+                    Temperature = string.Format("{0}°/{1}{2}", RoundTemperature(d.TemperatureMax[i]), RoundTemperature(d.TemperatureMin[i]), units.TemperatureMin),
                     Humidity = d.RelativeHumidityMean[i] + "%",
                     Precipitation = d.PrecipitationProbabilityMax[i] + "%",
                     Wind = string.Format("{0} {1} {2}", d.WindSpeedMax[i], units.WindSpeedMax, UnitHelper.InterpretDirection(d.WindDirectionDominant[i], true))
