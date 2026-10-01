@@ -11,6 +11,7 @@ namespace HaruCore
     public class OpenMeteoClient
     {
         private const string CacheFileName = "forecast.json";
+        private const string GeoNamesUsername = "fact";
 
         public TimeSpan RequestTimeout { get; set; }
 
@@ -26,6 +27,27 @@ namespace HaruCore
                 Uri.EscapeDataString(query), count, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
             DownloadJson<GeocodingResponse>(url, callback);
+        }
+
+        public void ReverseGeocode(double latitude, double longitude, Action<string, Exception> callback)
+        {
+            var url = string.Format("http://api.geonames.org/findNearbyPlaceNameJSON?lat={0}&lng={1}&lang={2}&username={3}",
+                latitude.ToString(CultureInfo.InvariantCulture),
+                longitude.ToString(CultureInfo.InvariantCulture),
+                CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
+                GeoNamesUsername);
+
+            DownloadJson<GeoNamesResponse>(url, (response, error) =>
+            {
+                if (error == null && (response == null || response.Status != null))
+                    error = new InvalidOperationException(response != null ? response.Status.Message : "empty response");
+
+                var name = error == null ? response.ToPlaceName() : null;
+                if (error == null && name == null)
+                    error = new InvalidOperationException("no place found");
+
+                InvokeCallback(callback, name, error);
+            });
         }
 
         public void GetForecast(double latitude, double longitude, string temperatureUnit, string windSpeedUnit,

@@ -30,6 +30,7 @@ namespace HaruApp.Views
             LiveTileToggleSwitch.IsChecked = HaruSettings.LiveTileEnabled;
             NotificationToggleSwitch.IsChecked = HaruSettings.NotificationEnabled;
             MonochromeTileToggleSwitch.IsChecked = HaruSettings.MonochromeTileEnabled;
+            LocationServiceToggleSwitch.IsChecked = HaruSettings.LocationServiceEnabled;
             suppressToggleEvents = false;
             ApplyToggleDependencies();
 
@@ -95,6 +96,7 @@ namespace HaruApp.Views
                    LiveTileToggleSwitch.IsChecked != HaruSettings.LiveTileEnabled ||
                    NotificationToggleSwitch.IsChecked != HaruSettings.NotificationEnabled ||
                    MonochromeTileToggleSwitch.IsChecked != HaruSettings.MonochromeTileEnabled ||
+                   LocationServiceToggleSwitch.IsChecked != HaruSettings.LocationServiceEnabled ||
                    TemperatureUnitListPicker.SelectedItem as string != HaruSettings.TemperatureUnit ||
                    WindSpeedUnitListPicker.SelectedItem as string != HaruSettings.WindSpeedUnit ||
                    PrecipitationUnitListPicker.SelectedItem as string != HaruSettings.PrecipitationUnit;
@@ -106,6 +108,7 @@ namespace HaruApp.Views
             HaruSettings.LiveTileEnabled = LiveTileToggleSwitch.IsChecked == true;
             HaruSettings.NotificationEnabled = NotificationToggleSwitch.IsChecked == true;
             HaruSettings.MonochromeTileEnabled = MonochromeTileToggleSwitch.IsChecked == true;
+            HaruSettings.LocationServiceEnabled = LocationServiceToggleSwitch.IsChecked == true;
             HaruSettings.TemperatureUnit = TemperatureUnitListPicker.SelectedItem as string;
             HaruSettings.WindSpeedUnit = WindSpeedUnitListPicker.SelectedItem as string;
             HaruSettings.PrecipitationUnit = PrecipitationUnitListPicker.SelectedItem as string;

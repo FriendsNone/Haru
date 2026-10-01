@@ -3,6 +3,7 @@
   <App xmlns="" ProductID="{94e9332f-10cf-4fd8-94e0-9797a93c3f65}" Title="Haru" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="FriendsNone" Description="A sleek and modern weather app designed for Windows Phone." Publisher="FriendsNone">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
+      <Capability Name="ID_CAP_LOCATION" />
       <Capability Name="ID_CAP_NETWORKING" />
     </Capabilities>
     <Tasks>

@@ -84,6 +84,12 @@ namespace HaruCore
             set { Store[SettingsKeys.MonochromeTileEnable] = value; }
         }
 
+        public static bool LocationServiceEnabled
+        {
+            get { return Get(SettingsKeys.LocationServiceEnable, false); }
+            set { Store[SettingsKeys.LocationServiceEnable] = value; }
+        }
+
         public static bool FirstTimeLocationShown
         {
             get { return Get(SettingsKeys.FirstTimeLocation, false); }

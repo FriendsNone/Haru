@@ -273,6 +273,33 @@
   <data name="SearchButton" xml:space="preserve">
     <value>buscar</value>
   </data>
+  <data name="ProgressLocating" xml:space="preserve">
+    <value>Buscando tu ubicación...</value>
+  </data>
+  <data name="ProgressLocationUnavailable" xml:space="preserve">
+    <value>No se pudo encontrar tu ubicación. Revisa que la ubicación esté activada.</value>
+  </data>
+  <data name="SearchCurrentLocation" xml:space="preserve">
+    <value>usar mi ubicación</value>
+  </data>
+  <data name="PromptAllow" xml:space="preserve">
+    <value>permitir</value>
+  </data>
+  <data name="PromptDontAllow" xml:space="preserve">
+    <value>no permitir</value>
+  </data>
+  <data name="PromptLocationTitle" xml:space="preserve">
+    <value>¿Usar tu ubicación?</value>
+  </data>
+  <data name="PromptLocationMessage" xml:space="preserve">
+    <value>Haru usa la ubicación de tu teléfono para obtener el pronóstico de donde estás. Tus coordenadas se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono. No se comparten con nadie más. Puedes desactivar esto en cualquier momento en la configuración.</value>
+  </data>
+  <data name="SettingLocationService" xml:space="preserve">
+    <value>Usar mi ubicación</value>
+  </data>
+  <data name="SettingLocationServiceDescription" xml:space="preserve">
+    <value>Permite que Haru encuentre tu ubicación cuando tocas "usar mi ubicación" en la página de búsqueda. Tus coordenadas solo se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono.</value>
+  </data>
   <data name="SearchHint" xml:space="preserve">
     <value>ingresa una ubicación</value>
   </data>

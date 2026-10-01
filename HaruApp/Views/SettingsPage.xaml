@@ -42,6 +42,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
@@ -70,31 +75,45 @@
                     <sys:String>inch</sys:String>
                 </toolkit:ListPicker>
 
-                <StackPanel Grid.Row="3">
-                    <toolkit:ToggleSwitch x:Name="BackgroundUpdateToggleSwitch"
-                                          Margin="0,12,-22,-12"
-                                          Header="{Binding LocalizedResources.SettingBackgroundUpdates, Source={StaticResource LocalizedStrings}}"
-                                          Checked="MasterToggle_Checked"
-                                          Unchecked="MasterToggle_Unchecked"/>
+                <toolkit:ToggleSwitch x:Name="BackgroundUpdateToggleSwitch"
+                                      Grid.Row="3"
+                                      Margin="0,12,-22,-12"
+                                      Header="{Binding LocalizedResources.SettingBackgroundUpdates, Source={StaticResource LocalizedStrings}}"
+                                      Checked="MasterToggle_Checked"
+                                      Unchecked="MasterToggle_Unchecked"/>
 
-                    <toolkit:ToggleSwitch x:Name="LiveTileToggleSwitch"
-                                          Margin="0,0,-22,-12"
-                                          Header="{Binding LocalizedResources.SettingLiveTile, Source={StaticResource LocalizedStrings}}"
-                                          Checked="ChildToggle_Checked"
-                                          Unchecked="ChildToggle_Unchecked"/>
+                <toolkit:ToggleSwitch x:Name="LiveTileToggleSwitch"
+                                      Grid.Row="4"
+                                      Margin="0,0,-22,-12"
+                                      Header="{Binding LocalizedResources.SettingLiveTile, Source={StaticResource LocalizedStrings}}"
+                                      Checked="ChildToggle_Checked"
+                                      Unchecked="ChildToggle_Unchecked"/>
 
-                    <toolkit:ToggleSwitch x:Name="MonochromeTileToggleSwitch"
-                                          Margin="0,0,-22,-12"
-                                          Header="{Binding LocalizedResources.SettingMonochromeTile, Source={StaticResource LocalizedStrings}}"/>
+                <toolkit:ToggleSwitch x:Name="MonochromeTileToggleSwitch"
+                                      Grid.Row="5"
+                                      Margin="0,0,-22,-12"
+                                      Header="{Binding LocalizedResources.SettingMonochromeTile, Source={StaticResource LocalizedStrings}}"/>
 
-                    <toolkit:ToggleSwitch x:Name="NotificationToggleSwitch"
-                                          Margin="0,0,-22,-12"
-                                          Header="{Binding LocalizedResources.SettingNotifications, Source={StaticResource LocalizedStrings}}"
-                                          Checked="ChildToggle_Checked"
-                                          Unchecked="ChildToggle_Unchecked"/>
+                <toolkit:ToggleSwitch x:Name="NotificationToggleSwitch"
+                                      Grid.Row="6"
+                                      Margin="0,0,-22,-12"
+                                      Header="{Binding LocalizedResources.SettingNotifications, Source={StaticResource LocalizedStrings}}"
+                                      Checked="ChildToggle_Checked"
+                                      Unchecked="ChildToggle_Unchecked"/>
+
+                <StackPanel Grid.Row="7"
+                            Margin="0,0,0,12">
+                    <toolkit:ToggleSwitch x:Name="LocationServiceToggleSwitch"
+                                          Margin="0,0,-22,-26"
+                                          Header="{Binding LocalizedResources.SettingLocationService, Source={StaticResource LocalizedStrings}}"/>
+                    <TextBlock Margin="12,12,12,0"
+                               FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                               FontSize="{StaticResource PhoneFontSizeMedium}"
+                               TextWrapping="Wrap"
+                               Text="{Binding LocalizedResources.SettingLocationServiceDescription, Source={StaticResource LocalizedStrings}}"/>
                 </StackPanel>
-
-                <StackPanel Grid.Row="4"
+                
+                <StackPanel Grid.Row="8"
                             Margin="0,0,0,0">
                     <Button x:Name="ClearSavedForecastButton"
                             Content="{Binding LocalizedResources.SettingClearForecast, Source={StaticResource LocalizedStrings}}"

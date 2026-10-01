@@ -37,6 +37,7 @@
               Margin="12,0,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
@@ -58,8 +59,13 @@
                         Click="SearchButton_Click"/>
             </Grid>
 
+            <Button x:Name="CurrentLocationButton"
+                    Grid.Row="1"
+                    Content="{Binding LocalizedResources.SearchCurrentLocation, Source={StaticResource LocalizedStrings}}"
+                    Click="CurrentLocationButton_Click"/>
+
             <ListBox x:Name="ResultListBox"
-                     Grid.Row="1"
+                     Grid.Row="2"
                      Margin="0,0,0,12"
                      ItemsSource="{Binding Location}"
                      SelectionChanged="ResultListBox_SelectionChanged">

@@ -550,6 +550,87 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finding your location....
+        /// </summary>
+        public static string ProgressLocating {
+            get {
+                return ResourceManager.GetString("ProgressLocating", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t find your location. Check that location is on..
+        /// </summary>
+        public static string ProgressLocationUnavailable {
+            get {
+                return ResourceManager.GetString("ProgressLocationUnavailable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to allow.
+        /// </summary>
+        public static string PromptAllow {
+            get {
+                return ResourceManager.GetString("PromptAllow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to don&apos;t allow.
+        /// </summary>
+        public static string PromptDontAllow {
+            get {
+                return ResourceManager.GetString("PromptDontAllow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use your location?.
+        /// </summary>
+        public static string PromptLocationTitle {
+            get {
+                return ResourceManager.GetString("PromptLocationTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Haru uses your phone&apos;s location to get the forecast for where you are....
+        /// </summary>
+        public static string PromptLocationMessage {
+            get {
+                return ResourceManager.GetString("PromptLocationMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use my location.
+        /// </summary>
+        public static string SettingLocationService {
+            get {
+                return ResourceManager.GetString("SettingLocationService", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Lets Haru find your location when you tap &quot;use my location&quot; on the search page....
+        /// </summary>
+        public static string SettingLocationServiceDescription {
+            get {
+                return ResourceManager.GetString("SettingLocationServiceDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to use my location.
+        /// </summary>
+        public static string SearchCurrentLocation {
+            get {
+                return ResourceManager.GetString("SearchCurrentLocation", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to enter location.
         /// </summary>
         public static string SearchHint {

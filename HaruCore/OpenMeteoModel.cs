@@ -52,6 +52,33 @@ namespace HaruCore
         [JsonProperty("admin4")] public string Admin4 { get; set; }
     }
 
+    public class GeoNamesResponse
+    {
+        [JsonProperty("geonames")] public List<GeoNamesPlace> Places { get; set; }
+        [JsonProperty("status")] public GeoNamesStatus Status { get; set; }
+
+        public string ToPlaceName()
+        {
+            var place = (Places ?? new List<GeoNamesPlace>()).FirstOrDefault(p => !string.IsNullOrWhiteSpace(p.Name));
+            if (place == null) return null;
+
+            return string.IsNullOrWhiteSpace(place.CountryCode)
+                ? place.Name
+                : string.Format("{0}, {1}", place.Name, place.CountryCode);
+        }
+    }
+
+    public class GeoNamesPlace
+    {
+        [JsonProperty("name")] public string Name { get; set; }
+        [JsonProperty("countryCode")] public string CountryCode { get; set; }
+    }
+
+    public class GeoNamesStatus
+    {
+        [JsonProperty("message")] public string Message { get; set; }
+    }
+
     public class LocationRecord
     {
         public string NameShort { get; set; }
