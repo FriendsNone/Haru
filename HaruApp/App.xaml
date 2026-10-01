@@ -12,6 +12,11 @@
     <Application.Resources>
         <local:LocalizedStrings x:Key="LocalizedStrings"/>
         <converters:CachedImageConverter x:Key="IconConverter"/>
+        <converters:UnitNameConverter x:Key="UnitNameConverter"/>
+
+        <DataTemplate x:Key="UnitNameTemplate">
+            <TextBlock Text="{Binding Converter={StaticResource UnitNameConverter}}"/>
+        </DataTemplate>
 
         <Style x:Key="TurnstilePageTransition"
                TargetType="phone:PhoneApplicationPage">

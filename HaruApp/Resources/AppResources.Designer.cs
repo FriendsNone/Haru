@@ -656,5 +656,77 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("SettingWindSpeedUnit", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Celsius (°C).
+        /// </summary>
+        public static string UnitCelsius {
+            get {
+                return ResourceManager.GetString("UnitCelsius", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fahrenheit (°F).
+        /// </summary>
+        public static string UnitFahrenheit {
+            get {
+                return ResourceManager.GetString("UnitFahrenheit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Inches (in).
+        /// </summary>
+        public static string UnitInch {
+            get {
+                return ResourceManager.GetString("UnitInch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Kilometers per hour (km/h).
+        /// </summary>
+        public static string UnitKmh {
+            get {
+                return ResourceManager.GetString("UnitKmh", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Knots (kn).
+        /// </summary>
+        public static string UnitKn {
+            get {
+                return ResourceManager.GetString("UnitKn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Millimeters (mm).
+        /// </summary>
+        public static string UnitMm {
+            get {
+                return ResourceManager.GetString("UnitMm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Miles per hour (mph).
+        /// </summary>
+        public static string UnitMph {
+            get {
+                return ResourceManager.GetString("UnitMph", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Meters per second (m/s).
+        /// </summary>
+        public static string UnitMs {
+            get {
+                return ResourceManager.GetString("UnitMs", resourceCulture);
+            }
+        }
     }
 }

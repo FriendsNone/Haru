@@ -318,4 +318,28 @@ que significa
   <data name="SettingNotifications" xml:space="preserve">
     <value>Avisar sobre cambios del clima</value>
   </data>
+  <data name="UnitCelsius" xml:space="preserve">
+    <value>Celsius (°C)</value>
+  </data>
+  <data name="UnitFahrenheit" xml:space="preserve">
+    <value>Fahrenheit (°F)</value>
+  </data>
+  <data name="UnitKmh" xml:space="preserve">
+    <value>Kilómetros por hora (km/h)</value>
+  </data>
+  <data name="UnitMs" xml:space="preserve">
+    <value>Metros por segundo (m/s)</value>
+  </data>
+  <data name="UnitMph" xml:space="preserve">
+    <value>Millas por hora (mph)</value>
+  </data>
+  <data name="UnitKn" xml:space="preserve">
+    <value>Nudos (kn)</value>
+  </data>
+  <data name="UnitMm" xml:space="preserve">
+    <value>Milímetros (mm)</value>
+  </data>
+  <data name="UnitInch" xml:space="preserve">
+    <value>Pulgadas (in)</value>
+  </data>
 </root>

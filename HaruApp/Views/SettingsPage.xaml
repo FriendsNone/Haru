@@ -46,6 +46,7 @@
 
                 <toolkit:ListPicker x:Name="TemperatureUnitListPicker"
                                     Grid.Row="0"
+                                    ItemTemplate="{StaticResource UnitNameTemplate}"
                                     Header="{Binding LocalizedResources.SettingTemperatureUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>celsius</sys:String>
                     <sys:String>fahrenheit</sys:String>
@@ -53,6 +54,7 @@
 
                 <toolkit:ListPicker x:Name="WindSpeedUnitListPicker"
                                     Grid.Row="1"
+                                    ItemTemplate="{StaticResource UnitNameTemplate}"
                                     Header="{Binding LocalizedResources.SettingWindSpeedUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>kmh</sys:String>
                     <sys:String>ms</sys:String>
@@ -62,6 +64,7 @@
 
                 <toolkit:ListPicker x:Name="PrecipitationUnitListPicker"
                                     Grid.Row="2"
+                                    ItemTemplate="{StaticResource UnitNameTemplate}"
                                     Header="{Binding LocalizedResources.SettingPrecipitationUnit, Source={StaticResource LocalizedStrings}}">
                     <sys:String>mm</sys:String>
                     <sys:String>inch</sys:String>
