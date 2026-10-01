@@ -342,4 +342,7 @@ meaning
   <data name="UnitInch" xml:space="preserve">
     <value>Inches (in)</value>
   </data>
+  <data name="BackgroundAgentDescription" xml:space="preserve">
+    <value>Updates the live tile and weather alerts with the latest forecast.</value>
+  </data>
 </root>

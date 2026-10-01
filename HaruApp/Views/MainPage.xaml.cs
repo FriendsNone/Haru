@@ -3,7 +3,6 @@ using HaruApp.Resources;
 using HaruApp.ViewModels;
 using HaruCore;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System;
 using System.Windows;
@@ -15,8 +14,8 @@ namespace HaruApp.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        private const string TASK_NAME = "HaruAgent";
         private static readonly TimeSpan RefetchAfter = TimeSpan.FromMinutes(30);
+        private static bool agentStarted;
 
         private readonly OpenMeteoClient client = new OpenMeteoClient();
         private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
@@ -25,7 +24,6 @@ namespace HaruApp.Views
         private readonly DispatcherTimer forecastTimeTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
         private string lastLocation;
         private bool isFetching;
-        private PeriodicTask task;
 
         public MainPage()
         {
@@ -39,6 +37,12 @@ namespace HaruApp.Views
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             SystemTray.ProgressIndicator = progressIndicator;
+
+            if (!agentStarted)
+            {
+                agentStarted = true;
+                AgentHelper.StartPeriodicAgent();
+            }
 
             if (!HaruSettings.FirstTimeLocationShown)
             {
@@ -197,50 +201,6 @@ namespace HaruApp.Views
                 );
             else
                 TileHelper.ResetTile();
-
-            StartPeriodicAgent();
-        }
-
-        private void StartPeriodicAgent()
-        {
-            var oldTask = ScheduledActionService.Find(TASK_NAME);
-            if (oldTask != null)
-                ScheduledActionService.Remove(TASK_NAME);
-
-            if (!HaruSettings.BackgroundUpdateEnabled
-                || (!HaruSettings.LiveTileEnabled && !HaruSettings.NotificationEnabled))
-                return;
-
-            task = new PeriodicTask(TASK_NAME)
-            {
-                Description = "Updates the live tile and weather alerts with the latest forecast.",
-                ExpirationTime = DateTime.Now.AddDays(14)
-            };
-
-            try
-            {
-                ScheduledActionService.Add(task);
-
-                if (HaruSettings.BackgroundAgentDisabledShown)
-                {
-                    HaruSettings.BackgroundAgentDisabledShown = false;
-                    HaruSettings.Save();
-                }
-#if DEBUG
-                ScheduledActionService.LaunchForTest(TASK_NAME, TimeSpan.FromSeconds(60));
-                System.Diagnostics.Debug.WriteLine("Periodic task is started: " + TASK_NAME);
-#endif
-            }
-            catch (InvalidOperationException ex)
-            {
-                if (ex.Message.Contains("BNS Error: The action is disabled") && !HaruSettings.BackgroundAgentDisabledShown)
-                {
-                    HaruSettings.BackgroundAgentDisabledShown = true;
-                    HaruSettings.Save();
-                    MessageBox.Show(AppResources.BackgroundAgentDisabled);
-                }
-            }
-            catch (SchedulerServiceException) { }
         }
 
         private void BuildApplicationBar()

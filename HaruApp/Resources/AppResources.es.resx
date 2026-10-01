@@ -342,4 +342,7 @@ que significa
   <data name="UnitInch" xml:space="preserve">
     <value>Pulgadas (in)</value>
   </data>
+  <data name="BackgroundAgentDescription" xml:space="preserve">
+    <value>Actualiza el mosaico dinámico y los avisos del clima con el pronóstico más reciente.</value>
+  </data>
 </root>

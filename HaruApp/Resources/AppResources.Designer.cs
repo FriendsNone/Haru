@@ -728,5 +728,14 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitMs", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Updates the live tile and weather alerts with the latest forecast..
+        /// </summary>
+        public static string BackgroundAgentDescription {
+            get {
+                return ResourceManager.GetString("BackgroundAgentDescription", resourceCulture);
+            }
+        }
     }
 }
