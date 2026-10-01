@@ -4,6 +4,7 @@ using Microsoft.Phone.Shell;
 using System;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 
@@ -13,7 +14,8 @@ namespace HaruAgent
     {
         private static volatile bool _classInitialized;
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-        private readonly OpenMeteoClient client = new OpenMeteoClient();
+        private readonly OpenMeteoClient client = new OpenMeteoClient { RequestTimeout = TimeSpan.FromSeconds(15) };
+        private int completed;
 
         /// <remarks>
         /// ScheduledAgent constructor, initializes the UnhandledException handler
@@ -52,18 +54,26 @@ namespace HaruAgent
         /// </remarks>
         protected override void OnInvoke(ScheduledTask task)
         {
+            try
+            {
+                if (!StartForecastUpdate(task))
+                    Complete();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Periodic task failed to start: " + ex);
+                Complete();
+            }
+        }
+
+        private bool StartForecastUpdate(ScheduledTask task)
+        {
             var tile = ShellTile.ActiveTiles.FirstOrDefault();
             if (tile == null)
-            {
-                NotifyComplete();
-                return;
-            }
+                return false;
 
             if (!SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true))
-            {
-                NotifyComplete();
-                return;
-            }
+                return false;
 
             string[] requiredKeys =
             {
@@ -71,14 +81,8 @@ namespace HaruAgent
                 "TemperatureUnit", "WindSpeedUnit", "PrecipitationUnit"
             };
 
-            foreach (var key in requiredKeys)
-            {
-                if (!settings.Contains(key))
-                {
-                    NotifyComplete();
-                    return;
-                }
-            }
+            if (requiredKeys.Any(key => !settings.Contains(key)))
+                return false;
 
             var location = (string)settings["Location"];
             var latitude = (double)settings["Latitude"];
@@ -89,38 +93,62 @@ namespace HaruAgent
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
             {
-                if (forecast != null)
+                try
                 {
-                    var current = forecast.ToCurrentRecord();
-                    var currentData = forecast.Current;
-
-                    if (SettingsHelper.GetBool(settings, "LiveTileEnable", true))
-                    {
-                        TileHelper.UpdateTile(
-                            location,
-                            current.Temperature,
-                            current.WeatherDescription,
-                            current.WeatherIcon,
-                            current.WeatherTile,
-                            error != null ? current.Time : DateTime.Now.ToString("t"),
-                            SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
-                        );
-                    }
-
-                    if (SettingsHelper.GetBool(settings, "NotificationEnable", true) && currentData != null)
-                    {
-                        NotificationHelper.MaybeNotify(settings, location, current,
-                            currentData.Temperature, currentData.WeatherCode, temperatureUnit);
-                    }
+                    if (forecast != null)
+                        ApplyForecast(forecast, location, temperatureUnit);
 
 #if DEBUG
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
                     System.Diagnostics.Debug.WriteLine("Periodic task is started again: " + task.Name);
 #endif
                 }
-
-                NotifyComplete();
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Periodic task failed: " + ex);
+                }
+                finally
+                {
+                    Complete();
+                }
             });
+            return true;
+        }
+
+        private void ApplyForecast(ForecastResponse forecast, string location, string temperatureUnit)
+        {
+            var current = forecast.ToCurrentRecord();
+            var currentData = forecast.Current;
+
+            if (SettingsHelper.GetBool(settings, "LiveTileEnable", true))
+            {
+                TileHelper.UpdateTile(
+                    location,
+                    current.Temperature,
+                    current.WeatherDescription,
+                    current.WeatherIcon,
+                    current.WeatherTile,
+                    UnitHelper.FormatObservationTime(current.ObservedUtc),
+                    SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
+                );
+            }
+
+            if (SettingsHelper.GetBool(settings, "NotificationEnable", true))
+            {
+                NotificationHelper.MaybeNotify(
+                    location,
+                    current,
+                    currentData.Temperature,
+                    currentData.WeatherCode,
+                    temperatureUnit
+                );
+            }
+        }
+
+        private void Complete()
+        {
+            if (Interlocked.Exchange(ref completed, 1) == 0)
+                NotifyComplete();
         }
     }
 }

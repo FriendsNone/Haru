@@ -47,10 +47,8 @@ namespace HaruCore
             return shorthand ? DirectionsShort[index] : GetDirections()[index];
         }
 
-        public static string InterpretTimeDifference(string dateTime, int utcOffsetSeconds)
+        public static string InterpretTimeDifference(DateTime observedUtc)
         {
-            var local = DateTime.Parse(dateTime, null, DateTimeStyles.RoundtripKind);
-            var observedUtc = local - TimeSpan.FromSeconds(utcOffsetSeconds);
             var diff = DateTime.UtcNow - observedUtc;
 
             if (diff.TotalSeconds < 60) return CoreResources.TimeNow;
@@ -71,7 +69,17 @@ namespace HaruCore
                     : CoreResources.TimeHoursAgo, hours);
             }
 
-            return local.ToString("t", CultureInfo.CurrentCulture);
+            return FormatObservationTime(observedUtc);
+        }
+
+        public static string FormatObservationTime(DateTime observedUtc)
+        {
+            var local = observedUtc.ToLocalTime();
+            var time = local.ToString("t", CultureInfo.CurrentCulture);
+
+            if (DateTime.UtcNow - observedUtc < TimeSpan.FromHours(24)) return time;
+
+            return local.ToString("d", CultureInfo.CurrentCulture) + " " + time;
         }
 
         public static string GetWeatherDescription(int weatherCode, bool isDay)

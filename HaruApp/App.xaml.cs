@@ -87,6 +87,8 @@ namespace HaruApp
             if (!settings.Contains("PrecipitationUnit"))
                 settings["PrecipitationUnit"] = "mm";
 
+            HaruCore.NotificationHelper.RemoveLegacyBaseline(settings);
+
             settings.Save();
         }
 

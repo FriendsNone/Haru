@@ -84,8 +84,14 @@ namespace HaruCore
                 WindSpeed = string.Format("{0} {1}", c.WindSpeed, cu.WindSpeed),
                 WindDirection = UnitHelper.InterpretDirection(c.WindDirection, false),
                 Pressure = string.Format("{0} {1}", c.Pressure, cu.Pressure),
-                Time = UnitHelper.InterpretTimeDifference(c.Time, UtcOffsetSeconds)
+                ObservedUtc = GetObservedUtc()
             };
+        }
+
+        private DateTime GetObservedUtc()
+        {
+            var local = DateTime.Parse(Current.Time, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+            return DateTime.SpecifyKind(local - TimeSpan.FromSeconds(UtcOffsetSeconds), DateTimeKind.Utc);
         }
 
         private static double RoundTemperature(double temperature)
@@ -181,7 +187,7 @@ namespace HaruCore
         public string WindSpeed { get; set; }
         public string WindDirection { get; set; }
         public string Pressure { get; set; }
-        public string Time { get; set; }
+        public DateTime ObservedUtc { get; set; }
     }
 
     public class HourlyUnits

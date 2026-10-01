@@ -17,12 +17,14 @@ namespace HaruApp.Views
     public partial class MainPage : PhoneApplicationPage
     {
         private const string TASK_NAME = "HaruAgent";
+        private static readonly TimeSpan RefetchAfter = TimeSpan.FromMinutes(30);
 
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private readonly OpenMeteoClient client = new OpenMeteoClient();
         private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
         private readonly ForecastViewModel vm = new ForecastViewModel();
         private readonly DispatcherTimer timer;
+        private readonly DispatcherTimer forecastTimeTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
         private string lastLocation;
         private PeriodicTask task;
 
@@ -32,6 +34,7 @@ namespace HaruApp.Views
             BuildApplicationBar();
             DataContext = vm;
             timer = ProgressHelper.CreateProgressTimer(progressIndicator);
+            forecastTimeTimer.Tick += (s, e) => vm.RefreshForecastTime();
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -88,6 +91,19 @@ namespace HaruApp.Views
                 if (MainPivot.SelectedIndex != 0) MainPivot.SelectedIndex = 0;
                 FetchForecast();
             }
+            else if (vm.Current != null && DateTime.UtcNow - vm.Current.ObservedUtc > RefetchAfter)
+            {
+                FetchForecast();
+            }
+
+            vm.RefreshForecastTime();
+            forecastTimeTimer.Start();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            forecastTimeTimer.Stop();
         }
 
         private void MainPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -177,7 +193,7 @@ namespace HaruApp.Views
                     cr.WeatherDescription,
                     cr.WeatherIcon,
                     cr.WeatherTile,
-                    DateTime.Now.ToString("t"),
+                    UnitHelper.FormatObservationTime(cr.ObservedUtc),
                     SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
                 );
             else

@@ -28,7 +28,7 @@ namespace HaruApp.ViewModels
             {
                 return current == null
                     ? null
-                    : string.Format(AppResources.ForecastAsOf, current.Time);
+                    : string.Format(AppResources.ForecastAsOf, UnitHelper.InterpretTimeDifference(current.ObservedUtc));
             }
         }
 
@@ -52,6 +52,11 @@ namespace HaruApp.ViewModels
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void RefreshForecastTime()
+        {
+            OnPropertyChanged("ForecastTime");
         }
     }
 }
