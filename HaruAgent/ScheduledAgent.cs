@@ -96,7 +96,7 @@ namespace HaruAgent
                 try
                 {
                     if (forecast != null)
-                        ApplyForecast(forecast, location, temperatureUnit);
+                        ApplyForecast(forecast, location, temperatureUnit, error == null);
 
 #if DEBUG
                     ScheduledActionService.LaunchForTest(task.Name, TimeSpan.FromSeconds(60));
@@ -115,7 +115,7 @@ namespace HaruAgent
             return true;
         }
 
-        private void ApplyForecast(ForecastResponse forecast, string location, string temperatureUnit)
+        private void ApplyForecast(ForecastResponse forecast, string location, string temperatureUnit, bool isFresh)
         {
             var current = forecast.ToCurrentRecord();
             var currentData = forecast.Current;
@@ -133,13 +133,15 @@ namespace HaruAgent
                 );
             }
 
-            if (SettingsHelper.GetBool(settings, "NotificationEnable", true))
+            if (isFresh
+                && currentData.Temperature.HasValue && currentData.WeatherCode.HasValue
+                && SettingsHelper.GetBool(settings, "NotificationEnable", true))
             {
                 NotificationHelper.MaybeNotify(
                     location,
                     current,
-                    currentData.Temperature,
-                    currentData.WeatherCode,
+                    currentData.Temperature.Value,
+                    currentData.WeatherCode.Value,
                     temperatureUnit
                 );
             }

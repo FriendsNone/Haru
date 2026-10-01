@@ -240,4 +240,7 @@
   <data name="WeatherUnknown" xml:space="preserve">
     <value>desconocido</value>
   </data>
+  <data name="DailyDateFormat" xml:space="preserve">
+    <value>ddd d/MM</value>
+  </data>
 </root>

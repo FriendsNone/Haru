@@ -82,11 +82,12 @@ namespace HaruCore
             return local.ToString("d", CultureInfo.CurrentCulture) + " " + time;
         }
 
-        public static string GetWeatherDescription(int weatherCode, bool isDay)
+        public static string GetWeatherDescription(int? weatherCode, bool isDay)
         {
+            if (!weatherCode.HasValue) return CoreResources.WeatherUnknown;
             if (weatherCode <= 1) return isDay ? CoreResources.WeatherSunny : CoreResources.WeatherClear;
 
-            switch (weatherCode)
+            switch (weatherCode.Value)
             {
                 case 2: return CoreResources.WeatherPartlyCloudy;
                 case 3: return CoreResources.WeatherOvercast;
@@ -118,18 +119,20 @@ namespace HaruCore
             }
         }
 
-        public static string GetWeatherIcon(int weatherCode, bool isDay)
+        public static string GetWeatherIcon(int? weatherCode, bool isDay)
         {
+            if (!weatherCode.HasValue) return IconBase + "not-available.png";
             if (weatherCode <= 1) return IconBase + (isDay ? "clear-day.png" : "clear-night.png");
             string icon;
-            return IconMap.TryGetValue(weatherCode, out icon) ? IconBase + icon + ".png" : IconBase + "not-available.png";
+            return IconMap.TryGetValue(weatherCode.Value, out icon) ? IconBase + icon + ".png" : IconBase + "not-available.png";
         }
 
-        public static string GetWeatherTileIcon(int weatherCode, bool isDay)
+        public static string GetWeatherTileIcon(int? weatherCode, bool isDay)
         {
+            if (!weatherCode.HasValue) return "not-available";
             if (weatherCode <= 1) return isDay ? "clear-day" : "clear-night";
             string icon;
-            return IconMap.TryGetValue(weatherCode, out icon) ? icon : "not-available";
+            return IconMap.TryGetValue(weatherCode.Value, out icon) ? icon : "not-available";
         }
 
         public static string GetWeatherCategory(int weatherCode)

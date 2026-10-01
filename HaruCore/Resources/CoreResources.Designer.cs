@@ -61,6 +61,15 @@ namespace HaruCore.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ddd M/dd.
+        /// </summary>
+        public static string DailyDateFormat {
+            get {
+                return ResourceManager.GetString("DailyDateFormat", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to east.
         /// </summary>
         public static string DirectionEast {
