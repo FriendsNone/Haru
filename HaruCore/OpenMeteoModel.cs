@@ -16,9 +16,11 @@ namespace HaruCore
         {
             return (Location ?? new List<Location>()).Select(l => new LocationRecord
             {
-                NameShort = string.Format("{0}, {1}", l.Name, l.CountryCode),
+                NameShort = string.IsNullOrWhiteSpace(l.CountryCode)
+                    ? l.Name
+                    : string.Format("{0}, {1}", l.Name, l.CountryCode),
                 NameLong = BuildLongName(l),
-                Coordinates = string.Format("{0}, {1}", l.Latitude, l.Longitude),
+                Coordinates = string.Format(CultureInfo.InvariantCulture, "{0:0.####}, {1:0.####}", l.Latitude, l.Longitude),
                 Latitude = l.Latitude,
                 Longitude = l.Longitude
             }).ToList();

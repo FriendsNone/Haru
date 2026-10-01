@@ -22,8 +22,8 @@ namespace HaruCore
                 return;
             }
 
-            var url = string.Format("http://geocoding-api.open-meteo.com/v1/search?name={0}&count={1}&language=en",
-                Uri.EscapeDataString(query), count);
+            var url = string.Format("http://geocoding-api.open-meteo.com/v1/search?name={0}&count={1}&language={2}",
+                Uri.EscapeDataString(query), count, CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
 
             DownloadJson<GeocodingResponse>(url, callback);
         }
