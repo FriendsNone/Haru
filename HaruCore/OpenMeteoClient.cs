@@ -33,15 +33,21 @@ namespace HaruCore
             int forecastDays = 7, int forecastHours = 12)
         {
             var url = string.Format(
-                "http://api.open-meteo.com/v1/forecast?latitude={0}&longitude={1}&hourly={2}&daily={3}&current={4}&temperature_unit={5}&wind_speed_unit={6}&precipitation_unit={7}&timeformat={8}&timezone={9}&forecast_days={10}&forecast_hours={11}",
+                "http://api.open-meteo.com/v1/forecast?latitude={0}&longitude={1}&hourly={2}&daily={3}&current={4}&temperature_unit={5}&wind_speed_unit={6}&precipitation_unit={7}&timeformat={8}&timezone={9}&forecast_days={10}&forecast_hours={11}&_={12}",
                 latitude.ToString(CultureInfo.InvariantCulture),
                 longitude.ToString(CultureInfo.InvariantCulture),
                 "temperature_2m,relative_humidity_2m,precipitation_probability,weather_code,wind_speed_10m,wind_direction_10m,is_day",
                 "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant,relative_humidity_2m_mean",
                 "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m,wind_direction_10m",
-                temperatureUnit, windSpeedUnit, precipitationUnit, timeFormat,
+                temperatureUnit,
+                windSpeedUnit,
+                precipitationUnit,
+                timeFormat,
                 "auto",
-                forecastDays, forecastHours);
+                forecastDays,
+                forecastHours,
+                DateTime.UtcNow.Ticks
+            );
 
             DownloadString(url, (json, error) =>
             {
