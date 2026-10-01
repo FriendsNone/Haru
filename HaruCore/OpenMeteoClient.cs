@@ -4,12 +4,15 @@ using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
+using System.Threading;
 
 namespace HaruCore
 {
     public class OpenMeteoClient
     {
         private const string CacheFileName = "forecast.json";
+
+        public TimeSpan RequestTimeout { get; set; }
 
         public void SearchLocation(string query, Action<GeocodingResponse, Exception> callback, int count = 10)
         {
@@ -40,61 +43,104 @@ namespace HaruCore
                 "auto",
                 forecastDays, forecastHours);
 
-            var wc = new WebClient();
-            wc.DownloadStringCompleted += (s, e) =>
+            DownloadString(url, (json, error) =>
             {
-                if (e.Error != null)
+                ForecastResponse forecast = null;
+                if (error == null)
                 {
-                    var cache = LoadFromCache();
-                    if (cache != null)
-                    {
-                        try
-                        {
-                            var forecast = JsonConvert.DeserializeObject<ForecastResponse>(cache);
-                            InvokeCallback(callback, forecast, e.Error);
-                            return;
-                        }
-                        catch { }
-                    }
-                    InvokeCallback(callback, null, e.Error);
-                    return;
+                    forecast = ParseForecast(json, out error);
+                    if (forecast != null) SaveToCache(json);
                 }
 
-                try
+                if (forecast == null)
                 {
-                    var forecast = JsonConvert.DeserializeObject<ForecastResponse>(e.Result);
-                    SaveToCache(e.Result);
-                    InvokeCallback(callback, forecast, null);
+                    Exception cacheError;
+                    forecast = ParseForecast(LoadFromCache(), out cacheError);
                 }
-                catch (Exception ex)
-                {
-                    InvokeCallback(callback, null, ex);
-                }
-            };
-            wc.DownloadStringAsync(new Uri(url));
+
+                InvokeCallback(callback, forecast, error);
+            });
         }
 
         private void DownloadJson<T>(string url, Action<T, Exception> callback) where T : class
         {
+            DownloadString(url, (json, error) =>
+            {
+                T result = null;
+                if (error == null)
+                {
+                    try { result = JsonConvert.DeserializeObject<T>(json); }
+                    catch (Exception ex) { error = ex; }
+                }
+
+                InvokeCallback(callback, result, error);
+            });
+        }
+
+        private void DownloadString(string url, Action<string, Exception> completed)
+        {
             var wc = new WebClient();
+            Timer timer = null;
+            var finished = 0;
+
+            Action<string, Exception> finish = (result, error) =>
+            {
+                if (Interlocked.Exchange(ref finished, 1) != 0) return;
+                if (timer != null) timer.Dispose();
+                completed(result, error);
+            };
+
             wc.DownloadStringCompleted += (s, e) =>
             {
-                if (e.Error != null)
-                {
-                    InvokeCallback(callback, null, e.Error);
-                    return;
-                }
-                try
-                {
-                    var result = JsonConvert.DeserializeObject<T>(e.Result);
-                    InvokeCallback(callback, result, null);
-                }
-                catch (Exception ex)
-                {
-                    InvokeCallback(callback, null, ex);
-                }
+                if (e.Error != null) finish(null, e.Error);
+                else if (e.Cancelled) finish(null, new WebException("The request was cancelled."));
+                else finish(e.Result, null);
             };
-            wc.DownloadStringAsync(new Uri(url));
+
+            if (RequestTimeout > TimeSpan.Zero)
+            {
+                timer = new Timer(state =>
+                {
+                    finish(null, new TimeoutException("The request timed out."));
+                    try { wc.CancelAsync(); }
+                    catch { }
+                }, null, (int)RequestTimeout.TotalMilliseconds, Timeout.Infinite);
+            }
+
+            try
+            {
+                wc.DownloadStringAsync(new Uri(url));
+            }
+            catch (Exception ex)
+            {
+                finish(null, ex);
+            }
+        }
+
+        private static ForecastResponse ParseForecast(string json, out Exception error)
+        {
+            error = null;
+            if (json == null) return null;
+
+            try
+            {
+                var forecast = JsonConvert.DeserializeObject<ForecastResponse>(json);
+                if (IsComplete(forecast)) return forecast;
+                error = new FormatException("The forecast response is incomplete.");
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+            }
+            return null;
+        }
+
+        private static bool IsComplete(ForecastResponse forecast)
+        {
+            return forecast != null
+                && forecast.Current != null && forecast.CurrentUnits != null && !string.IsNullOrEmpty(forecast.Current.Time)
+                && forecast.Hourly != null && forecast.HourlyUnits != null
+                && forecast.Daily != null && forecast.DailyUnits != null;
         }
 
         private void InvokeCallback<T>(Action<T, Exception> callback, T result, Exception error)
