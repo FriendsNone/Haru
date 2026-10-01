@@ -24,6 +24,7 @@ namespace HaruApp.Views
         private readonly DispatcherTimer timer;
         private readonly DispatcherTimer forecastTimeTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
         private string lastLocation;
+        private bool isFetching;
         private PeriodicTask task;
 
         public MainPage()
@@ -89,7 +90,7 @@ namespace HaruApp.Views
                 if (MainPivot.SelectedIndex != 0) MainPivot.SelectedIndex = 0;
                 FetchForecast();
             }
-            else if (vm.Current != null && DateTime.UtcNow - vm.Current.ObservedUtc > RefetchAfter)
+            else if (!isFetching && vm.Current != null && DateTime.UtcNow - vm.Current.ObservedUtc > RefetchAfter)
             {
                 FetchForecast();
             }
@@ -134,7 +135,7 @@ namespace HaruApp.Views
                     AppResources.PromptYes,
                     AppResources.PromptLater,
                     () => NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative)));
-            else
+            else if (!isFetching)
                 FetchForecast();
         }
 
@@ -156,10 +157,13 @@ namespace HaruApp.Views
             var windSpeedUnit = HaruSettings.WindSpeedUnit;
             var precipitationUnit = HaruSettings.PrecipitationUnit;
 
-            ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressFetchingForecast);
+            isFetching = true;
+            ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressFetchingForecast, timer: timer);
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
             {
+                isFetching = false;
+
                 if (forecast == null)
                 {
                     ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressError, true, timer);
@@ -175,7 +179,7 @@ namespace HaruApp.Views
                 if (error != null)
                     ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressShowingLastUpdate, true, timer);
                 else
-                    ProgressHelper.HideProgress(progressIndicator);
+                    ProgressHelper.HideProgress(progressIndicator, timer);
             });
         }
 

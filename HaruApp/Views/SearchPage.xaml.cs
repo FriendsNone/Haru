@@ -70,7 +70,7 @@ namespace HaruApp.Views
 
         private void FetchLocation(string searchTerm)
         {
-            ProgressHelper.ShowProgress(progressIndicator, string.Format(AppResources.ProgressSearching, searchTerm));
+            ProgressHelper.ShowProgress(progressIndicator, string.Format(AppResources.ProgressSearching, searchTerm), timer: timer);
 
             client.SearchLocation(searchTerm, (locations, error) =>
             {
@@ -87,7 +87,7 @@ namespace HaruApp.Views
                 }
 
                 vm.Location = locations.ToLocationRecords();
-                ProgressHelper.HideProgress(progressIndicator);
+                ProgressHelper.HideProgress(progressIndicator, timer);
             });
         }
     }

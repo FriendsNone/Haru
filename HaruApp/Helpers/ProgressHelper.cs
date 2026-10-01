@@ -6,16 +6,19 @@ namespace HaruApp.Helpers
 {
     public static class ProgressHelper
     {
+        // Pass the page's timer every time, so a pending error timeout can't hide newer progress.
         public static void ShowProgress(ProgressIndicator indicator, string text, bool isError = false, DispatcherTimer timer = null)
         {
+            if (timer != null) timer.Stop();
             indicator.IsIndeterminate = !isError;
             indicator.Text = text;
             indicator.IsVisible = true;
             if (isError && timer != null) timer.Start();
         }
 
-        public static void HideProgress(ProgressIndicator indicator)
+        public static void HideProgress(ProgressIndicator indicator, DispatcherTimer timer = null)
         {
+            if (timer != null) timer.Stop();
             indicator.IsVisible = false;
         }
 
