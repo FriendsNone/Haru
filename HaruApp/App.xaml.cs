@@ -18,8 +18,6 @@ namespace HaruApp
 {
     public partial class App : Application
     {
-        private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>
@@ -66,30 +64,8 @@ namespace HaruApp
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            if (!settings.Contains("BackgroundUpdateEnable"))
-                settings["BackgroundUpdateEnable"] = true;
-
-            if (!settings.Contains("LiveTileEnable"))
-                settings["LiveTileEnable"] = true;
-
-            if (!settings.Contains("NotificationEnable"))
-                settings["NotificationEnable"] = true;
-
-            if (!settings.Contains("MonochromeTileEnable"))
-                settings["MonochromeTileEnable"] = false;
-
-            if (!settings.Contains("TemperatureUnit"))
-                settings["TemperatureUnit"] = "celsius";
-
-            if (!settings.Contains("WindSpeedUnit"))
-                settings["WindSpeedUnit"] = "kmh";
-
-            if (!settings.Contains("PrecipitationUnit"))
-                settings["PrecipitationUnit"] = "mm";
-
-            HaruCore.NotificationHelper.RemoveLegacyBaseline(settings);
-
-            settings.Save();
+            HaruCore.NotificationHelper.RemoveLegacyBaseline(IsolatedStorageSettings.ApplicationSettings);
+            HaruCore.HaruSettings.Save();
         }
 
         // Code to execute when the application is activated (brought to foreground)

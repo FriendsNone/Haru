@@ -13,7 +13,6 @@ namespace HaruApp.Views
 {
     public partial class SettingsPage : PhoneApplicationPage
     {
-        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private bool isPromptShown;
         private bool suppressToggleEvents;
 
@@ -28,19 +27,16 @@ namespace HaruApp.Views
             base.OnNavigatedTo(e);
 
             suppressToggleEvents = true;
-            BackgroundUpdateToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true);
-            LiveTileToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "LiveTileEnable", true);
-            NotificationToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "NotificationEnable", true);
-            MonochromeTileToggleSwitch.IsChecked = SettingsHelper.GetBool(settings, "MonochromeTileEnable", false);
+            BackgroundUpdateToggleSwitch.IsChecked = HaruSettings.BackgroundUpdateEnabled;
+            LiveTileToggleSwitch.IsChecked = HaruSettings.LiveTileEnabled;
+            NotificationToggleSwitch.IsChecked = HaruSettings.NotificationEnabled;
+            MonochromeTileToggleSwitch.IsChecked = HaruSettings.MonochromeTileEnabled;
             suppressToggleEvents = false;
             ApplyToggleDependencies();
 
-            if (settings.Contains("TemperatureUnit"))
-                TemperatureUnitListPicker.SelectedItem = settings["TemperatureUnit"];
-            if (settings.Contains("WindSpeedUnit"))
-                WindSpeedUnitListPicker.SelectedItem = settings["WindSpeedUnit"];
-            if (settings.Contains("PrecipitationUnit"))
-                PrecipitationUnitListPicker.SelectedItem = settings["PrecipitationUnit"];
+            TemperatureUnitListPicker.SelectedItem = HaruSettings.TemperatureUnit;
+            WindSpeedUnitListPicker.SelectedItem = HaruSettings.WindSpeedUnit;
+            PrecipitationUnitListPicker.SelectedItem = HaruSettings.PrecipitationUnit;
         }
 
         protected override void OnBackKeyPress(CancelEventArgs e)
@@ -96,25 +92,25 @@ namespace HaruApp.Views
 
         private bool HasChanges()
         {
-            return BackgroundUpdateToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true) ||
-                   LiveTileToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "LiveTileEnable", true) ||
-                   NotificationToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "NotificationEnable", true) ||
-                   MonochromeTileToggleSwitch.IsChecked != SettingsHelper.GetBool(settings, "MonochromeTileEnable", false) ||
-                   (settings.Contains("TemperatureUnit") && TemperatureUnitListPicker.SelectedItem as string != settings["TemperatureUnit"] as string) ||
-                   (settings.Contains("WindSpeedUnit") && WindSpeedUnitListPicker.SelectedItem as string != settings["WindSpeedUnit"] as string) ||
-                   (settings.Contains("PrecipitationUnit") && PrecipitationUnitListPicker.SelectedItem as string != settings["PrecipitationUnit"] as string);
+            return BackgroundUpdateToggleSwitch.IsChecked != HaruSettings.BackgroundUpdateEnabled ||
+                   LiveTileToggleSwitch.IsChecked != HaruSettings.LiveTileEnabled ||
+                   NotificationToggleSwitch.IsChecked != HaruSettings.NotificationEnabled ||
+                   MonochromeTileToggleSwitch.IsChecked != HaruSettings.MonochromeTileEnabled ||
+                   TemperatureUnitListPicker.SelectedItem as string != HaruSettings.TemperatureUnit ||
+                   WindSpeedUnitListPicker.SelectedItem as string != HaruSettings.WindSpeedUnit ||
+                   PrecipitationUnitListPicker.SelectedItem as string != HaruSettings.PrecipitationUnit;
         }
 
         private void SaveSettings()
         {
-            settings["BackgroundUpdateEnable"] = BackgroundUpdateToggleSwitch.IsChecked;
-            settings["LiveTileEnable"] = LiveTileToggleSwitch.IsChecked;
-            settings["NotificationEnable"] = NotificationToggleSwitch.IsChecked;
-            settings["MonochromeTileEnable"] = MonochromeTileToggleSwitch.IsChecked;
-            settings["TemperatureUnit"] = TemperatureUnitListPicker.SelectedItem as string;
-            settings["WindSpeedUnit"] = WindSpeedUnitListPicker.SelectedItem as string;
-            settings["PrecipitationUnit"] = PrecipitationUnitListPicker.SelectedItem as string;
-            settings.Save();
+            HaruSettings.BackgroundUpdateEnabled = BackgroundUpdateToggleSwitch.IsChecked == true;
+            HaruSettings.LiveTileEnabled = LiveTileToggleSwitch.IsChecked == true;
+            HaruSettings.NotificationEnabled = NotificationToggleSwitch.IsChecked == true;
+            HaruSettings.MonochromeTileEnabled = MonochromeTileToggleSwitch.IsChecked == true;
+            HaruSettings.TemperatureUnit = TemperatureUnitListPicker.SelectedItem as string;
+            HaruSettings.WindSpeedUnit = WindSpeedUnitListPicker.SelectedItem as string;
+            HaruSettings.PrecipitationUnit = PrecipitationUnitListPicker.SelectedItem as string;
+            HaruSettings.Save();
 
             if (BackgroundUpdateToggleSwitch.IsChecked != true || LiveTileToggleSwitch.IsChecked != true)
                 TileHelper.ResetTile();

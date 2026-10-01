@@ -6,7 +6,6 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System;
-using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -17,10 +16,8 @@ namespace HaruApp.Views
     public partial class MainPage : PhoneApplicationPage
     {
         private const string TASK_NAME = "HaruAgent";
-        private const string AgentDisabledShownKey = "BackgroundAgentDisabledShown";
         private static readonly TimeSpan RefetchAfter = TimeSpan.FromMinutes(30);
 
-        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private readonly OpenMeteoClient client = new OpenMeteoClient();
         private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
         private readonly ForecastViewModel vm = new ForecastViewModel();
@@ -42,7 +39,7 @@ namespace HaruApp.Views
         {
             SystemTray.ProgressIndicator = progressIndicator;
 
-            if (!settings.Contains("FirstTimeLocation"))
+            if (!HaruSettings.FirstTimeLocationShown)
             {
                 PromptHelper.ShowPrompt(
                     AppResources.PromptNoLocationTitle,
@@ -51,19 +48,19 @@ namespace HaruApp.Views
                     AppResources.PromptLater,
                     () =>
                     {
-                        settings["FirstTimeLocation"] = true;
-                        settings.Save();
+                        HaruSettings.FirstTimeLocationShown = true;
+                        HaruSettings.Save();
                         NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
                     },
                     () =>
                     {
-                        settings["FirstTimeLocation"] = true;
-                        settings.Save();
+                        HaruSettings.FirstTimeLocationShown = true;
+                        HaruSettings.Save();
                     },
                     () =>
                     {
-                        settings["FirstTimeLocation"] = true;
-                        settings.Save();
+                        HaruSettings.FirstTimeLocationShown = true;
+                        HaruSettings.Save();
                     });
             }
         }
@@ -85,9 +82,9 @@ namespace HaruApp.Views
                 }
             }
 
-            if (settings.Contains("Location") && settings["Location"] as string != lastLocation)
+            if (HaruSettings.HasLocation && HaruSettings.Location != lastLocation)
             {
-                lastLocation = settings["Location"] as string;
+                lastLocation = HaruSettings.Location;
                 MainPivot.Title = lastLocation.ToUpper();
                 if (MainPivot.SelectedIndex != 0) MainPivot.SelectedIndex = 0;
                 FetchForecast();
@@ -130,7 +127,7 @@ namespace HaruApp.Views
 
         private void RefreshApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            if (!HasLocationSettings())
+            if (!HaruSettings.HasLocation)
                 PromptHelper.ShowPrompt(
                     AppResources.PromptNoLocationTitle,
                     AppResources.PromptNoLocationRefresh,
@@ -153,11 +150,11 @@ namespace HaruApp.Views
 
         private void FetchForecast()
         {
-            var latitude = (double)settings["Latitude"];
-            var longitude = (double)settings["Longitude"];
-            var temperatureUnit = (string)settings["TemperatureUnit"];
-            var windSpeedUnit = (string)settings["WindSpeedUnit"];
-            var precipitationUnit = (string)settings["PrecipitationUnit"];
+            var latitude = HaruSettings.Latitude;
+            var longitude = HaruSettings.Longitude;
+            var temperatureUnit = HaruSettings.TemperatureUnit;
+            var windSpeedUnit = HaruSettings.WindSpeedUnit;
+            var precipitationUnit = HaruSettings.PrecipitationUnit;
 
             ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressFetchingForecast);
 
@@ -184,18 +181,15 @@ namespace HaruApp.Views
 
         private void UpdateTile(CurrentRecord cr)
         {
-            var showWeatherTile = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true)
-                && SettingsHelper.GetBool(settings, "LiveTileEnable", true);
-
-            if (showWeatherTile)
+            if (HaruSettings.BackgroundUpdateEnabled && HaruSettings.LiveTileEnabled)
                 TileHelper.UpdateTile(
-                    (string)settings["Location"],
+                    HaruSettings.Location,
                     cr.Temperature,
                     cr.WeatherDescription,
                     cr.WeatherIcon,
                     cr.WeatherTile,
                     UnitHelper.FormatObservationTime(cr.ObservedUtc),
-                    SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
+                    HaruSettings.MonochromeTileEnabled
                 );
             else
                 TileHelper.ResetTile();
@@ -209,11 +203,8 @@ namespace HaruApp.Views
             if (oldTask != null)
                 ScheduledActionService.Remove(TASK_NAME);
 
-            var backgroundUpdateEnabled = SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true);
-            var liveTileEnabled = SettingsHelper.GetBool(settings, "LiveTileEnable", true);
-            var notificationEnabled = SettingsHelper.GetBool(settings, "NotificationEnable", true);
-
-            if (!backgroundUpdateEnabled || (!liveTileEnabled && !notificationEnabled))
+            if (!HaruSettings.BackgroundUpdateEnabled
+                || (!HaruSettings.LiveTileEnabled && !HaruSettings.NotificationEnabled))
                 return;
 
             task = new PeriodicTask(TASK_NAME)
@@ -226,8 +217,11 @@ namespace HaruApp.Views
             {
                 ScheduledActionService.Add(task);
 
-                if (settings.Remove(AgentDisabledShownKey))
-                    settings.Save();
+                if (HaruSettings.BackgroundAgentDisabledShown)
+                {
+                    HaruSettings.BackgroundAgentDisabledShown = false;
+                    HaruSettings.Save();
+                }
 #if DEBUG
                 ScheduledActionService.LaunchForTest(TASK_NAME, TimeSpan.FromSeconds(60));
                 System.Diagnostics.Debug.WriteLine("Periodic task is started: " + TASK_NAME);
@@ -235,19 +229,14 @@ namespace HaruApp.Views
             }
             catch (InvalidOperationException ex)
             {
-                if (ex.Message.Contains("BNS Error: The action is disabled") && !settings.Contains(AgentDisabledShownKey))
+                if (ex.Message.Contains("BNS Error: The action is disabled") && !HaruSettings.BackgroundAgentDisabledShown)
                 {
-                    settings[AgentDisabledShownKey] = true;
-                    settings.Save();
+                    HaruSettings.BackgroundAgentDisabledShown = true;
+                    HaruSettings.Save();
                     MessageBox.Show(AppResources.BackgroundAgentDisabled);
                 }
             }
             catch (SchedulerServiceException) { }
-        }
-
-        private bool HasLocationSettings()
-        {
-            return settings.Contains("Location") && settings.Contains("Latitude") && settings.Contains("Longitude");
         }
 
         private void BuildApplicationBar()

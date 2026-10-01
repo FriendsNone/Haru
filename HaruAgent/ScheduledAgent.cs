@@ -2,7 +2,6 @@
 using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using System;
-using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -13,7 +12,6 @@ namespace HaruAgent
     public class ScheduledAgent : ScheduledTaskAgent
     {
         private static volatile bool _classInitialized;
-        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private readonly OpenMeteoClient client = new OpenMeteoClient { RequestTimeout = TimeSpan.FromSeconds(15) };
         private int completed;
 
@@ -72,24 +70,15 @@ namespace HaruAgent
             if (tile == null)
                 return false;
 
-            if (!SettingsHelper.GetBool(settings, "BackgroundUpdateEnable", true))
+            if (!HaruSettings.BackgroundUpdateEnabled || !HaruSettings.HasLocation)
                 return false;
 
-            string[] requiredKeys =
-            {
-                "Location", "Latitude", "Longitude",
-                "TemperatureUnit", "WindSpeedUnit", "PrecipitationUnit"
-            };
-
-            if (requiredKeys.Any(key => !settings.Contains(key)))
-                return false;
-
-            var location = (string)settings["Location"];
-            var latitude = (double)settings["Latitude"];
-            var longitude = (double)settings["Longitude"];
-            var temperatureUnit = (string)settings["TemperatureUnit"];
-            var windSpeedUnit = (string)settings["WindSpeedUnit"];
-            var precipitationUnit = (string)settings["PrecipitationUnit"];
+            var location = HaruSettings.Location;
+            var latitude = HaruSettings.Latitude;
+            var longitude = HaruSettings.Longitude;
+            var temperatureUnit = HaruSettings.TemperatureUnit;
+            var windSpeedUnit = HaruSettings.WindSpeedUnit;
+            var precipitationUnit = HaruSettings.PrecipitationUnit;
 
             client.GetForecast(latitude, longitude, temperatureUnit, windSpeedUnit, precipitationUnit, (forecast, error) =>
             {
@@ -120,7 +109,7 @@ namespace HaruAgent
             var current = forecast.ToCurrentRecord();
             var currentData = forecast.Current;
 
-            if (SettingsHelper.GetBool(settings, "LiveTileEnable", true))
+            if (HaruSettings.LiveTileEnabled)
             {
                 TileHelper.UpdateTile(
                     location,
@@ -129,13 +118,13 @@ namespace HaruAgent
                     current.WeatherIcon,
                     current.WeatherTile,
                     UnitHelper.FormatObservationTime(current.ObservedUtc),
-                    SettingsHelper.GetBool(settings, "MonochromeTileEnable", false)
+                    HaruSettings.MonochromeTileEnabled
                 );
             }
 
             if (isFresh
                 && currentData.Temperature.HasValue && currentData.WeatherCode.HasValue
-                && SettingsHelper.GetBool(settings, "NotificationEnable", true))
+                && HaruSettings.NotificationEnabled)
             {
                 NotificationHelper.MaybeNotify(
                     location,

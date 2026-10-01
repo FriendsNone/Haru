@@ -5,7 +5,6 @@ using HaruCore;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System;
-using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +14,6 @@ namespace HaruApp.Views
 {
     public partial class SearchPage : PhoneApplicationPage
     {
-        private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private readonly ProgressIndicator progressIndicator = new ProgressIndicator();
         private readonly OpenMeteoClient client = new OpenMeteoClient();
         private readonly GeocodingViewModel vm = new GeocodingViewModel();
@@ -59,10 +57,10 @@ namespace HaruApp.Views
             var selectedLocation = ResultListBox.SelectedItem as LocationRecord;
             if (selectedLocation == null) return;
 
-            settings["Location"] = selectedLocation.NameShort;
-            settings["Latitude"] = selectedLocation.Latitude;
-            settings["Longitude"] = selectedLocation.Longitude;
-            settings.Save();
+            HaruSettings.Location = selectedLocation.NameShort;
+            HaruSettings.Latitude = selectedLocation.Latitude;
+            HaruSettings.Longitude = selectedLocation.Longitude;
+            HaruSettings.Save();
 
             if (NavigationService.CanGoBack)
                 NavigationService.RemoveBackEntry();

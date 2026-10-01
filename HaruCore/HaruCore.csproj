@@ -63,7 +63,8 @@
     <Compile Include="OpenMeteoClient.cs" />
     <Compile Include="OpenMeteoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsHelper.cs" />
+    <Compile Include="HaruSettings.cs" />
+    <Compile Include="SettingsKeys.cs" />
     <Compile Include="Resources\CoreResources.es.Designer.cs">
       <DependentUpon>CoreResources.es.resx</DependentUpon>
       <AutoGen>True</AutoGen>
