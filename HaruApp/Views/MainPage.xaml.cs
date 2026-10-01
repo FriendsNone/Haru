@@ -17,6 +17,7 @@ namespace HaruApp.Views
     public partial class MainPage : PhoneApplicationPage
     {
         private const string TASK_NAME = "HaruAgent";
+        private const string AgentDisabledShownKey = "BackgroundAgentDisabledShown";
         private static readonly TimeSpan RefetchAfter = TimeSpan.FromMinutes(30);
 
         private readonly IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
@@ -224,6 +225,9 @@ namespace HaruApp.Views
             try
             {
                 ScheduledActionService.Add(task);
+
+                if (settings.Remove(AgentDisabledShownKey))
+                    settings.Save();
 #if DEBUG
                 ScheduledActionService.LaunchForTest(TASK_NAME, TimeSpan.FromSeconds(60));
                 System.Diagnostics.Debug.WriteLine("Periodic task is started: " + TASK_NAME);
@@ -231,8 +235,12 @@ namespace HaruApp.Views
             }
             catch (InvalidOperationException ex)
             {
-                if (ex.Message.Contains("BNS Error: The action is disabled"))
+                if (ex.Message.Contains("BNS Error: The action is disabled") && !settings.Contains(AgentDisabledShownKey))
+                {
+                    settings[AgentDisabledShownKey] = true;
+                    settings.Save();
                     MessageBox.Show(AppResources.BackgroundAgentDisabled);
+                }
             }
             catch (SchedulerServiceException) { }
         }
