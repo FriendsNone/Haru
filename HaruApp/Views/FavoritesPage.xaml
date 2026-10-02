@@ -1,0 +1,81 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="HaruApp.Views.FavoritesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"
+    Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    Style="{StaticResource TurnstilePageTransition}"
+    toolkit:TiltEffect.IsTiltEnabled="True">
+
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="12,17,0,28">
+            <TextBlock Text="{Binding LocalizedResources.AppTitle, Source={StaticResource LocalizedStrings}}"
+                       Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding LocalizedResources.PageFavorites, Source={StaticResource LocalizedStrings}}"
+                       Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1"
+              Margin="12,0,12,0">
+            <StackPanel>
+                <TextBlock x:Name="DescriptionTextBlock"
+                           TextWrapping="Wrap"
+                           Style="{StaticResource PhoneTextSubtleStyle}"
+                           Margin="12,0,12,12"/>
+
+                <ListBox x:Name="FavoritesListBox"
+                         Margin="0,0,0,12"
+                         ItemsSource="{Binding Favorites}"
+                         SelectionChanged="FavoritesListBox_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,10"
+                                  Background="Transparent">
+                                <toolkit:ContextMenuService.ContextMenu>
+                                    <toolkit:ContextMenu IsZoomEnabled="True">
+                                        <toolkit:MenuItem Header="{Binding LocalizedResources.MenuPinToStart, Source={StaticResource LocalizedStrings}}"
+                                                          IsEnabled="{Binding CanPin}"
+                                                          Click="PinMenuItem_Click"/>
+                                        <toolkit:MenuItem Header="{Binding LocalizedResources.MenuRemoveFavorite, Source={StaticResource LocalizedStrings}}"
+                                                          IsEnabled="{Binding CanRemove}"
+                                                          Click="RemoveMenuItem_Click"/>
+                                    </toolkit:ContextMenu>
+                                </toolkit:ContextMenuService.ContextMenu>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0"
+                                           Style="{StaticResource PhoneTextLargeStyle}"
+                                           Text="{Binding Name}"/>
+                                <TextBlock Grid.Row="1"
+                                           Style="{StaticResource PhoneTextSmallStyle}"
+                                           Text="{Binding Detail}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

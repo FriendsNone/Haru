@@ -40,7 +40,8 @@ namespace HaruApp.Views
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             SystemTray.ProgressIndicator = progressIndicator;
-            SearchPhoneTextBox.Focus();
+            if (vm.Location == null)
+                SearchPhoneTextBox.Focus();
         }
 
         private void SearchPhoneTextBox_KeyUp(object sender, KeyEventArgs e)
@@ -68,7 +69,48 @@ namespace HaruApp.Views
             var selectedLocation = ResultListBox.SelectedItem as LocationRecord;
             if (selectedLocation == null) return;
 
-            SaveLocation(selectedLocation.NameShort, selectedLocation.Latitude, selectedLocation.Longitude);
+            ResultListBox.SelectedItem = null;
+            ShowLocation(ToPlace(selectedLocation));
+        }
+
+        private void ResultContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            var menu = (ContextMenu)sender;
+            var place = ToPlace(menu.DataContext as LocationRecord);
+            if (place == null) return;
+
+            var isFavorite = FavoritesHelper.IsFavorite(place);
+            var favoriteItem = (MenuItem)menu.Items[0];
+            favoriteItem.Header = isFavorite ? AppResources.MenuRemoveFavorite : AppResources.MenuAddFavorite;
+            favoriteItem.IsEnabled = !isFavorite || FavoritesHelper.CanRemove(place);
+
+            var pinItem = (MenuItem)menu.Items[1];
+            pinItem.IsEnabled = FavoritesHelper.IsHome(place) || TileHelper.FindTile(place) == null;
+        }
+
+        private void FavoriteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var place = ToPlace(((FrameworkElement)sender).DataContext as LocationRecord);
+            if (place == null) return;
+
+            if (FavoritesHelper.IsFavorite(place))
+                FavoritesHelper.Remove(place, null);
+            else
+                FavoritesHelper.TryAdd(place);
+        }
+
+        private void PinMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var place = ToPlace(((FrameworkElement)sender).DataContext as LocationRecord);
+            if (place != null)
+                FavoritesHelper.Pin(place, null);
+        }
+
+        private static Place ToPlace(LocationRecord record)
+        {
+            return record == null
+                ? null
+                : new Place { Name = record.NameShort, Latitude = record.Latitude, Longitude = record.Longitude };
         }
 
         private void CurrentLocationButton_Click(object sender, RoutedEventArgs e)
@@ -128,7 +170,7 @@ namespace HaruApp.Views
                         // Without a place name, the coordinates double as the name.
                         var name = place ?? string.Format(CultureInfo.InvariantCulture, "{0:0.##}, {1:0.##}",
                             coordinate.Latitude, coordinate.Longitude);
-                        SaveLocation(name, coordinate.Latitude, coordinate.Longitude);
+                        ShowLocation(new Place { Name = name, Latitude = coordinate.Latitude, Longitude = coordinate.Longitude });
                     }));
             });
         }
@@ -152,17 +194,16 @@ namespace HaruApp.Views
             watcher = null;
         }
 
-        private void SaveLocation(string name, double latitude, double longitude)
+        private void ShowLocation(Place place)
         {
-            HaruSettings.Location = name;
-            HaruSettings.Latitude = latitude;
-            HaruSettings.Longitude = longitude;
-            HaruSettings.Save();
+            if (!HaruSettings.HasLocation)
+            {
+                FavoritesHelper.TryAdd(place);
+                NavigationService.Navigate(new Uri("/Views/MainPage.xaml?refresh=true", UriKind.Relative));
+                return;
+            }
 
-            if (NavigationService.CanGoBack)
-                NavigationService.RemoveBackEntry();
-
-            NavigationService.Navigate(new Uri("/Views/MainPage.xaml?refresh=true", UriKind.Relative));
+            NavigationService.Navigate(new Uri(TileHelper.NavigationUriFor(place).OriginalString + "&search=true", UriKind.Relative));
         }
 
         private void FetchLocation(string searchTerm)

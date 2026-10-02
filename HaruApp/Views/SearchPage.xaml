@@ -71,7 +71,17 @@
                      SelectionChanged="ResultListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="0,0,0,10">
+                        <Grid Margin="0,0,0,10"
+                              Background="Transparent">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu IsZoomEnabled="True"
+                                                     Opened="ResultContextMenu_Opened">
+                                    <toolkit:MenuItem Click="FavoriteMenuItem_Click"/>
+                                    <toolkit:MenuItem Header="{Binding LocalizedResources.MenuPinToStart, Source={StaticResource LocalizedStrings}}"
+                                                      Click="PinMenuItem_Click"/>
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>

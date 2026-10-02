@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Net;
 using System.Threading;
 
@@ -10,7 +12,7 @@ namespace HaruCore
 {
     public class OpenMeteoClient
     {
-        private const string CacheFileName = "forecast.json";
+        private const string CacheFilePattern = "forecast*.json";
         private const string GeoNamesUsername = "fact";
 
         public TimeSpan RequestTimeout { get; set; }
@@ -71,19 +73,21 @@ namespace HaruCore
                 DateTime.UtcNow.Ticks
             );
 
+            var cacheFileName = CacheFileName(latitude, longitude);
+
             DownloadString(url, (json, error) =>
             {
                 ForecastResponse forecast = null;
                 if (error == null)
                 {
                     forecast = ParseForecast(json, out error);
-                    if (forecast != null) SaveToCache(json);
+                    if (forecast != null) SaveToCache(cacheFileName, json);
                 }
 
                 if (forecast == null)
                 {
                     Exception cacheError;
-                    forecast = ParseForecast(LoadFromCache(), out cacheError);
+                    forecast = ParseForecast(LoadFromCache(cacheFileName), out cacheError);
                 }
 
                 InvokeCallback(callback, forecast, error);
@@ -176,26 +180,55 @@ namespace HaruCore
             if (callback != null) callback(result, error);
         }
 
+        public static ForecastResponse GetCachedForecast(double latitude, double longitude)
+        {
+            Exception error;
+            return ParseForecast(LoadFromCache(CacheFileName(latitude, longitude)), out error);
+        }
+
         public static bool ClearCache()
         {
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    if (store.FileExists(CacheFileName))
-                        store.DeleteFile(CacheFileName);
+                    foreach (var name in store.GetFileNames(CacheFilePattern))
+                        store.DeleteFile(name);
                 }
                 return true;
             }
             catch { return false; }
         }
 
-        private void SaveToCache(string content)
+        public static void PruneCache(IEnumerable<Place> keep)
+        {
+            var keepNames = keep.Select(p => CacheFileName(p.Latitude, p.Longitude)).ToList();
+
+            try
+            {
+                using (var store = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    foreach (var name in store.GetFileNames(CacheFilePattern).Except(keepNames))
+                    {
+                        try { store.DeleteFile(name); }
+                        catch { }
+                    }
+                }
+            }
+            catch { }
+        }
+
+        private static string CacheFileName(double latitude, double longitude)
+        {
+            return "forecast_" + Place.KeyFor(latitude, longitude) + ".json";
+        }
+
+        private static void SaveToCache(string fileName, string content)
         {
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
-                using (var stream = new IsolatedStorageFileStream(CacheFileName, FileMode.Create, store))
+                using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Create, store))
                 using (var writer = new StreamWriter(stream))
                 {
                     writer.Write(content);
@@ -204,14 +237,14 @@ namespace HaruCore
             catch { }
         }
 
-        private string LoadFromCache()
+        private static string LoadFromCache(string fileName)
         {
             try
             {
                 using (var store = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    if (!store.FileExists(CacheFileName)) return null;
-                    using (var stream = new IsolatedStorageFileStream(CacheFileName, FileMode.Open, store))
+                    if (!store.FileExists(fileName)) return null;
+                    using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Open, store))
                     using (var reader = new StreamReader(stream))
                     {
                         return reader.ReadToEnd();

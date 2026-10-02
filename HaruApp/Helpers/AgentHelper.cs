@@ -10,8 +10,6 @@ namespace HaruApp.Helpers
     {
         private const string TaskName = "HaruAgent";
 
-        // Removes and re-registers the periodic task, which also renews its 14-day expiration.
-        // Call it when the app launches and after settings are saved.
         public static void StartPeriodicAgent()
         {
             if (ScheduledActionService.Find(TaskName) != null)
@@ -47,7 +45,11 @@ namespace HaruApp.Helpers
                 {
                     HaruSettings.BackgroundAgentDisabledShown = true;
                     HaruSettings.Save();
-                    MessageBox.Show(AppResources.BackgroundAgentDisabled);
+                    PromptHelper.ShowAlert(
+                        AppResources.BackgroundAgentDisabledTitle,
+                        AppResources.BackgroundAgentDisabledMessage,
+                        AppResources.PromptOkay
+                    );
                 }
             }
             catch (SchedulerServiceException) { }

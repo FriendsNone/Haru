@@ -66,6 +66,10 @@ namespace HaruApp
         {
             HaruCore.NotificationHelper.RemoveLegacyBaseline(IsolatedStorageSettings.ApplicationSettings);
             HaruCore.HaruSettings.Save();
+
+            var keep = HaruCore.HaruSettings.Favorites;
+            keep.AddRange(HaruCore.TileHelper.GetPinnedPlaces());
+            HaruCore.OpenMeteoClient.PruneCache(keep);
         }
 
         // Code to execute when the application is activated (brought to foreground)

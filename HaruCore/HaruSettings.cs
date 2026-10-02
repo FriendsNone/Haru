@@ -1,4 +1,7 @@
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO.IsolatedStorage;
+using System.Linq;
 
 namespace HaruCore
 {
@@ -7,6 +10,7 @@ namespace HaruCore
         public const string DefaultTemperatureUnit = "celsius";
         public const string DefaultWindSpeedUnit = "kmh";
         public const string DefaultPrecipitationUnit = "mm";
+        public const int MaxFavorites = 6;
 
         private static IsolatedStorageSettings Store
         {
@@ -39,6 +43,48 @@ namespace HaruCore
         {
             get { return Get(SettingsKeys.Longitude, 0.0); }
             set { Store[SettingsKeys.Longitude] = value; }
+        }
+
+        public static Place HomePlace
+        {
+            get { return HasLocation ? new Place { Name = Location, Latitude = Latitude, Longitude = Longitude } : null; }
+        }
+
+        public static List<Place> Favorites
+        {
+            get
+            {
+                var home = HomePlace;
+                var favorites = new List<Place>();
+                if (home != null) favorites.Add(home);
+                favorites.AddRange(GetOtherFavorites().Where(f => !f.IsSameAs(home)));
+                return favorites;
+            }
+            set
+            {
+                if (value.Count > 0)
+                {
+                    Location = value[0].Name;
+                    Latitude = value[0].Latitude;
+                    Longitude = value[0].Longitude;
+                }
+                else
+                {
+                    Store.Remove(SettingsKeys.Location);
+                    Store.Remove(SettingsKeys.Latitude);
+                    Store.Remove(SettingsKeys.Longitude);
+                }
+                Store[SettingsKeys.Favorites] = JsonConvert.SerializeObject(value.Skip(1).ToList());
+            }
+        }
+
+        private static List<Place> GetOtherFavorites()
+        {
+            var json = Get<string>(SettingsKeys.Favorites, null);
+            if (json == null) return new List<Place>();
+
+            try { return JsonConvert.DeserializeObject<List<Place>>(json) ?? new List<Place>(); }
+            catch { return new List<Place>(); }
         }
 
         // Unit values are raw Open-Meteo query values, passed straight to the API.

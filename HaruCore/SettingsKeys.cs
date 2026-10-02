@@ -13,6 +13,7 @@ namespace HaruCore
         public const string NotificationEnable = "NotificationEnable";
         public const string MonochromeTileEnable = "MonochromeTileEnable";
         public const string LocationServiceEnable = "LocationServiceEnable";
+        public const string Favorites = "Favorites";
         public const string FirstTimeLocation = "FirstTimeLocation";
         public const string BackgroundAgentDisabledShown = "BackgroundAgentDisabledShown";
     }

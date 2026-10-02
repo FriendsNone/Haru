@@ -120,11 +120,23 @@
   <data name="AppBarAbout" xml:space="preserve">
     <value>acerca de</value>
   </data>
+  <data name="AppBarAddToFavorites" xml:space="preserve">
+    <value>agregar a fav.</value>
+  </data>
   <data name="AppBarCancel" xml:space="preserve">
     <value>cancelar</value>
   </data>
+  <data name="AppBarFavorites" xml:space="preserve">
+    <value>favoritos</value>
+  </data>
+  <data name="AppBarPinToStart" xml:space="preserve">
+    <value>anclar a inicio</value>
+  </data>
   <data name="AppBarRefresh" xml:space="preserve">
     <value>actualizar</value>
+  </data>
+  <data name="AppBarRemoveFromFavorites" xml:space="preserve">
+    <value>eliminar de fav.</value>
   </data>
   <data name="AppBarSave" xml:space="preserve">
     <value>guardar</value>
@@ -138,8 +150,29 @@
   <data name="AppTitle" xml:space="preserve">
     <value>HARU</value>
   </data>
-  <data name="BackgroundAgentDisabled" xml:space="preserve">
-    <value>El usuario ha desactivado los agentes en segundo plano para esta aplicación.</value>
+  <data name="BackgroundAgentDescription" xml:space="preserve">
+    <value>Actualiza el mosaico dinámico y envía avisos del clima con el pronóstico más reciente.</value>
+  </data>
+  <data name="BackgroundAgentDisabledMessage" xml:space="preserve">
+    <value>Para recibir avisos del clima y actualizaciones del mosaico dinámico, vuelve a activar las tareas en segundo plano en la configuración del teléfono.</value>
+  </data>
+  <data name="BackgroundAgentDisabledTitle" xml:space="preserve">
+    <value>Tareas en segundo plano desactivadas</value>
+  </data>
+  <data name="FavoritesDescription" xml:space="preserve">
+    <value>Todas tus ubicaciones favoritas aparecen aquí. Puedes agregar hasta {0} favoritos desde la búsqueda.</value>
+  </data>
+  <data name="FavoritesHomeDetail" xml:space="preserve">
+    <value>principal · {0}</value>
+  </data>
+  <data name="ForecastAsOf" xml:space="preserve">
+    <value>Pronóstico de {0}</value>
+  </data>
+  <data name="HaruMeaning" xml:space="preserve">
+    <value>Del japonés
+晴 (haru)
+que significa
+"tiempo despejado"</value>
   </data>
   <data name="LabelAppIcon" xml:space="preserve">
     <value>ÍCONO DE LA APP</value>
@@ -201,11 +234,23 @@
   <data name="MadeWithLove" xml:space="preserve">
     <value>hecho con amor &lt;3</value>
   </data>
+  <data name="MenuAddFavorite" xml:space="preserve">
+    <value>agregar a favoritos</value>
+  </data>
+  <data name="MenuPinToStart" xml:space="preserve">
+    <value>anclar a inicio</value>
+  </data>
+  <data name="MenuRemoveFavorite" xml:space="preserve">
+    <value>eliminar de favoritos</value>
+  </data>
   <data name="NoLocation" xml:space="preserve">
     <value>SIN UBICACIÓN</value>
   </data>
   <data name="PageAbout" xml:space="preserve">
     <value>acerca de</value>
+  </data>
+  <data name="PageFavorites" xml:space="preserve">
+    <value>favoritos</value>
   </data>
   <data name="PageSearch" xml:space="preserve">
     <value>buscar</value>
@@ -231,6 +276,12 @@
   <data name="ProgressFetchingForecast" xml:space="preserve">
     <value>Obteniendo pronóstico...</value>
   </data>
+  <data name="ProgressLocating" xml:space="preserve">
+    <value>Buscando tu ubicación...</value>
+  </data>
+  <data name="ProgressLocationUnavailable" xml:space="preserve">
+    <value>No se pudo ubicarte. Revisa si la ubicación está activada.</value>
+  </data>
   <data name="ProgressNoResults" xml:space="preserve">
     <value>Sin resultados para "{0}"</value>
   </data>
@@ -240,14 +291,35 @@
   <data name="ProgressShowingLastUpdate" xml:space="preserve">
     <value>Algo salió mal. Mostrando última actualización.</value>
   </data>
+  <data name="PromptAllow" xml:space="preserve">
+    <value>permitir</value>
+  </data>
+  <data name="PromptCancel" xml:space="preserve">
+    <value>cancelar</value>
+  </data>
+  <data name="PromptDontAllow" xml:space="preserve">
+    <value>no permitir</value>
+  </data>
   <data name="PromptDontSave" xml:space="preserve">
     <value>no guardar</value>
+  </data>
+  <data name="PromptFavoritesFullMessage" xml:space="preserve">
+    <value>Solo puedes agregar hasta {0} favoritos. Elimina uno para agregar otro.</value>
+  </data>
+  <data name="PromptFavoritesFullTitle" xml:space="preserve">
+    <value>Favoritos llenos</value>
   </data>
   <data name="PromptLater" xml:space="preserve">
     <value>después</value>
   </data>
+  <data name="PromptLocationMessage" xml:space="preserve">
+    <value>Haru usa la ubicación de tu teléfono para obtener el pronóstico de donde estás. Tus coordenadas se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono. No se comparten con nadie más. Puedes desactivar esto en cualquier momento en la configuración.</value>
+  </data>
+  <data name="PromptLocationTitle" xml:space="preserve">
+    <value>¿Usar tu ubicación?</value>
+  </data>
   <data name="PromptNoLocationFirstTime" xml:space="preserve">
-    <value>Si es la primera vez que usas Haru, debes establecer una ubicación antes de obtener el pronóstico. ¿Quieres hacerlo ahora?</value>
+    <value>Busca una ubicación para obtener el pronóstico. La primera que elijas será tu ubicación principal, que Haru abre al iniciar y muestra en su icono. ¿Quieres buscar ahora?</value>
   </data>
   <data name="PromptNoLocationRefresh" xml:space="preserve">
     <value>Debes establecer una ubicación antes de actualizar el pronóstico. ¿Quieres hacerlo ahora?</value>
@@ -257,6 +329,21 @@
   </data>
   <data name="PromptOkay" xml:space="preserve">
     <value>aceptar</value>
+  </data>
+  <data name="PromptPinHomeMessage" xml:space="preserve">
+    <value>{0} es tu ubicación principal, así que se muestra en el icono principal de Haru, que las aplicaciones no pueden anclar por sí mismas. Para anclarlo, busca Haru en la lista de aplicaciones, mantenlo presionado y toca "anclar a inicio".</value>
+  </data>
+  <data name="PromptPinHomeTitle" xml:space="preserve">
+    <value>Anclar ubicación principal a Inicio</value>
+  </data>
+  <data name="PromptRemove" xml:space="preserve">
+    <value>eliminar</value>
+  </data>
+  <data name="PromptRemoveFavoriteMessage" xml:space="preserve">
+    <value>Esta ubicación está anclada a Inicio. Si la eliminas de favoritos, también se desanclará.</value>
+  </data>
+  <data name="PromptRemoveFavoriteTitle" xml:space="preserve">
+    <value>¿Eliminar de favoritos?</value>
   </data>
   <data name="PromptSave" xml:space="preserve">
     <value>guardar</value>
@@ -273,32 +360,8 @@
   <data name="SearchButton" xml:space="preserve">
     <value>buscar</value>
   </data>
-  <data name="ProgressLocating" xml:space="preserve">
-    <value>Buscando tu ubicación...</value>
-  </data>
-  <data name="ProgressLocationUnavailable" xml:space="preserve">
-    <value>No se pudo encontrar tu ubicación. Revisa que la ubicación esté activada.</value>
-  </data>
   <data name="SearchCurrentLocation" xml:space="preserve">
     <value>usar mi ubicación</value>
-  </data>
-  <data name="PromptAllow" xml:space="preserve">
-    <value>permitir</value>
-  </data>
-  <data name="PromptDontAllow" xml:space="preserve">
-    <value>no permitir</value>
-  </data>
-  <data name="PromptLocationTitle" xml:space="preserve">
-    <value>¿Usar tu ubicación?</value>
-  </data>
-  <data name="PromptLocationMessage" xml:space="preserve">
-    <value>Haru usa la ubicación de tu teléfono para obtener el pronóstico de donde estás. Tus coordenadas se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono. No se comparten con nadie más. Puedes desactivar esto en cualquier momento en la configuración.</value>
-  </data>
-  <data name="SettingLocationService" xml:space="preserve">
-    <value>Usar mi ubicación</value>
-  </data>
-  <data name="SettingLocationServiceDescription" xml:space="preserve">
-    <value>Permite que Haru encuentre tu ubicación cuando tocas "usar mi ubicación" en la página de búsqueda. Tus coordenadas solo se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono.</value>
   </data>
   <data name="SearchHint" xml:space="preserve">
     <value>ingresa una ubicación</value>
@@ -312,11 +375,29 @@
   <data name="SettingClearForecastDescription" xml:space="preserve">
     <value>Elimina el pronóstico guardado anteriormente, asegurando que Haru obtenga el pronóstico más reciente y actualizado.</value>
   </data>
+  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
+    <value>No se pudo eliminar el pronóstico guardado</value>
+  </data>
   <data name="SettingClearForecastSuccessMessage" xml:space="preserve">
     <value>Un pronóstico actualizado estará listo la próxima vez que actualices o abras la app.</value>
   </data>
   <data name="SettingClearForecastSuccessTitle" xml:space="preserve">
     <value>¡Pronóstico guardado eliminado!</value>
+  </data>
+  <data name="SettingLiveTile" xml:space="preserve">
+    <value>Actualizar el mosaico dinámico</value>
+  </data>
+  <data name="SettingLocationService" xml:space="preserve">
+    <value>Usar mi ubicación</value>
+  </data>
+  <data name="SettingLocationServiceDescription" xml:space="preserve">
+    <value>Permite que Haru encuentre tu ubicación cuando tocas "usar mi ubicación" en la página de búsqueda. Tus coordenadas solo se envían a Open-Meteo para obtener el pronóstico y a GeoNames para buscar el nombre del lugar, y se guardan en este teléfono.</value>
+  </data>
+  <data name="SettingMonochromeTile" xml:space="preserve">
+    <value>Utiliza iconos de mosaico monocromáticos</value>
+  </data>
+  <data name="SettingNotifications" xml:space="preserve">
+    <value>Avisar sobre cambios del clima</value>
   </data>
   <data name="SettingPrecipitationUnit" xml:space="preserve">
     <value>Unidad de precipitación</value>
@@ -327,38 +408,17 @@
   <data name="SettingWindSpeedUnit" xml:space="preserve">
     <value>Unidad de velocidad del viento</value>
   </data>
-  <data name="HaruMeaning" xml:space="preserve">
-    <value>Del japonés
-晴 (haru)
-que significa
-"tiempo despejado"</value>
-  </data>
-  <data name="ForecastAsOf" xml:space="preserve">
-    <value>Pronóstico de {0}</value>
-  </data>
-  <data name="SettingMonochromeTile" xml:space="preserve">
-    <value>Utiliza iconos de mosaico monocromáticos</value>
-  </data>
-  <data name="SettingLiveTile" xml:space="preserve">
-    <value>Actualizar el mosaico dinámico</value>
-  </data>
-  <data name="SettingNotifications" xml:space="preserve">
-    <value>Avisar sobre cambios del clima</value>
-  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>Celsius (°C)</value>
   </data>
   <data name="UnitFahrenheit" xml:space="preserve">
     <value>Fahrenheit (°F)</value>
   </data>
+  <data name="UnitInch" xml:space="preserve">
+    <value>Pulgadas (in)</value>
+  </data>
   <data name="UnitKmh" xml:space="preserve">
     <value>Kilómetros por hora (km/h)</value>
-  </data>
-  <data name="UnitMs" xml:space="preserve">
-    <value>Metros por segundo (m/s)</value>
-  </data>
-  <data name="UnitMph" xml:space="preserve">
-    <value>Millas por hora (mph)</value>
   </data>
   <data name="UnitKn" xml:space="preserve">
     <value>Nudos (kn)</value>
@@ -366,13 +426,10 @@ que significa
   <data name="UnitMm" xml:space="preserve">
     <value>Milímetros (mm)</value>
   </data>
-  <data name="UnitInch" xml:space="preserve">
-    <value>Pulgadas (in)</value>
+  <data name="UnitMph" xml:space="preserve">
+    <value>Millas por hora (mph)</value>
   </data>
-  <data name="BackgroundAgentDescription" xml:space="preserve">
-    <value>Actualiza el mosaico dinámico y los avisos del clima con el pronóstico más reciente.</value>
-  </data>
-  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
-    <value>No se pudo eliminar el pronóstico guardado</value>
+  <data name="UnitMs" xml:space="preserve">
+    <value>Metros por segundo (m/s)</value>
   </data>
 </root>

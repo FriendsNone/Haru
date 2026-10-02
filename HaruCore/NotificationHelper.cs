@@ -1,8 +1,10 @@
 using Microsoft.Phone.Shell;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Threading;
 
 namespace HaruCore
@@ -19,21 +21,31 @@ namespace HaruCore
             "LastNotifiedTemp", "LastNotifiedCategory", "LastNotifiedTempUnit", "LastNotifiedLocation"
         };
 
-        public static void MaybeNotify(string location, CurrentRecord current,
-                                       double temperature, int weatherCode, string temperatureUnit)
+        public static void MaybeNotify(IList<NotificationCandidate> candidates, IEnumerable<string> activeKeys,
+                                       string temperatureUnit)
         {
-            var next = new NotificationBaseline
-            {
-                Temperature = temperature,
-                Category = UnitHelper.GetWeatherCategory(weatherCode),
-                TemperatureUnit = temperatureUnit,
-                Location = location
-            };
-
             if (!BaselineMutex.WaitOne(MutexTimeoutMilliseconds)) return;
             try
             {
-                MaybeNotify(LoadBaseline(), next, current);
+                var state = LoadState() ?? new NotificationState();
+                var last = state.Baselines ?? new Dictionary<string, NotificationBaseline>();
+                var baselines = activeKeys.Distinct().Where(last.ContainsKey).ToDictionary(k => k, k => last[k]);
+
+#if DEBUG
+                if (candidates.Count > 0)
+                {
+                    ShowToast(candidates[0]);
+                    state.LastToastUtc = DateTime.UtcNow;
+                }
+                foreach (var candidate in candidates)
+                    baselines[candidate.Place.Key] = ToBaseline(candidate, temperatureUnit);
+#else
+                foreach (var candidate in candidates)
+                    MaybeNotify(state, baselines, candidate, temperatureUnit);
+#endif
+
+                state.Baselines = baselines;
+                SaveState(state);
             }
             finally
             {
@@ -47,16 +59,15 @@ namespace HaruCore
                 settings.Remove(key);
         }
 
-        private static void MaybeNotify(NotificationBaseline last, NotificationBaseline next, CurrentRecord current)
+        private static void MaybeNotify(NotificationState state, Dictionary<string, NotificationBaseline> baselines,
+                                        NotificationCandidate candidate, string temperatureUnit)
         {
-#if DEBUG
-            ShowToast(next.Location, current);
-            next.LastToastUtc = DateTime.UtcNow;
-            SaveBaseline(next);
-#else
-            var comparable = last != null
-                && string.Equals(last.TemperatureUnit, next.TemperatureUnit, StringComparison.OrdinalIgnoreCase)
-                && string.Equals(last.Location, next.Location, StringComparison.Ordinal);
+            var key = candidate.Place.Key;
+            var next = ToBaseline(candidate, temperatureUnit);
+
+            NotificationBaseline last;
+            var comparable = baselines.TryGetValue(key, out last) && last != null
+                && string.Equals(last.TemperatureUnit, next.TemperatureUnit, StringComparison.OrdinalIgnoreCase);
 
             if (comparable)
             {
@@ -66,15 +77,24 @@ namespace HaruCore
                 if (!precipitationChanged && !tempJumped)
                     return;
 
-                if (last.LastToastUtc.HasValue && DateTime.UtcNow - last.LastToastUtc.Value < Cooldown)
+                if (state.LastToastUtc.HasValue && DateTime.UtcNow - state.LastToastUtc.Value < Cooldown)
                     return;
 
-                ShowToast(next.Location, current);
-                next.LastToastUtc = DateTime.UtcNow;
+                ShowToast(candidate);
+                state.LastToastUtc = DateTime.UtcNow;
             }
 
-            SaveBaseline(next);
-#endif
+            baselines[key] = next;
+        }
+
+        private static NotificationBaseline ToBaseline(NotificationCandidate candidate, string temperatureUnit)
+        {
+            return new NotificationBaseline
+            {
+                Temperature = candidate.Temperature,
+                Category = UnitHelper.GetWeatherCategory(candidate.WeatherCode),
+                TemperatureUnit = temperatureUnit
+            };
         }
 
         private static int GetPrecipitationLevel(string category)
@@ -97,18 +117,18 @@ namespace HaruCore
             return string.Equals(temperatureUnit, "fahrenheit", StringComparison.OrdinalIgnoreCase) ? 9.0 : 5.0;
         }
 
-        private static void ShowToast(string location, CurrentRecord current)
+        private static void ShowToast(NotificationCandidate candidate)
         {
             var toast = new ShellToast
             {
-                Title = location,
-                Content = string.Format("{0}  {1}", current.Temperature, current.WeatherDescription),
-                NavigationUri = new Uri("/Views/MainPage.xaml", UriKind.Relative)
+                Title = candidate.Place.Name,
+                Content = string.Format("{0}  {1}", candidate.Current.Temperature, candidate.Current.WeatherDescription),
+                NavigationUri = candidate.NavigationUri
             };
             toast.Show();
         }
 
-        private static NotificationBaseline LoadBaseline()
+        private static NotificationState LoadState()
         {
             try
             {
@@ -118,14 +138,14 @@ namespace HaruCore
                     using (var stream = new IsolatedStorageFileStream(BaselineFileName, FileMode.Open, store))
                     using (var reader = new StreamReader(stream))
                     {
-                        return JsonConvert.DeserializeObject<NotificationBaseline>(reader.ReadToEnd());
+                        return JsonConvert.DeserializeObject<NotificationState>(reader.ReadToEnd());
                     }
                 }
             }
             catch { return null; }
         }
 
-        private static void SaveBaseline(NotificationBaseline baseline)
+        private static void SaveState(NotificationState state)
         {
             try
             {
@@ -133,11 +153,26 @@ namespace HaruCore
                 using (var stream = new IsolatedStorageFileStream(BaselineFileName, FileMode.Create, store))
                 using (var writer = new StreamWriter(stream))
                 {
-                    writer.Write(JsonConvert.SerializeObject(baseline));
+                    writer.Write(JsonConvert.SerializeObject(state));
                 }
             }
             catch { }
         }
+    }
+
+    public class NotificationCandidate
+    {
+        public Place Place { get; set; }
+        public CurrentRecord Current { get; set; }
+        public double Temperature { get; set; }
+        public int WeatherCode { get; set; }
+        public Uri NavigationUri { get; set; }
+    }
+
+    public class NotificationState
+    {
+        public DateTime? LastToastUtc { get; set; }
+        public Dictionary<string, NotificationBaseline> Baselines { get; set; }
     }
 
     public class NotificationBaseline
@@ -145,7 +180,5 @@ namespace HaruCore
         public double Temperature { get; set; }
         public string Category { get; set; }
         public string TemperatureUnit { get; set; }
-        public string Location { get; set; }
-        public DateTime? LastToastUtc { get; set; }
     }
 }

@@ -70,6 +70,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add to fav..
+        /// </summary>
+        public static string AppBarAddToFavorites {
+            get {
+                return ResourceManager.GetString("AppBarAddToFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cancel.
         /// </summary>
         public static string AppBarCancel {
@@ -79,11 +88,38 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to favorites.
+        /// </summary>
+        public static string AppBarFavorites {
+            get {
+                return ResourceManager.GetString("AppBarFavorites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pin to start.
+        /// </summary>
+        public static string AppBarPinToStart {
+            get {
+                return ResourceManager.GetString("AppBarPinToStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to refresh.
         /// </summary>
         public static string AppBarRefresh {
             get {
                 return ResourceManager.GetString("AppBarRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to remove from fav..
+        /// </summary>
+        public static string AppBarRemoveFromFavorites {
+            get {
+                return ResourceManager.GetString("AppBarRemoveFromFavorites", resourceCulture);
             }
         }
         
@@ -124,11 +160,47 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Background agents for this application have been disabled by the user..
+        ///   Looks up a localized string similar to Updates the live tile and sends weather alerts with the latest forecast..
         /// </summary>
-        public static string BackgroundAgentDisabled {
+        public static string BackgroundAgentDescription {
             get {
-                return ResourceManager.GetString("BackgroundAgentDisabled", resourceCulture);
+                return ResourceManager.GetString("BackgroundAgentDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to To get weather alerts and live tile updates, turn background tasks back on in your phone&apos;s settings..
+        /// </summary>
+        public static string BackgroundAgentDisabledMessage {
+            get {
+                return ResourceManager.GetString("BackgroundAgentDisabledMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Background tasks disabled.
+        /// </summary>
+        public static string BackgroundAgentDisabledTitle {
+            get {
+                return ResourceManager.GetString("BackgroundAgentDisabledTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All your favorite locations show up here. You can add up to {0} favorites in search..
+        /// </summary>
+        public static string FavoritesDescription {
+            get {
+                return ResourceManager.GetString("FavoritesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to home · {0}.
+        /// </summary>
+        public static string FavoritesHomeDetail {
+            get {
+                return ResourceManager.GetString("FavoritesHomeDetail", resourceCulture);
             }
         }
         
@@ -334,6 +406,33 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add to favorites.
+        /// </summary>
+        public static string MenuAddFavorite {
+            get {
+                return ResourceManager.GetString("MenuAddFavorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pin to start.
+        /// </summary>
+        public static string MenuPinToStart {
+            get {
+                return ResourceManager.GetString("MenuPinToStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to remove from favorites.
+        /// </summary>
+        public static string MenuRemoveFavorite {
+            get {
+                return ResourceManager.GetString("MenuRemoveFavorite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NO LOCATION.
         /// </summary>
         public static string NoLocation {
@@ -348,6 +447,15 @@ namespace HaruApp.Resources {
         public static string PageAbout {
             get {
                 return ResourceManager.GetString("PageAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to favorites.
+        /// </summary>
+        public static string PageFavorites {
+            get {
+                return ResourceManager.GetString("PageFavorites", resourceCulture);
             }
         }
         
@@ -424,6 +532,24 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finding your location....
+        /// </summary>
+        public static string ProgressLocating {
+            get {
+                return ResourceManager.GetString("ProgressLocating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t find you. Check if location is on..
+        /// </summary>
+        public static string ProgressLocationUnavailable {
+            get {
+                return ResourceManager.GetString("ProgressLocationUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No results for &quot;{0}&quot;.
         /// </summary>
         public static string ProgressNoResults {
@@ -451,11 +577,56 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to allow.
+        /// </summary>
+        public static string PromptAllow {
+            get {
+                return ResourceManager.GetString("PromptAllow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cancel.
+        /// </summary>
+        public static string PromptCancel {
+            get {
+                return ResourceManager.GetString("PromptCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to don&apos;t allow.
+        /// </summary>
+        public static string PromptDontAllow {
+            get {
+                return ResourceManager.GetString("PromptDontAllow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to don&apos;t save.
         /// </summary>
         public static string PromptDontSave {
             get {
                 return ResourceManager.GetString("PromptDontSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can only add up to {0} favorites. Remove one to add another..
+        /// </summary>
+        public static string PromptFavoritesFullMessage {
+            get {
+                return ResourceManager.GetString("PromptFavoritesFullMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Favorites are full.
+        /// </summary>
+        public static string PromptFavoritesFullTitle {
+            get {
+                return ResourceManager.GetString("PromptFavoritesFullTitle", resourceCulture);
             }
         }
         
@@ -469,7 +640,25 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?.
+        ///   Looks up a localized string similar to Haru uses your phone&apos;s location to get the forecast for where you are. Your coordinates are sent to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone. They aren&apos;t shared with anyone else. You can turn this off at any time in settings..
+        /// </summary>
+        public static string PromptLocationMessage {
+            get {
+                return ResourceManager.GetString("PromptLocationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use your location?.
+        /// </summary>
+        public static string PromptLocationTitle {
+            get {
+                return ResourceManager.GetString("PromptLocationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a location to get the forecast. The first one you pick becomes your home, which Haru opens to and shows on its tile. Do you want to search now?.
         /// </summary>
         public static string PromptNoLocationFirstTime {
             get {
@@ -501,6 +690,51 @@ namespace HaruApp.Resources {
         public static string PromptOkay {
             get {
                 return ResourceManager.GetString("PromptOkay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is your home, so it goes on Haru&apos;s main tile, which apps can&apos;t pin themselves. To pin it, find Haru in the app list, tap and hold it, and tap &quot;pin to start&quot;..
+        /// </summary>
+        public static string PromptPinHomeMessage {
+            get {
+                return ResourceManager.GetString("PromptPinHomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pin home to Start.
+        /// </summary>
+        public static string PromptPinHomeTitle {
+            get {
+                return ResourceManager.GetString("PromptPinHomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to remove.
+        /// </summary>
+        public static string PromptRemove {
+            get {
+                return ResourceManager.GetString("PromptRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This location is pinned to Start. Removing it from favorites also unpins it..
+        /// </summary>
+        public static string PromptRemoveFavoriteMessage {
+            get {
+                return ResourceManager.GetString("PromptRemoveFavoriteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove from favorites?.
+        /// </summary>
+        public static string PromptRemoveFavoriteTitle {
+            get {
+                return ResourceManager.GetString("PromptRemoveFavoriteTitle", resourceCulture);
             }
         }
         
@@ -550,78 +784,6 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finding your location....
-        /// </summary>
-        public static string ProgressLocating {
-            get {
-                return ResourceManager.GetString("ProgressLocating", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Couldn&apos;t find your location. Check that location is on..
-        /// </summary>
-        public static string ProgressLocationUnavailable {
-            get {
-                return ResourceManager.GetString("ProgressLocationUnavailable", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to allow.
-        /// </summary>
-        public static string PromptAllow {
-            get {
-                return ResourceManager.GetString("PromptAllow", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to don&apos;t allow.
-        /// </summary>
-        public static string PromptDontAllow {
-            get {
-                return ResourceManager.GetString("PromptDontAllow", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Use your location?.
-        /// </summary>
-        public static string PromptLocationTitle {
-            get {
-                return ResourceManager.GetString("PromptLocationTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Haru uses your phone&apos;s location to get the forecast for where you are....
-        /// </summary>
-        public static string PromptLocationMessage {
-            get {
-                return ResourceManager.GetString("PromptLocationMessage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Use my location.
-        /// </summary>
-        public static string SettingLocationService {
-            get {
-                return ResourceManager.GetString("SettingLocationService", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Lets Haru find your location when you tap &quot;use my location&quot; on the search page....
-        /// </summary>
-        public static string SettingLocationServiceDescription {
-            get {
-                return ResourceManager.GetString("SettingLocationServiceDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to use my location.
         /// </summary>
         public static string SearchCurrentLocation {
@@ -629,7 +791,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("SearchCurrentLocation", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to enter location.
         /// </summary>
@@ -667,6 +829,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t clear saved forecast.
+        /// </summary>
+        public static string SettingClearForecastFailedTitle {
+            get {
+                return ResourceManager.GetString("SettingClearForecastFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A fresh and up-to-date forecast will be ready the next time you refresh or open the app..
         /// </summary>
         public static string SettingClearForecastSuccessMessage {
@@ -685,15 +856,6 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use monochrome tile icons.
-        /// </summary>
-        public static string SettingMonochromeTile {
-            get {
-                return ResourceManager.GetString("SettingMonochromeTile", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Update live tile.
         /// </summary>
         public static string SettingLiveTile {
@@ -701,7 +863,34 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("SettingLiveTile", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use my location.
+        /// </summary>
+        public static string SettingLocationService {
+            get {
+                return ResourceManager.GetString("SettingLocationService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lets Haru find your location when you tap &quot;use my location&quot; on the search page. Your coordinates are sent only to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone..
+        /// </summary>
+        public static string SettingLocationServiceDescription {
+            get {
+                return ResourceManager.GetString("SettingLocationServiceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use monochrome tile icons.
+        /// </summary>
+        public static string SettingMonochromeTile {
+            get {
+                return ResourceManager.GetString("SettingMonochromeTile", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Notify on weather changes.
         /// </summary>
@@ -737,7 +926,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("SettingWindSpeedUnit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Celsius (°C).
         /// </summary>
@@ -746,7 +935,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitCelsius", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Fahrenheit (°F).
         /// </summary>
@@ -755,7 +944,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitFahrenheit", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Inches (in).
         /// </summary>
@@ -764,7 +953,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitInch", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Kilometers per hour (km/h).
         /// </summary>
@@ -773,7 +962,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitKmh", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Knots (kn).
         /// </summary>
@@ -782,7 +971,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitKn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Millimeters (mm).
         /// </summary>
@@ -791,7 +980,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitMm", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Miles per hour (mph).
         /// </summary>
@@ -800,31 +989,13 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("UnitMph", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Meters per second (m/s).
         /// </summary>
         public static string UnitMs {
             get {
                 return ResourceManager.GetString("UnitMs", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Updates the live tile and weather alerts with the latest forecast..
-        /// </summary>
-        public static string BackgroundAgentDescription {
-            get {
-                return ResourceManager.GetString("BackgroundAgentDescription", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Couldn&apos;t clear saved forecast.
-        /// </summary>
-        public static string SettingClearForecastFailedTitle {
-            get {
-                return ResourceManager.GetString("SettingClearForecastFailedTitle", resourceCulture);
             }
         }
     }

@@ -79,6 +79,7 @@
     <Compile Include="Converters\CachedImageConverter.cs" />
     <Compile Include="Converters\UnitNameConverter.cs" />
     <Compile Include="Helpers\AgentHelper.cs" />
+    <Compile Include="Helpers\FavoritesHelper.cs" />
     <Compile Include="Helpers\ProgressHelper.cs" />
     <Compile Include="Helpers\PromptHelper.cs" />
     <Compile Include="Resources\AppResources.es.Designer.cs">
@@ -88,8 +89,12 @@
     </Compile>
     <Compile Include="ViewModels\GeocodingViewModel.cs" />
     <Compile Include="ViewModels\ForecastViewModel.cs" />
+    <Compile Include="ViewModels\FavoritesViewModel.cs" />
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FavoritesPage.xaml.cs">
+      <DependentUpon>FavoritesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -108,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FavoritesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -130,6 +139,9 @@
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\AppBar\appbar.favs.rest.png" />
+    <Content Include="Assets\AppBar\appbar.favs.addto.rest.png" />
+    <Content Include="Assets\AppBar\appbar.favs.removefrom.rest.png" />
     <Content Include="Assets\ApplicationIcon.png" />
     <Content Include="Assets\AppBar\appbar.cancel.rest.png" />
     <Content Include="Assets\AppBar\appbar.feature.search.rest.png" />

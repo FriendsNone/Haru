@@ -117,14 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppBarAddToFavorites" xml:space="preserve">
+    <value>add to fav.</value>
+  </data>
   <data name="AppBarAbout" xml:space="preserve">
     <value>about</value>
   </data>
   <data name="AppBarCancel" xml:space="preserve">
     <value>cancel</value>
   </data>
+  <data name="AppBarFavorites" xml:space="preserve">
+    <value>favorites</value>
+  </data>
+  <data name="AppBarPinToStart" xml:space="preserve">
+    <value>pin to start</value>
+  </data>
   <data name="AppBarRefresh" xml:space="preserve">
     <value>refresh</value>
+  </data>
+  <data name="AppBarRemoveFromFavorites" xml:space="preserve">
+    <value>remove from fav.</value>
   </data>
   <data name="AppBarSave" xml:space="preserve">
     <value>save</value>
@@ -138,8 +150,29 @@
   <data name="AppTitle" xml:space="preserve">
     <value>HARU</value>
   </data>
-  <data name="BackgroundAgentDisabled" xml:space="preserve">
-    <value>Background agents for this application have been disabled by the user.</value>
+  <data name="BackgroundAgentDescription" xml:space="preserve">
+    <value>Updates the live tile and sends weather alerts with the latest forecast.</value>
+  </data>
+  <data name="BackgroundAgentDisabledMessage" xml:space="preserve">
+    <value>To get weather alerts and live tile updates, turn background tasks back on in your phone's settings.</value>
+  </data>
+  <data name="BackgroundAgentDisabledTitle" xml:space="preserve">
+    <value>Background tasks disabled</value>
+  </data>
+  <data name="FavoritesDescription" xml:space="preserve">
+    <value>All your favorite locations show up here. You can add up to {0} favorites in search.</value>
+  </data>
+  <data name="FavoritesHomeDetail" xml:space="preserve">
+    <value>home · {0}</value>
+  </data>
+  <data name="ForecastAsOf" xml:space="preserve">
+    <value>Forecast as of {0}</value>
+  </data>
+  <data name="HaruMeaning" xml:space="preserve">
+    <value>From Japanese
+晴 (haru)
+meaning
+"clear weather"</value>
   </data>
   <data name="LabelAppIcon" xml:space="preserve">
     <value>APP ICON</value>
@@ -201,11 +234,23 @@
   <data name="MadeWithLove" xml:space="preserve">
     <value>made with love &lt;3</value>
   </data>
+  <data name="MenuAddFavorite" xml:space="preserve">
+    <value>add to favorites</value>
+  </data>
+  <data name="MenuPinToStart" xml:space="preserve">
+    <value>pin to start</value>
+  </data>
+  <data name="MenuRemoveFavorite" xml:space="preserve">
+    <value>remove from favorites</value>
+  </data>
   <data name="NoLocation" xml:space="preserve">
     <value>NO LOCATION</value>
   </data>
   <data name="PageAbout" xml:space="preserve">
     <value>about</value>
+  </data>
+  <data name="PageFavorites" xml:space="preserve">
+    <value>favorites</value>
   </data>
   <data name="PageSearch" xml:space="preserve">
     <value>search</value>
@@ -231,6 +276,12 @@
   <data name="ProgressFetchingForecast" xml:space="preserve">
     <value>Fetching forecast...</value>
   </data>
+  <data name="ProgressLocationUnavailable" xml:space="preserve">
+    <value>Couldn't find you. Check if location is on.</value>
+  </data>
+  <data name="ProgressLocating" xml:space="preserve">
+    <value>Finding your location...</value>
+  </data>
   <data name="ProgressNoResults" xml:space="preserve">
     <value>No results for "{0}"</value>
   </data>
@@ -240,11 +291,32 @@
   <data name="ProgressShowingLastUpdate" xml:space="preserve">
     <value>Something went wrong. Showing last update.</value>
   </data>
+  <data name="PromptAllow" xml:space="preserve">
+    <value>allow</value>
+  </data>
+  <data name="PromptCancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="PromptDontAllow" xml:space="preserve">
+    <value>don't allow</value>
+  </data>
   <data name="PromptDontSave" xml:space="preserve">
     <value>don't save</value>
   </data>
+  <data name="PromptFavoritesFullMessage" xml:space="preserve">
+    <value>You can only add up to {0} favorites. Remove one to add another.</value>
+  </data>
+  <data name="PromptFavoritesFullTitle" xml:space="preserve">
+    <value>Favorites are full</value>
+  </data>
   <data name="PromptLater" xml:space="preserve">
     <value>later</value>
+  </data>
+  <data name="PromptLocationMessage" xml:space="preserve">
+    <value>Haru uses your phone's location to get the forecast for where you are. Your coordinates are sent to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone. They aren't shared with anyone else. You can turn this off at any time in settings.</value>
+  </data>
+  <data name="PromptLocationTitle" xml:space="preserve">
+    <value>Use your location?</value>
   </data>
   <data name="PromptNoLocationFirstTime" xml:space="preserve">
     <value>If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?</value>
@@ -257,6 +329,21 @@
   </data>
   <data name="PromptOkay" xml:space="preserve">
     <value>okay</value>
+  </data>
+  <data name="PromptPinHomeMessage" xml:space="preserve">
+    <value>{0} is your home, so it goes on Haru's main tile, which apps can't pin themselves. To pin it, find Haru in the app list, tap and hold it, and tap "pin to start".</value>
+  </data>
+  <data name="PromptPinHomeTitle" xml:space="preserve">
+    <value>Pin home to Start</value>
+  </data>
+  <data name="PromptRemove" xml:space="preserve">
+    <value>remove</value>
+  </data>
+  <data name="PromptRemoveFavoriteMessage" xml:space="preserve">
+    <value>This location is pinned to Start. Removing it from favorites also unpins it.</value>
+  </data>
+  <data name="PromptRemoveFavoriteTitle" xml:space="preserve">
+    <value>Remove from favorites?</value>
   </data>
   <data name="PromptSave" xml:space="preserve">
     <value>save</value>
@@ -273,32 +360,8 @@
   <data name="SearchButton" xml:space="preserve">
     <value>search</value>
   </data>
-  <data name="ProgressLocating" xml:space="preserve">
-    <value>Finding your location...</value>
-  </data>
-  <data name="ProgressLocationUnavailable" xml:space="preserve">
-    <value>Couldn't find your location. Check that location is on.</value>
-  </data>
   <data name="SearchCurrentLocation" xml:space="preserve">
     <value>use my location</value>
-  </data>
-  <data name="PromptAllow" xml:space="preserve">
-    <value>allow</value>
-  </data>
-  <data name="PromptDontAllow" xml:space="preserve">
-    <value>don't allow</value>
-  </data>
-  <data name="PromptLocationTitle" xml:space="preserve">
-    <value>Use your location?</value>
-  </data>
-  <data name="PromptLocationMessage" xml:space="preserve">
-    <value>Haru uses your phone's location to get the forecast for where you are. Your coordinates are sent to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone. They aren't shared with anyone else. You can turn this off at any time in settings.</value>
-  </data>
-  <data name="SettingLocationService" xml:space="preserve">
-    <value>Use my location</value>
-  </data>
-  <data name="SettingLocationServiceDescription" xml:space="preserve">
-    <value>Lets Haru find your location when you tap "use my location" on the search page. Your coordinates are sent only to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone.</value>
   </data>
   <data name="SearchHint" xml:space="preserve">
     <value>enter location</value>
@@ -312,11 +375,29 @@
   <data name="SettingClearForecastDescription" xml:space="preserve">
     <value>Removes the previously saved forecast, making sure Haru gets the freshest and most up-to-date forecast.</value>
   </data>
+  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
+    <value>Couldn't clear saved forecast</value>
+  </data>
   <data name="SettingClearForecastSuccessMessage" xml:space="preserve">
     <value>A fresh and up-to-date forecast will be ready the next time you refresh or open the app.</value>
   </data>
   <data name="SettingClearForecastSuccessTitle" xml:space="preserve">
     <value>Saved forecast cleared!</value>
+  </data>
+  <data name="SettingLiveTile" xml:space="preserve">
+    <value>Update live tile</value>
+  </data>
+  <data name="SettingLocationService" xml:space="preserve">
+    <value>Use my location</value>
+  </data>
+  <data name="SettingLocationServiceDescription" xml:space="preserve">
+    <value>Lets Haru find your location when you tap "use my location" on the search page. Your coordinates are sent only to Open-Meteo to fetch the forecast and to GeoNames to look up the place name, and saved on this phone.</value>
+  </data>
+  <data name="SettingMonochromeTile" xml:space="preserve">
+    <value>Use monochrome tile icons</value>
+  </data>
+  <data name="SettingNotifications" xml:space="preserve">
+    <value>Notify on weather changes</value>
   </data>
   <data name="SettingPrecipitationUnit" xml:space="preserve">
     <value>Precipitation unit</value>
@@ -327,38 +408,17 @@
   <data name="SettingWindSpeedUnit" xml:space="preserve">
     <value>Wind speed unit</value>
   </data>
-  <data name="HaruMeaning" xml:space="preserve">
-    <value>From Japanese
-晴 (haru)
-meaning
-"clear weather"</value>
-  </data>
-  <data name="ForecastAsOf" xml:space="preserve">
-    <value>Forecast as of {0}</value>
-  </data>
-  <data name="SettingMonochromeTile" xml:space="preserve">
-    <value>Use monochrome tile icons</value>
-  </data>
-  <data name="SettingLiveTile" xml:space="preserve">
-    <value>Update live tile</value>
-  </data>
-  <data name="SettingNotifications" xml:space="preserve">
-    <value>Notify on weather changes</value>
-  </data>
   <data name="UnitCelsius" xml:space="preserve">
     <value>Celsius (°C)</value>
   </data>
   <data name="UnitFahrenheit" xml:space="preserve">
     <value>Fahrenheit (°F)</value>
   </data>
+  <data name="UnitInch" xml:space="preserve">
+    <value>Inches (in)</value>
+  </data>
   <data name="UnitKmh" xml:space="preserve">
     <value>Kilometers per hour (km/h)</value>
-  </data>
-  <data name="UnitMs" xml:space="preserve">
-    <value>Meters per second (m/s)</value>
-  </data>
-  <data name="UnitMph" xml:space="preserve">
-    <value>Miles per hour (mph)</value>
   </data>
   <data name="UnitKn" xml:space="preserve">
     <value>Knots (kn)</value>
@@ -366,13 +426,10 @@ meaning
   <data name="UnitMm" xml:space="preserve">
     <value>Millimeters (mm)</value>
   </data>
-  <data name="UnitInch" xml:space="preserve">
-    <value>Inches (in)</value>
+  <data name="UnitMph" xml:space="preserve">
+    <value>Miles per hour (mph)</value>
   </data>
-  <data name="BackgroundAgentDescription" xml:space="preserve">
-    <value>Updates the live tile and weather alerts with the latest forecast.</value>
-  </data>
-  <data name="SettingClearForecastFailedTitle" xml:space="preserve">
-    <value>Couldn't clear saved forecast</value>
+  <data name="UnitMs" xml:space="preserve">
+    <value>Meters per second (m/s)</value>
   </data>
 </root>

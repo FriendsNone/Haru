@@ -115,7 +115,7 @@ namespace HaruApp.Views
             HaruSettings.Save();
 
             if (BackgroundUpdateToggleSwitch.IsChecked != true || LiveTileToggleSwitch.IsChecked != true)
-                TileHelper.ResetTile();
+                TileHelper.ResetAllTiles();
 
             AgentHelper.StartPeriodicAgent();
         }
