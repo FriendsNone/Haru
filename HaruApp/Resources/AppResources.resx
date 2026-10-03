@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppBarAddToFavorites" xml:space="preserve">
-    <value>add to fav.</value>
-  </data>
   <data name="AppBarAbout" xml:space="preserve">
     <value>about</value>
+  </data>
+  <data name="AppBarAddToFavorites" xml:space="preserve">
+    <value>add to fav.</value>
   </data>
   <data name="AppBarCancel" xml:space="preserve">
     <value>cancel</value>
@@ -143,6 +143,9 @@
   </data>
   <data name="AppBarSearch" xml:space="preserve">
     <value>search</value>
+  </data>
+  <data name="AppBarSetAsHome" xml:space="preserve">
+    <value>set as home</value>
   </data>
   <data name="AppBarSettings" xml:space="preserve">
     <value>settings</value>
@@ -243,6 +246,9 @@ meaning
   <data name="MenuRemoveFavorite" xml:space="preserve">
     <value>remove from favorites</value>
   </data>
+  <data name="MenuSetAsHome" xml:space="preserve">
+    <value>set as home</value>
+  </data>
   <data name="NoLocation" xml:space="preserve">
     <value>NO LOCATION</value>
   </data>
@@ -276,11 +282,11 @@ meaning
   <data name="ProgressFetchingForecast" xml:space="preserve">
     <value>Fetching forecast...</value>
   </data>
-  <data name="ProgressLocationUnavailable" xml:space="preserve">
-    <value>Couldn't find you. Check if location is on.</value>
-  </data>
   <data name="ProgressLocating" xml:space="preserve">
     <value>Finding your location...</value>
+  </data>
+  <data name="ProgressLocationUnavailable" xml:space="preserve">
+    <value>Couldn't find you. Check if location is on.</value>
   </data>
   <data name="ProgressNoResults" xml:space="preserve">
     <value>No results for "{0}"</value>

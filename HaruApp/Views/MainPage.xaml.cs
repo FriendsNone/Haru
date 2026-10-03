@@ -24,6 +24,7 @@ namespace HaruApp.Views
         private readonly DispatcherTimer forecastTimeTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
         private ApplicationBarIconButton favoriteButton;
         private ApplicationBarIconButton pinButton;
+        private ApplicationBarIconButton homeButton;
         private Place place;
         private bool isFetching;
 
@@ -143,6 +144,20 @@ namespace HaruApp.Views
             favoriteButton.Text = isFavorite ? AppResources.AppBarRemoveFromFavorites : AppResources.AppBarAddToFavorites;
             favoriteButton.IsEnabled = place != null && (!isFavorite || FavoritesHelper.CanRemove(place));
             pinButton.IsEnabled = place != null && (isHome || TileHelper.FindTile(place) == null);
+            homeButton.IsEnabled = place != null && !isHome;
+        }
+
+        private void SetHomeApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            if (place == null) return;
+
+            var shown = place;
+            FavoritesHelper.ReplaceHome(shown, () =>
+            {
+                if (vm.Current != null)
+                    FavoritesHelper.UpdateTiles(shown, vm.Current);
+                UpdateApplicationBarButtons();
+            });
         }
 
         private void ToggleFavoriteApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -220,32 +235,13 @@ namespace HaruApp.Views
                 vm.Hourly = forecast.ToHourlyRecords();
                 vm.Daily = forecast.ToDailyRecords();
                 NowScrollViewer.Visibility = Visibility.Visible;
-                UpdateTiles(target, vm.Current);
+                FavoritesHelper.UpdateTiles(target, vm.Current);
 
                 if (error != null)
                     ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressShowingLastUpdate, true, timer);
                 else
                     ProgressHelper.HideProgress(progressIndicator, timer);
             });
-        }
-
-        private static void UpdateTiles(Place target, CurrentRecord cr)
-        {
-            var live = HaruSettings.BackgroundUpdateEnabled && HaruSettings.LiveTileEnabled;
-            var mono = HaruSettings.MonochromeTileEnabled;
-
-            var home = HaruSettings.HomePlace;
-            if (target.IsSameAs(home))
-            {
-                if (live)
-                    TileHelper.UpdateTile(TileHelper.PrimaryTile, home.Name, cr, mono);
-                else
-                    TileHelper.ResetTile();
-            }
-
-            var tile = TileHelper.FindTile(target);
-            if (tile != null)
-                TileHelper.UpdateTile(tile, target.Name, live ? cr : null, mono);
         }
 
         private void BuildApplicationBar(bool isSearchResult)
@@ -265,6 +261,12 @@ namespace HaruApp.Views
                 pinButton.Text = AppResources.AppBarPinToStart;
                 pinButton.Click += PinApplicationBarIconButton_Click;
                 ApplicationBar.Buttons.Add(pinButton);
+
+                homeButton = new ApplicationBarIconButton();
+                homeButton.IconUri = new Uri("/Assets/AppBar/appbar.home.rest.png", UriKind.Relative);
+                homeButton.Text = AppResources.AppBarSetAsHome;
+                homeButton.Click += SetHomeApplicationBarIconButton_Click;
+                ApplicationBar.Buttons.Add(homeButton);
             }
             else
             {

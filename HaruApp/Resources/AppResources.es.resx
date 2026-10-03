@@ -144,6 +144,9 @@
   <data name="AppBarSearch" xml:space="preserve">
     <value>buscar</value>
   </data>
+  <data name="AppBarSetAsHome" xml:space="preserve">
+    <value>hacer principal</value>
+  </data>
   <data name="AppBarSettings" xml:space="preserve">
     <value>ajustes</value>
   </data>
@@ -243,6 +246,9 @@ que significa
   <data name="MenuRemoveFavorite" xml:space="preserve">
     <value>eliminar de favoritos</value>
   </data>
+  <data name="MenuSetAsHome" xml:space="preserve">
+    <value>establecer como principal</value>
+  </data>
   <data name="NoLocation" xml:space="preserve">
     <value>SIN UBICACIÓN</value>
   </data>
@@ -319,7 +325,7 @@ que significa
     <value>¿Usar tu ubicación?</value>
   </data>
   <data name="PromptNoLocationFirstTime" xml:space="preserve">
-    <value>Busca una ubicación para obtener el pronóstico. La primera que elijas será tu ubicación principal, que Haru abre al iniciar y muestra en su icono. ¿Quieres buscar ahora?</value>
+    <value>Si es la primera vez que usas Haru, debes establecer una ubicación antes de obtener el pronóstico. ¿Quieres hacerlo ahora?</value>
   </data>
   <data name="PromptNoLocationRefresh" xml:space="preserve">
     <value>Debes establecer una ubicación antes de actualizar el pronóstico. ¿Quieres hacerlo ahora?</value>

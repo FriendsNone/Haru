@@ -76,9 +76,11 @@
                             <toolkit:ContextMenuService.ContextMenu>
                                 <toolkit:ContextMenu IsZoomEnabled="True"
                                                      Opened="ResultContextMenu_Opened">
-                                    <toolkit:MenuItem Click="FavoriteMenuItem_Click"/>
+                                    <toolkit:MenuItem Header="{Binding LocalizedResources.MenuSetAsHome, Source={StaticResource LocalizedStrings}}"
+                                                      Click="SetHomeMenuItem_Click"/>
                                     <toolkit:MenuItem Header="{Binding LocalizedResources.MenuPinToStart, Source={StaticResource LocalizedStrings}}"
                                                       Click="PinMenuItem_Click"/>
+                                    <toolkit:MenuItem Click="FavoriteMenuItem_Click"/>
                                 </toolkit:ContextMenu>
                             </toolkit:ContextMenuService.ContextMenu>
 

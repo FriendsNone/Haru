@@ -142,6 +142,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to set as home.
+        /// </summary>
+        public static string AppBarSetAsHome {
+            get {
+                return ResourceManager.GetString("AppBarSetAsHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to settings.
         /// </summary>
         public static string AppBarSettings {
@@ -167,7 +176,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("BackgroundAgentDescription", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to To get weather alerts and live tile updates, turn background tasks back on in your phone&apos;s settings..
         /// </summary>
@@ -176,7 +185,7 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("BackgroundAgentDisabledMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Background tasks disabled.
         /// </summary>
@@ -433,6 +442,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to set as home.
+        /// </summary>
+        public static string MenuSetAsHome {
+            get {
+                return ResourceManager.GetString("MenuSetAsHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NO LOCATION.
         /// </summary>
         public static string NoLocation {
@@ -658,7 +676,7 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a location to get the forecast. The first one you pick becomes your home, which Haru opens to and shows on its tile. Do you want to search now?.
+        ///   Looks up a localized string similar to If this is your first time using Haru, you need to set a location before fetching the forecast. Do you want to set it now?.
         /// </summary>
         public static string PromptNoLocationFirstTime {
             get {

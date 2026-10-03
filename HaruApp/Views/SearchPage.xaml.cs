@@ -79,13 +79,24 @@ namespace HaruApp.Views
             var place = ToPlace(menu.DataContext as LocationRecord);
             if (place == null) return;
 
-            var isFavorite = FavoritesHelper.IsFavorite(place);
-            var favoriteItem = (MenuItem)menu.Items[0];
-            favoriteItem.Header = isFavorite ? AppResources.MenuRemoveFavorite : AppResources.MenuAddFavorite;
-            favoriteItem.IsEnabled = !isFavorite || FavoritesHelper.CanRemove(place);
+            var isHome = FavoritesHelper.IsHome(place);
+            var homeItem = (MenuItem)menu.Items[0];
+            homeItem.IsEnabled = !isHome;
 
             var pinItem = (MenuItem)menu.Items[1];
-            pinItem.IsEnabled = FavoritesHelper.IsHome(place) || TileHelper.FindTile(place) == null;
+            pinItem.IsEnabled = isHome || TileHelper.FindTile(place) == null;
+
+            var isFavorite = FavoritesHelper.IsFavorite(place);
+            var favoriteItem = (MenuItem)menu.Items[2];
+            favoriteItem.Header = isFavorite ? AppResources.MenuRemoveFavorite : AppResources.MenuAddFavorite;
+            favoriteItem.IsEnabled = !isFavorite || FavoritesHelper.CanRemove(place);
+        }
+
+        private void SetHomeMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var place = ToPlace(((FrameworkElement)sender).DataContext as LocationRecord);
+            if (place != null)
+                FavoritesHelper.ReplaceHome(place, null);
         }
 
         private void FavoriteMenuItem_Click(object sender, RoutedEventArgs e)

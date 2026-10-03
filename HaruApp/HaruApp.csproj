@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\AppBar\appbar.favs.rest.png" />
+    <Content Include="Assets\AppBar\appbar.home.rest.png" />
     <Content Include="Assets\AppBar\appbar.favs.addto.rest.png" />
     <Content Include="Assets\AppBar\appbar.favs.removefrom.rest.png" />
     <Content Include="Assets\ApplicationIcon.png" />
