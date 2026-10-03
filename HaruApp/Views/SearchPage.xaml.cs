@@ -22,6 +22,8 @@ namespace HaruApp.Views
         private readonly DispatcherTimer timer;
         private readonly DispatcherTimer locateTimeout = new DispatcherTimer { Interval = TimeSpan.FromSeconds(30) };
         private GeoCoordinateWatcher watcher;
+        private int locateRequest;
+        private bool isLocating;
 
         public SearchPage()
         {
@@ -34,7 +36,13 @@ namespace HaruApp.Views
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            StopWatcher();
+            if (watcher != null || isLocating)
+            {
+                StopWatcher();
+                locateRequest++;
+                ProgressHelper.HideProgress(progressIndicator, timer);
+                SetBusy(false);
+            }
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -149,6 +157,9 @@ namespace HaruApp.Views
 
         private void StartLocating()
         {
+            SetBusy(true);
+            isLocating = true;
+            locateRequest++;
             ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressLocating, timer: timer);
             watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
             watcher.StatusChanged += Watcher_StatusChanged;
@@ -172,13 +183,16 @@ namespace HaruApp.Views
             {
                 if (watcher == null) return;
                 StopWatcher();
+                var request = locateRequest;
 
                 client.ReverseGeocode(coordinate.Latitude, coordinate.Longitude, (place, error) =>
                     Dispatcher.BeginInvoke(() =>
                     {
+                        if (request != locateRequest) return;
+                        isLocating = false;
+                        SetBusy(false);
                         ProgressHelper.HideProgress(progressIndicator, timer);
 
-                        // Without a place name, the coordinates double as the name.
                         var name = place ?? string.Format(CultureInfo.InvariantCulture, "{0:0.##}, {1:0.##}",
                             coordinate.Latitude, coordinate.Longitude);
                         ShowLocation(new Place { Name = name, Latitude = coordinate.Latitude, Longitude = coordinate.Longitude });
@@ -190,6 +204,8 @@ namespace HaruApp.Views
         {
             if (watcher == null) return;
             StopWatcher();
+            isLocating = false;
+            SetBusy(false);
             ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressLocationUnavailable, true, timer);
         }
 
@@ -217,12 +233,23 @@ namespace HaruApp.Views
             NavigationService.Navigate(new Uri(TileHelper.NavigationUriFor(place).OriginalString + "&search=true", UriKind.Relative));
         }
 
+        private void SetBusy(bool busy)
+        {
+            SearchPhoneTextBox.IsEnabled = !busy;
+            SearchButton.IsEnabled = !busy;
+            CurrentLocationButton.IsEnabled = !busy;
+            ResultListBox.IsEnabled = !busy;
+        }
+
         private void FetchLocation(string searchTerm)
         {
+            SetBusy(true);
             ProgressHelper.ShowProgress(progressIndicator, string.Format(AppResources.ProgressSearching, searchTerm), timer: timer);
 
             client.SearchLocation(searchTerm, (locations, error) =>
             {
+                SetBusy(false);
+
                 if (error != null)
                 {
                     ProgressHelper.ShowProgress(progressIndicator, AppResources.ProgressError, true, timer);
