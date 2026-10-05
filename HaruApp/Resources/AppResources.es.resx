@@ -372,6 +372,9 @@ que significa
   <data name="SearchHint" xml:space="preserve">
     <value>ingresa una ubicación</value>
   </data>
+  <data name="SettingAllFavoritesNotifications" xml:space="preserve">
+    <value>Avisar sobre cambios del clima en todos los favoritos</value>
+  </data>
   <data name="SettingBackgroundUpdates" xml:space="preserve">
     <value>Permitir actualizaciones en segundo plano</value>
   </data>
@@ -403,7 +406,7 @@ que significa
     <value>Utiliza iconos de mosaico monocromáticos</value>
   </data>
   <data name="SettingNotifications" xml:space="preserve">
-    <value>Avisar sobre cambios del clima</value>
+    <value>Avisar cuando cambie el clima en la ubicación principal</value>
   </data>
   <data name="SettingPrecipitationUnit" xml:space="preserve">
     <value>Unidad de precipitación</value>

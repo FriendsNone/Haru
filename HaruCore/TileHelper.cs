@@ -98,7 +98,8 @@ namespace HaruCore
 
         public static void ResetTile()
         {
-            ResetTile(PrimaryTile, DefaultTitle);
+            var home = HaruSettings.HomePlace;
+            ResetTile(PrimaryTile, home != null ? home.Name : DefaultTitle);
         }
 
         public static void ResetTile(ShellTile tile, string title)

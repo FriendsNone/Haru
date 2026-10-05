@@ -30,6 +30,7 @@ namespace HaruApp.Views
             LiveTileToggleSwitch.IsChecked = HaruSettings.LiveTileEnabled;
             NotificationToggleSwitch.IsChecked = HaruSettings.NotificationEnabled;
             MonochromeTileToggleSwitch.IsChecked = HaruSettings.MonochromeTileEnabled;
+            AllFavoritesNotificationToggleSwitch.IsChecked = HaruSettings.AllFavoritesNotificationEnabled;
             LocationServiceToggleSwitch.IsChecked = HaruSettings.LocationServiceEnabled;
             suppressToggleEvents = false;
             ApplyToggleDependencies();
@@ -96,6 +97,7 @@ namespace HaruApp.Views
                    LiveTileToggleSwitch.IsChecked != HaruSettings.LiveTileEnabled ||
                    NotificationToggleSwitch.IsChecked != HaruSettings.NotificationEnabled ||
                    MonochromeTileToggleSwitch.IsChecked != HaruSettings.MonochromeTileEnabled ||
+                   AllFavoritesNotificationToggleSwitch.IsChecked != HaruSettings.AllFavoritesNotificationEnabled ||
                    LocationServiceToggleSwitch.IsChecked != HaruSettings.LocationServiceEnabled ||
                    TemperatureUnitListPicker.SelectedItem as string != HaruSettings.TemperatureUnit ||
                    WindSpeedUnitListPicker.SelectedItem as string != HaruSettings.WindSpeedUnit ||
@@ -104,18 +106,23 @@ namespace HaruApp.Views
 
         private void SaveSettings()
         {
+            var tilesChanged = BackgroundUpdateToggleSwitch.IsChecked != HaruSettings.BackgroundUpdateEnabled ||
+                               LiveTileToggleSwitch.IsChecked != HaruSettings.LiveTileEnabled ||
+                               MonochromeTileToggleSwitch.IsChecked != HaruSettings.MonochromeTileEnabled;
+
             HaruSettings.BackgroundUpdateEnabled = BackgroundUpdateToggleSwitch.IsChecked == true;
             HaruSettings.LiveTileEnabled = LiveTileToggleSwitch.IsChecked == true;
             HaruSettings.NotificationEnabled = NotificationToggleSwitch.IsChecked == true;
             HaruSettings.MonochromeTileEnabled = MonochromeTileToggleSwitch.IsChecked == true;
+            HaruSettings.AllFavoritesNotificationEnabled = AllFavoritesNotificationToggleSwitch.IsChecked == true;
             HaruSettings.LocationServiceEnabled = LocationServiceToggleSwitch.IsChecked == true;
             HaruSettings.TemperatureUnit = TemperatureUnitListPicker.SelectedItem as string;
             HaruSettings.WindSpeedUnit = WindSpeedUnitListPicker.SelectedItem as string;
             HaruSettings.PrecipitationUnit = PrecipitationUnitListPicker.SelectedItem as string;
             HaruSettings.Save();
 
-            if (BackgroundUpdateToggleSwitch.IsChecked != true || LiveTileToggleSwitch.IsChecked != true)
-                TileHelper.ResetAllTiles();
+            if (tilesChanged)
+                FavoritesHelper.RefreshAllTiles();
 
             AgentHelper.StartPeriodicAgent();
         }
@@ -124,10 +131,12 @@ namespace HaruApp.Views
         {
             var master = BackgroundUpdateToggleSwitch.IsChecked == true;
             var liveTile = LiveTileToggleSwitch.IsChecked == true;
+            var notification = NotificationToggleSwitch.IsChecked == true;
 
             LiveTileToggleSwitch.IsEnabled = master;
             NotificationToggleSwitch.IsEnabled = master;
             MonochromeTileToggleSwitch.IsEnabled = master && liveTile;
+            AllFavoritesNotificationToggleSwitch.IsEnabled = master && notification;
         }
 
         private void MasterToggle_Checked(object sender, RoutedEventArgs e)

@@ -1,5 +1,6 @@
 ﻿using HaruApp.Resources;
 using HaruCore;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,7 +145,7 @@ namespace HaruApp.Helpers
 
         public static void UpdateTiles(Place target, CurrentRecord cr)
         {
-            var live = HaruSettings.BackgroundUpdateEnabled && HaruSettings.LiveTileEnabled;
+            var live = IsLiveTileEnabled();
             var mono = HaruSettings.MonochromeTileEnabled;
 
             var home = HaruSettings.HomePlace;
@@ -181,13 +182,39 @@ namespace HaruApp.Helpers
                 RefreshHomeTile();
         }
 
+        public static void RefreshAllTiles()
+        {
+            if (!IsLiveTileEnabled())
+            {
+                TileHelper.ResetAllTiles();
+                return;
+            }
+
+            RefreshHomeTile();
+
+            var mono = HaruSettings.MonochromeTileEnabled;
+            foreach (var tile in ShellTile.ActiveTiles)
+            {
+                var place = TileHelper.GetPlace(tile);
+                if (place != null)
+                    TileHelper.UpdateTile(tile, place.Name, GetCachedCurrent(place), mono);
+            }
+        }
+
         private static void RefreshHomeTile()
         {
             var home = HaruSettings.HomePlace;
-            if (home == null || !HaruSettings.BackgroundUpdateEnabled || !HaruSettings.LiveTileEnabled)
-                return;
+            if (home == null) return;
 
-            TileHelper.UpdateTile(TileHelper.PrimaryTile, home.Name, GetCachedCurrent(home), HaruSettings.MonochromeTileEnabled);
+            if (IsLiveTileEnabled())
+                TileHelper.UpdateTile(TileHelper.PrimaryTile, home.Name, GetCachedCurrent(home), HaruSettings.MonochromeTileEnabled);
+            else
+                TileHelper.ResetTile();
+        }
+
+        private static bool IsLiveTileEnabled()
+        {
+            return HaruSettings.BackgroundUpdateEnabled && HaruSettings.LiveTileEnabled;
         }
 
         public static CurrentRecord GetCachedCurrent(Place place)

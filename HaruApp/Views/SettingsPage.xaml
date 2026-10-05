@@ -101,7 +101,12 @@
                                       Checked="ChildToggle_Checked"
                                       Unchecked="ChildToggle_Unchecked"/>
 
-                <StackPanel Grid.Row="7"
+                <toolkit:ToggleSwitch x:Name="AllFavoritesNotificationToggleSwitch"
+                                      Grid.Row="7"
+                                      Margin="0,0,-22,-12"
+                                      Header="{Binding LocalizedResources.SettingAllFavoritesNotifications, Source={StaticResource LocalizedStrings}}"/>
+
+                <StackPanel Grid.Row="8"
                             Margin="0,0,0,12">
                     <toolkit:ToggleSwitch x:Name="LocationServiceToggleSwitch"
                                           Margin="0,0,-22,-26"
@@ -113,7 +118,7 @@
                                Text="{Binding LocalizedResources.SettingLocationServiceDescription, Source={StaticResource LocalizedStrings}}"/>
                 </StackPanel>
                 
-                <StackPanel Grid.Row="8"
+                <StackPanel Grid.Row="9"
                             Margin="0,0,0,0">
                     <Button x:Name="ClearSavedForecastButton"
                             Content="{Binding LocalizedResources.SettingClearForecast, Source={StaticResource LocalizedStrings}}"

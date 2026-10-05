@@ -130,6 +130,12 @@ namespace HaruCore
             set { Store[SettingsKeys.MonochromeTileEnable] = value; }
         }
 
+        public static bool AllFavoritesNotificationEnabled
+        {
+            get { return Get(SettingsKeys.AllFavoritesNotificationEnable, false); }
+            set { Store[SettingsKeys.AllFavoritesNotificationEnable] = value; }
+        }
+
         public static bool LocationServiceEnabled
         {
             get { return Get(SettingsKeys.LocationServiceEnable, false); }

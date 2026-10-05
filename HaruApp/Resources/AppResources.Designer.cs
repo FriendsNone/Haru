@@ -820,6 +820,15 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notify for all favorite weather changes.
+        /// </summary>
+        public static string SettingAllFavoritesNotifications {
+            get {
+                return ResourceManager.GetString("SettingAllFavoritesNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow background updates.
         /// </summary>
         public static string SettingBackgroundUpdates {
@@ -910,7 +919,7 @@ namespace HaruApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Notify on weather changes.
+        ///   Looks up a localized string similar to Notify when home weather changes.
         /// </summary>
         public static string SettingNotifications {
             get {

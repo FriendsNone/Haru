@@ -372,6 +372,9 @@ meaning
   <data name="SearchHint" xml:space="preserve">
     <value>enter location</value>
   </data>
+  <data name="SettingAllFavoritesNotifications" xml:space="preserve">
+    <value>Notify for all favorite weather changes</value>
+  </data>
   <data name="SettingBackgroundUpdates" xml:space="preserve">
     <value>Allow background updates</value>
   </data>
@@ -403,7 +406,7 @@ meaning
     <value>Use monochrome tile icons</value>
   </data>
   <data name="SettingNotifications" xml:space="preserve">
-    <value>Notify on weather changes</value>
+    <value>Notify when home weather changes</value>
   </data>
   <data name="SettingPrecipitationUnit" xml:space="preserve">
     <value>Precipitation unit</value>
