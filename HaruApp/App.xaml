@@ -18,6 +18,26 @@
             <TextBlock Text="{Binding Converter={StaticResource UnitNameConverter}}"/>
         </DataTemplate>
 
+        <Style x:Key="LabelTextStyle"
+               TargetType="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize"
+                    Value="{StaticResource PhoneFontSizeSmall}"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource PhoneSubtleBrush}"/>
+        </Style>
+
+        <Style x:Key="ConditionTextStyle"
+               TargetType="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="{StaticResource PhoneFontFamilySemiLight}"/>
+            <Setter Property="FontSize"
+                    Value="{StaticResource PhoneFontSizeExtraLarge}"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource PhoneAccentBrush}"/>
+        </Style>
+
         <Style x:Key="TurnstilePageTransition"
                TargetType="phone:PhoneApplicationPage">
             <Setter Property="toolkit:TransitionService.NavigationInTransition">

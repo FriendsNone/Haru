@@ -43,9 +43,7 @@
 
                     <StackPanel Grid.Row="0"
                                 Grid.Column="2">
-                        <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                   FontSize="{StaticResource PhoneFontSizeSmall}"
-                                   Foreground="{StaticResource PhoneSubtleBrush}"
+                        <TextBlock Style="{StaticResource LabelTextStyle}"
                                    Text="{Binding LocalizedResources.LabelDevelopedBy, Source={StaticResource LocalizedStrings}}"/>
                         <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                    FontSize="{StaticResource PhoneFontSizeLarge}"
@@ -83,9 +81,7 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel Grid.Row="0">
-                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                           FontSize="{StaticResource PhoneFontSizeSmall}"
-                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                <TextBlock Style="{StaticResource LabelTextStyle}"
                                            Text="{Binding LocalizedResources.LabelAppIcon, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
@@ -98,9 +94,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Row="2">
-                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                           FontSize="{StaticResource PhoneFontSizeSmall}"
-                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                <TextBlock Style="{StaticResource LabelTextStyle}"
                                            Text="{Binding LocalizedResources.LabelWeatherIcons, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"
@@ -113,9 +107,7 @@
                             </StackPanel>
 
                             <StackPanel Grid.Row="4">
-                                <TextBlock FontFamily="{StaticResource PhoneFontFamilySemiBold}"
-                                           FontSize="{StaticResource PhoneFontSizeSmall}"
-                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                <TextBlock Style="{StaticResource LabelTextStyle}"
                                            Text="{Binding LocalizedResources.LabelWeatherApi, Source={StaticResource LocalizedStrings}}"/>
                                 <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
                                            FontSize="{StaticResource PhoneFontSizeLarge}"

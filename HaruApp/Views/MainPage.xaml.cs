@@ -48,27 +48,15 @@ namespace HaruApp.Views
 
             if (!HaruSettings.FirstTimeLocationShown)
             {
+                HaruSettings.FirstTimeLocationShown = true;
+                HaruSettings.Save();
+
                 PromptHelper.ShowPrompt(
                     AppResources.PromptNoLocationTitle,
                     AppResources.PromptNoLocationFirstTime,
                     AppResources.PromptYes,
                     AppResources.PromptLater,
-                    () =>
-                    {
-                        HaruSettings.FirstTimeLocationShown = true;
-                        HaruSettings.Save();
-                        NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative));
-                    },
-                    () =>
-                    {
-                        HaruSettings.FirstTimeLocationShown = true;
-                        HaruSettings.Save();
-                    },
-                    () =>
-                    {
-                        HaruSettings.FirstTimeLocationShown = true;
-                        HaruSettings.Save();
-                    });
+                    () => NavigationService.Navigate(new Uri("/Views/SearchPage.xaml", UriKind.Relative)));
             }
         }
 
@@ -234,7 +222,7 @@ namespace HaruApp.Views
                 vm.Current = forecast.ToCurrentRecord();
                 vm.Hourly = forecast.ToHourlyRecords();
                 vm.Daily = forecast.ToDailyRecords();
-                NowScrollViewer.Visibility = Visibility.Visible;
+                NowGrid.Visibility = Visibility.Visible;
                 FavoritesHelper.UpdateTiles(target, vm.Current);
 
                 if (error != null)

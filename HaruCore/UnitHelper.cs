@@ -5,10 +5,9 @@ using System.Globalization;
 
 namespace HaruCore
 {
-    public class UnitHelper
+    public static class UnitHelper
     {
         private const string IconBase = "/Assets/WeatherIcons/";
-        private const string TileBase = "/Assets/WeatherIcons/Tile/";
 
         private static string[] _directions;
 
