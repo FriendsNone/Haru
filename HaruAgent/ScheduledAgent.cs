@@ -72,15 +72,15 @@ namespace HaruAgent
 
             var notify = HaruSettings.NotificationEnabled;
             var notifyAll = notify && HaruSettings.AllFavoritesNotificationEnabled;
+            var liveTile = HaruSettings.LiveTileEnabled;
 
-            var targets = GetTargets(notifyAll);
+            var targets = GetTargets(liveTile, notifyAll);
             if (targets.Count == 0)
                 return false;
 
             var temperatureUnit = HaruSettings.TemperatureUnit;
             var windSpeedUnit = HaruSettings.WindSpeedUnit;
             var precipitationUnit = HaruSettings.PrecipitationUnit;
-            var liveTile = HaruSettings.LiveTileEnabled;
             var mono = HaruSettings.MonochromeTileEnabled;
             var pending = targets.Count;
 
@@ -107,7 +107,7 @@ namespace HaruAgent
             return true;
         }
 
-        private static List<UpdateTarget> GetTargets(bool notifyAll)
+        private static List<UpdateTarget> GetTargets(bool liveTile, bool notifyAll)
         {
             var targets = new List<UpdateTarget>();
 
@@ -115,12 +115,15 @@ namespace HaruAgent
             if (home != null)
                 targets.Add(new UpdateTarget { Place = home, IsHome = true, Notifies = true });
 
-            foreach (var tile in ShellTile.ActiveTiles)
+            if (liveTile || notifyAll)
             {
-                var place = TileHelper.GetPlace(tile);
-                if (place == null) continue;
+                foreach (var tile in ShellTile.ActiveTiles)
+                {
+                    var place = TileHelper.GetPlace(tile);
+                    if (place == null) continue;
 
-                GetOrAddTarget(targets, place, notifyAll).Tiles.Add(tile);
+                    GetOrAddTarget(targets, place, notifyAll).Tiles.Add(tile);
+                }
             }
 
             if (notifyAll)
