@@ -118,6 +118,19 @@
                                            Foreground="{StaticResource PhoneForegroundBrush}"
                                            Text="Open-Meteo.com"/>
                             </StackPanel>
+
+                            <StackPanel Grid.Row="6">
+                                <TextBlock Style="{StaticResource LabelTextStyle}"
+                                           Text="{Binding LocalizedResources.LabelReverseGeocodingApi, Source={StaticResource LocalizedStrings}}"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeLarge}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           Text="GeoNames"/>
+                                <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           Text="GeoNames.org"/>
+                            </StackPanel>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

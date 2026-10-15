@@ -341,7 +341,16 @@ namespace HaruApp.Resources {
                 return ResourceManager.GetString("LabelPressure", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to REVERSE GEOCODING API.
+        /// </summary>
+        public static string LabelReverseGeocodingApi {
+            get {
+                return ResourceManager.GetString("LabelReverseGeocodingApi", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to TEMP.
         /// </summary>

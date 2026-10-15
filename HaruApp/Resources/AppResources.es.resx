@@ -213,6 +213,9 @@ que significa
   <data name="LabelPressure" xml:space="preserve">
     <value>PRESIÓN</value>
   </data>
+  <data name="LabelReverseGeocodingApi" xml:space="preserve">
+    <value>API DE GEOCODIFICACIÓN INVERSA</value>
+  </data>
   <data name="LabelTemp" xml:space="preserve">
     <value>TEMP</value>
   </data>
