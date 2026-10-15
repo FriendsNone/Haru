@@ -38,7 +38,7 @@
                     <toolkit:HubTile Grid.Row="0"
                                      Grid.Column="0"
                                      Source="/Assets/ApplicationTile.png"
-                                     Title="v1.0.0"
+                                     Title="v2.0.0"
                                      Message="{Binding LocalizedResources.HaruMeaning, Source={StaticResource LocalizedStrings}}"/>
 
                     <StackPanel Grid.Row="0"
@@ -137,37 +137,97 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="{Binding LocalizedResources.PivotChangelog, Source={StaticResource LocalizedStrings}}">
-                <StackPanel Margin="12,0,12,0">
+                <ScrollViewer Margin="12,0,12,0">
                     <StackPanel>
-                        <TextBlock Foreground="{StaticResource PhoneAccentBrush}"
-                                   FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                   FontSize="{StaticResource PhoneFontSizeLarge}"
-                                   Text="[1.0.0] - 2025-10-16"/>
-                        <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
-                                   FontSize="{StaticResource PhoneFontSizeNormal}"
-                                   Text="Added"/>
-                        <StackPanel Margin="24,0,0,0">
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Current weather conditions with detailed metrics"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; 12-hour hourly forecast"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; 7-day daily forecast"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Global location search with geocoding"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Live tile with automatic background updates"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Offline support with smart caching"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Customizable weather units (temperature, wind speed, precipitation)"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Background tile updates toggle"/>
-                            <TextBlock TextWrapping="Wrap"
-                                       Text="&#8226; Day/night weather icon variants"/>
+                        <StackPanel Margin="0,0,0,24">
+                            <TextBlock Foreground="{StaticResource PhoneAccentBrush}"
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"
+                                       Text="[2.0.0] - 2026-10-15"/>
+                            <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Text="Added"/>
+                            <StackPanel Margin="24,0,0,0">
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Favorites: save up to 6 places and switch between them"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Pin any favorite to Start as its own live tile"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Weather alerts when rain or storms start or stop, or the temperature changes sharply, for home or every favorite"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Use my location in search, with a privacy setting"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Wide live tiles and monochrome tile icons (Windows Phone 7.8+)"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Observation time on the back of the live tile"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Spanish translation"/>
+                            </StackPanel>
+                            <TextBlock Margin="0,12,0,0"
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Text="Changed"/>
+                            <StackPanel Margin="24,0,0,0">
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Search results use the phone's language"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Friendlier unit names in settings"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Daily dates are formatted for each language"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Forecasts older than 30 minutes refresh when you return to the app"/>
+                            </StackPanel>
+                            <TextBlock Margin="0,12,0,0"
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Text="Fixed"/>
+                            <StackPanel Margin="24,0,0,0">
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Temperatures are rounded instead of always rounded up"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; &quot;Forecast as of&quot; time no longer gets stuck"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Background updates keep running after a slow network request"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Missing forecast values show a dash instead of crashing the app"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; The background agents disabled message shows only once"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; The progress indicator no longer disappears too early"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <TextBlock Foreground="{StaticResource PhoneAccentBrush}"
+                                       FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"
+                                       Text="[1.0.0] - 2025-10-16"/>
+                            <TextBlock FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                                       Text="Added"/>
+                            <StackPanel Margin="24,0,0,0">
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Current weather conditions with detailed metrics"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; 12-hour hourly forecast"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; 7-day daily forecast"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Global location search with geocoding"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Live tile with automatic background updates"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Offline support with smart caching"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Customizable weather units (temperature, wind speed, precipitation)"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Background tile updates toggle"/>
+                                <TextBlock TextWrapping="Wrap"
+                                           Text="&#8226; Day/night weather icon variants"/>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </ScrollViewer>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
