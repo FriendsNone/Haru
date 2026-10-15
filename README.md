@@ -43,13 +43,17 @@ A clean, modern weather application for Windows Phone that brings beautiful weat
 
 ## Screenshots
 
-|![Splash screen](Screenshots/splash.webp)|![Current weather](Screenshots/right-now.webp)|![Location search](Screenshots/location-search.webp)|![Settings](Screenshots/settings.webp)|
-|:---:|:---:|:---:|:---:|
-|Splash Screen|Current Weather|Location Search|Settings|
+| ![right now](Screenshots/right_now.webp) | ![next 12 hours](Screenshots/next_12_hours.webp) | ![next 7 days](Screenshots/next_7_days.webp) |
+| :--------------------------------------: | :----------------------------------------------: | :------------------------------------------: |
+|                right now                 |                  next 12 hours                   |                 next 7 days                  |
 
-|![Front (no location)](Screenshots/tile1.webp)|![Back (no location)](Screenshots/tile2.webp)|![Front (location set)](Screenshots/tile3.webp)|![Back (location set)](Screenshots/tile4.webp)|
-|:---:|:---:|:---:|:---:|
-|Live Tile Front (no location)|Live Tile Back (no location)|Live Tile Front (location set)|Live Tile Back (location set)|
+| ![favorites](Screenshots/favorites.webp) | ![search](Screenshots/search.webp) | ![settings](Screenshots/settings.webp) |
+| :--------------------------------------: | :--------------------------------: | :------------------------------------: |
+|                favorites                 |               search               |                settings                |
+
+| ![Live Tile](Screenshots/live_tile.webp) ![Live Tile (back)](Screenshots/live_tile_back.webp) | ![Monochrome Live Tile](Screenshots/mono_live_tile.webp) ![Monochrome Live Tile (back)](Screenshots/mono_live_tile_back.webp) |
+| :-------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
+|                                           Live Tile                                           |                                                     Monochrome Live Tile                                                      |
 
 ## Limitations
 
